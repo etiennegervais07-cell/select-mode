@@ -953,6 +953,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="sb-item" onclick="dPage('settings',this)"><span class="sb-icon">⚙️</span><span>Paramètres</span></div>
       <div class="sb-item" onclick="goTo('brand')"><span class="sb-icon">👁️</span><span>Ma page publique</span></div>
       <div class="sb-item"><span class="sb-icon">💬</span><span>Support</span><span class="sb-badge red">1</span></div>
+      <div class="sb-item" onclick="doLogout()"><span class="sb-icon">🚪</span><span>Déconnexion</span></div>
     </nav>
     <div class="sb-footer">Abonnement Pro<br>Prochain débit : <a>01/06/2026</a></div>
   </aside>
@@ -1037,13 +1038,13 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <table class="p-table" id="pTable">
           <thead><tr><th style="width:54px;">Photo</th><th>Produit</th><th>Collection</th><th>Prix</th><th>Vues</th><th>Statut</th><th>Actions</th></tr></thead>
           <tbody id="pBody">
-            <tr data-cat="robes"><td><div class="t-thumb" style="background:linear-gradient(145deg,#e8e0d4,#c8bfb0);">✦</div></td><td><div>Robe Lumière en soie</div><div style="font-size:0.68rem;color:var(--gris);">Robes</div></td><td>SS 2026</td><td>890 €</td><td>1 204</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="manteaux"><td><div class="t-thumb" style="background:linear-gradient(145deg,#1a1814,#2e2820);"></div></td><td><div>Trench Minuit en gabardine</div><div style="font-size:0.68rem;color:var(--gris);">Manteaux</div></td><td>SS 2026</td><td>1 250 €</td><td>976</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="robes"><td><div class="t-thumb" style="background:linear-gradient(145deg,#2a1830,#1a1a2e);"></div></td><td><div>Robe Velours Nuit</div><div style="font-size:0.68rem;color:var(--gris);">Robes</div></td><td>AW 2025</td><td>1 100 €</td><td>801</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="accessoires"><td><div class="t-thumb" style="background:linear-gradient(145deg,#e0d8cc,#ccc4b8);">✦</div></td><td><div>Sac Aurore en cuir grainé</div><div style="font-size:0.68rem;color:var(--gris);">Accessoires</div></td><td>SS 2026</td><td>680 €</td><td>632</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="hauts"><td><div class="t-thumb" style="background:linear-gradient(145deg,#ddd6c8,#c4bfb0);"></div></td><td><div>Pull Douceur en cachemire</div><div style="font-size:0.68rem;color:var(--gris);">Hauts</div></td><td>AW 2025</td><td>560 €</td><td>499</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="accessoires"><td><div class="t-thumb" style="background:linear-gradient(145deg,#c8c0b4,#b0a898);"></div></td><td><div>Ceinture Dorée en cuir</div><div style="font-size:0.68rem;color:var(--gris);">Accessoires</div></td><td>AW 2025</td><td>290 €</td><td>411</td><td><span class="st-badge sold">Épuisé</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
-            <tr data-cat="manteaux"><td><div class="t-thumb" style="background:linear-gradient(145deg,#181614,#242018);"></div></td><td><div>Veste Smoking Noir</div><div style="font-size:0.68rem;color:var(--gris);">Manteaux</div></td><td>AW 2025</td><td>1 490 €</td><td>301</td><td><span class="st-badge off">Hors ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✅ Produit mis en ligne')">Mettre en ligne</button><button class="t-btn danger" onclick="toast('🗑 Produit retiré')">Retirer</button></div></td></tr>
+            <tr data-cat="robes"><td><div class="t-thumb" style="background:linear-gradient(145deg,#e8e0d4,#c8bfb0);">✦</div></td><td><div>Robe Lumière en soie</div><div style="font-size:0.68rem;color:var(--gris);">Robes</div></td><td>SS 2026</td><td>890 €</td><td>1 204</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="manteaux"><td><div class="t-thumb" style="background:linear-gradient(145deg,#1a1814,#2e2820);"></div></td><td><div>Trench Minuit en gabardine</div><div style="font-size:0.68rem;color:var(--gris);">Manteaux</div></td><td>SS 2026</td><td>1 250 €</td><td>976</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="robes"><td><div class="t-thumb" style="background:linear-gradient(145deg,#2a1830,#1a1a2e);"></div></td><td><div>Robe Velours Nuit</div><div style="font-size:0.68rem;color:var(--gris);">Robes</div></td><td>AW 2025</td><td>1 100 €</td><td>801</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="accessoires"><td><div class="t-thumb" style="background:linear-gradient(145deg,#e0d8cc,#ccc4b8);">✦</div></td><td><div>Sac Aurore en cuir grainé</div><div style="font-size:0.68rem;color:var(--gris);">Accessoires</div></td><td>SS 2026</td><td>680 €</td><td>632</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="hauts"><td><div class="t-thumb" style="background:linear-gradient(145deg,#ddd6c8,#c4bfb0);"></div></td><td><div>Pull Douceur en cachemire</div><div style="font-size:0.68rem;color:var(--gris);">Hauts</div></td><td>AW 2025</td><td>560 €</td><td>499</td><td><span class="st-badge on">En ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="accessoires"><td><div class="t-thumb" style="background:linear-gradient(145deg,#c8c0b4,#b0a898);"></div></td><td><div>Ceinture Dorée en cuir</div><div style="font-size:0.68rem;color:var(--gris);">Accessoires</div></td><td>AW 2025</td><td>290 €</td><td>411</td><td><span class="st-badge sold">Épuisé</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
+            <tr data-cat="manteaux"><td><div class="t-thumb" style="background:linear-gradient(145deg,#181614,#242018);"></div></td><td><div>Veste Smoking Noir</div><div style="font-size:0.68rem;color:var(--gris);">Manteaux</div></td><td>AW 2025</td><td>1 490 €</td><td>301</td><td><span class="st-badge off">Hors ligne</span></td><td><div class="t-actions"><button class="t-btn" onclick="toast('✅ Produit mis en ligne')">Mettre en ligne</button><button class="t-btn danger" onclick="toast("🗑 Produit retiré")">Retirer</button></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -1220,7 +1221,7 @@ function updateSummary() {
     const save = planData[selPlanKey].m - price;
     dl.style.display = 'flex';
     document.getElementById('discVal').textContent = '−' + save + ' €';
-    document.getElementById('sumBadge').textContent = 'Annuel · Économisez ' + (save*12) + ' €/an';
+    document.getElementById('sumBadge').textContent = "Annuel · Economisez " + (save*12) + " euros/an";
   } else { dl.style.display = 'none'; document.getElementById('sumBadge').textContent = 'Facturation mensuelle'; }
   document.getElementById('sumFeatTitle').textContent = p.featTitle;
   document.getElementById('sumFeats').innerHTML = p.feats.map(f => `<div class="feat-item">${f}</div>`).join('');
@@ -1294,7 +1295,7 @@ function sTab(tab, el) {
 // ══ MODAL ══
 function openModal() { document.getElementById('modalOv').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeModal() { document.getElementById('modalOv').classList.remove('open'); document.body.style.overflow=''; }
-function addProd() { closeModal(); toast('✦ Produit publié avec succès !'); }
+function addProd() { addProduitSB(); }
 
 // ══ TOAST ══
 let toastTimer;
@@ -1316,14 +1317,192 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
   s.onload = () => {
     window.sb = supabase.createClient(SB_URL, SB_KEY);
     window.sb.auth.getSession().then(({data:{session}}) => {
-      if(session) updateNavUser(session.user.email);
+      if(session){ updateNavUser(session.user.email); loadDashboardData(session.user); }
     });
+    // Charger les marques dès que Supabase est prêt
+    loadMarques();
   };
   document.head.appendChild(s);
 })();
+
 function updateNavUser(email){
-  const el = document.querySelector('a[onclick*="goTo('login')"]');
+  const el = document.querySelector('[onclick*="login"]');
   if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"goTo('dashboard')"); }
+}
+
+// ══ CHARGER LES MARQUES DEPUIS SUPABASE ══
+async function loadMarques() {
+  if(!window.sb) return;
+  try {
+    const { data, error } = await window.sb
+      .from('marques')
+      .select('*')
+      .eq('abonnement_actif', true)
+      .order('created_at', { ascending: false });
+    if(error || !data || data.length === 0) return; // Garder les données statiques si vide
+    // Mettre à jour la grille d'accueil
+    updateHomeBrands(data);
+    // Mettre à jour la grille de recherche
+    updateSearchBrands(data);
+  } catch(e) { console.log('Données statiques utilisées'); }
+}
+
+function updateHomeBrands(marques) {
+  const grid = document.querySelector('.brands-grid');
+  if(!grid || marques.length === 0) return;
+  grid.innerHTML = marques.slice(0,8).map(m => `
+    <div class="brand-tile" onclick="goTo('brand')">
+      ${m.plan === 'prestige' ? '<span class="b-new">Prestige ✦</span>' : ''}
+      <div class="b-initials">${m.nom.substring(0,2).toUpperCase()}</div>
+      <h4>${m.nom}</h4>
+      <div class="b-cat">${m.categorie || 'Mode'}</div>
+      <div class="b-items">${m.ville || 'France'}</div>
+    </div>
+  `).join('');
+}
+
+function updateSearchBrands(marques) {
+  const grid = document.getElementById('brandGrid');
+  if(!grid || marques.length === 0) return;
+  grid.innerHTML = marques.map(m => `
+    <div class="br-card" onclick="goTo('brand')"
+      data-cat="${m.categorie||'mode'}"
+      data-plan="${m.plan||'starter'}"
+      data-name="${m.nom.toLowerCase()}">
+      ${m.plan==='prestige' ? '<span class="br-card-badge">Prestige ✦</span>' : ''}
+      <div class="br-card-init">${m.nom.substring(0,2).toUpperCase()}</div>
+      <div class="br-card-name">${m.nom}</div>
+      <div class="br-card-cat">${m.categorie||'Mode'}</div>
+      <div class="br-card-items">${m.ville||'France'}</div>
+    </div>
+  `).join('');
+  document.getElementById('srchCount').textContent = marques.length;
+}
+
+// ══ SAUVEGARDER LA MARQUE APRÈS INSCRIPTION ══
+async function saveMarqueAfterRegister(userId, brand, first, last, email) {
+  if(!window.sb) return;
+  await window.sb.from('marques').insert({
+    user_id: userId,
+    nom: brand,
+    plan: 'starter',
+    abonnement_actif: false,
+    ville: '',
+    categorie: '',
+    description: ''
+  });
+}
+
+// ══ CHARGER LES DONNÉES DU DASHBOARD ══
+async function loadDashboardData(user) {
+  if(!window.sb || !user) return;
+  try {
+    // Charger la marque de l'utilisateur
+    const { data: marque } = await window.sb
+      .from('marques')
+      .select('*')
+      .eq('user_id', user.id)
+      .single();
+
+    if(!marque) return;
+
+    // Mettre à jour le nom dans le sidebar
+    const sbName = document.querySelector('.sb-brand-name');
+    if(sbName) sbName.textContent = marque.nom;
+
+    // Mettre à jour le plan
+    const sbPlan = document.querySelector('.sb-brand-plan');
+    if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
+
+    // Charger les produits
+    const { data: produits } = await window.sb
+      .from('produits')
+      .select('*')
+      .eq('marque_id', marque.id);
+
+    if(produits) {
+      // Mettre à jour le compteur produits
+      const pCount = document.querySelector('.sb-badge');
+      if(pCount) pCount.textContent = produits.length;
+
+      // Mettre à jour KPI produits actifs
+      const kpiProd = document.querySelectorAll('.kpi-val')[3];
+      if(kpiProd) kpiProd.textContent = produits.filter(p=>p.statut==='online').length;
+
+      // Mettre à jour le tableau produits
+      updateProductsTable(produits);
+    }
+
+  } catch(e) { console.log('Dashboard: données statiques'); }
+}
+
+function updateProductsTable(produits) {
+  const body = document.getElementById('pBody');
+  if(!body || produits.length === 0) return;
+  body.innerHTML = produits.map(p => `
+    <tr data-cat="${p.categorie||''}">
+      <td><div class="t-thumb" style="background:var(--creme);font-family:'Cormorant Garamond',serif;font-size:0.8rem;display:flex;align-items:center;justify-content:center;">
+        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover;">` : '✦'}
+      </div></td>
+      <td><div>${p.nom}</div><div style="font-size:0.68rem;color:var(--gris);">${p.categorie||''}</div></td>
+      <td>${p.collection||'—'}</td>
+      <td>${p.prix ? p.prix+'€' : '—'}</td>
+      <td>${p.vues||0}</td>
+      <td><span class="st-badge ${p.statut==='online'?'on':p.statut==='epuise'?'sold':'off'}">${p.statut==='online'?'En ligne':p.statut==='epuise'?'Épuisé':'Hors ligne'}</span></td>
+      <td><div class="t-actions">
+        <button class="t-btn" onclick="toast('✏️ Modification ouverte')">Modifier</button>
+        <button class="t-btn danger" onclick="deleteProduit('${p.id}')">Retirer</button>
+      </div></td>
+    </tr>
+  `).join('');
+}
+
+// ══ AJOUTER UN PRODUIT DANS SUPABASE ══
+async function addProduitSB() {
+  if(!window.sb) { addProd(); return; }
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) { toast("⚠️ Connectez-vous dabord"); return; }
+
+  // Récupérer la marque
+  const { data: marque } = await window.sb
+    .from('marques').select('id').eq('user_id', session.user.id).single();
+  if(!marque) { toast("⚠️ Marque introuvable"); return; }
+
+  const nom = document.querySelector('#modalOv input[placeholder*="Robe"]')?.value;
+  const prix = document.querySelector('#modalOv input[placeholder="890 €"]')?.value;
+  const cat = document.querySelector('#modalOv select')?.value;
+  const collection = document.querySelectorAll('#modalOv select')[1]?.value;
+
+  if(!nom){ toast("⚠️ Entrez un nom de produit"); return; }
+
+  const { error } = await window.sb.from('produits').insert({
+    marque_id: marque.id,
+    nom, prix: parseFloat(prix)||0, categorie: cat, collection, statut: 'online'
+  });
+
+  if(error){ toast("❌ Erreur: " + error.message); return; }
+  closeModal();
+  toast("✦ Produit publié avec succès !");
+  loadDashboardData(session.user);
+}
+
+// ══ SUPPRIMER UN PRODUIT ══
+async function deleteProduit(id) {
+  if(!window.sb) return;
+  const { error } = await window.sb.from('produits').delete().eq('id', id);
+  if(error){ toast("❌ Erreur suppression"); return; }
+  toast("🗑 Produit retiré");
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(session) loadDashboardData(session.user);
+}
+
+// ══ DÉCONNEXION ══
+async function doLogout() {
+  if(window.sb) await window.sb.auth.signOut();
+  toast("👋 Déconnecté");
+  goTo('home');
+  const el = document.querySelector('[onclick*="dashboard"]');
+  if(el){ el.textContent = 'Mon espace'; el.setAttribute('onclick',"goTo('login')"); }
 }
 
 // ══ SEARCH ══
@@ -1379,11 +1558,11 @@ function togglePw(id,btn){
 async function doLogin(){
   const email=document.getElementById('lEmail').value;
   const pw=document.getElementById('lPw').value;
-  if(!email||!pw){toast('⚠️ Remplissez tous les champs');return;}
-  if(!window.sb){toast('⏳ Chargement, réessayez...');return;}
-  toast('⏳ Connexion...');
+  if(!email||!pw){toast("⚠️ Remplissez tous les champs");return;}
+  if(!window.sb){toast("⏳ Chargement, réessayez...");return;}
+  toast("⏳ Connexion...");
   const {data,error} = await window.sb.auth.signInWithPassword({email,password:pw});
-  if(error){toast('❌ Email ou mot de passe incorrect');return;}
+  if(error){toast("❌ Email ou mot de passe incorrect");return;}
   document.getElementById('lSuc').style.display='block';
   updateNavUser(data.user.email);
   setTimeout(()=>{document.getElementById('lSuc').style.display='none';goTo('dashboard');},1600);
@@ -1395,22 +1574,24 @@ async function doRegister(){
   const email=document.getElementById('rEmail').value;
   const pw=document.getElementById('rPw').value;
   const terms=document.getElementById('rTerms').checked;
-  if(!brand||!first||!last||!email||!pw){toast('⚠️ Remplissez tous les champs');return;}
-  if(!terms){toast('⚠️ Acceptez les CGU');return;}
-  if(pw.length<8){toast('⚠️ Mot de passe trop court (8 min)');return;}
-  if(!window.sb){toast('⏳ Chargement, réessayez...');return;}
-  toast('⏳ Création du compte...');
+  if(!brand||!first||!last||!email||!pw){toast("⚠️ Remplissez tous les champs");return;}
+  if(!terms){toast("⚠️ Acceptez les CGU");return;}
+  if(pw.length<8){toast("⚠️ Mot de passe trop court (8 min)");return;}
+  if(!window.sb){toast("⏳ Chargement, réessayez...");return;}
+  toast("⏳ Création du compte...");
   const {data,error} = await window.sb.auth.signUp({email,password:pw,options:{data:{brand_name:brand,first_name:first,last_name:last}}});
-  if(error){toast('❌ '+error.message);return;}
-  toast('✅ Compte créé ! Vérifiez votre email.');
+  if(error){toast("❌ " + error.message);return;}
+  // Sauvegarder la marque dans Supabase
+  if(data.user) await saveMarqueAfterRegister(data.user.id, brand, first, last, email);
+  toast('✅ Compte créé ! Vérifiez votre email puis choisissez votre plan.');
   setTimeout(()=>window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank'),2000);
 }
 async function forgotPw(){
   const email=document.getElementById('lEmail').value;
-  if(!email){toast('⚠️ Entrez votre email d abord');return;}
+  if(!email){toast("⚠️ Entrez votre email dabord");return;}
   if(!window.sb)return;
   await window.sb.auth.resetPasswordForEmail(email);
-  toast('📧 Email de réinitialisation envoyé !');
+  toast("📧 Email de réinitialisation envoyé !");
 }
 
 // Init
