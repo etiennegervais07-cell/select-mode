@@ -645,6 +645,19 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   .lr{width:100%;padding:32px 22px;}
 }
 
+
+/* ══ PHOTO UPLOAD ══ */
+.photo-upload-zone { border: 2px dashed rgba(0,0,0,0.15); padding: 28px; text-align: center; cursor: pointer; transition: all .2s; position: relative; }
+.photo-upload-zone:hover { border-color: var(--or); background: var(--or-pale); }
+.photo-upload-zone input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.photo-preview-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.photo-preview-item { aspect-ratio: 3/4; position: relative; overflow: hidden; background: var(--creme); }
+.photo-preview-item img { width: 100%; height: 100%; object-fit: cover; }
+.photo-preview-remove { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; background: var(--rouge); color: #fff; border: none; border-radius: 50%; cursor: pointer; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; }
+.upload-progress { height: 4px; background: var(--gris-clair); margin-top: 8px; border-radius: 2px; overflow: hidden; display: none; }
+.upload-progress-bar { height: 100%; background: var(--or); border-radius: 2px; transition: width .3s; width: 0%; }
+.upload-status { font-size: 0.76rem; color: var(--gris); margin-top: 6px; text-align: center; }
+
 </style>
 </head>
 <body>
@@ -1155,7 +1168,18 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="f-group"><label class="f-label">Nom du produit *</label><input class="f-input" placeholder="Ex: Robe Lumière en soie"></div>
       <div class="f-row2"><div class="f-group"><label class="f-label">Catégorie *</label><select class="f-input" style="cursor:pointer;"><option>Robes</option><option>Manteaux</option><option>Hauts</option><option>Accessoires</option></select></div><div class="f-group"><label class="f-label">Collection *</label><select class="f-input" style="cursor:pointer;"><option>SS 2026</option><option>AW 2025</option><option>Capsule</option></select></div></div>
       <div class="f-row2"><div class="f-group"><label class="f-label">Prix *</label><input class="f-input" placeholder="890 €"></div><div class="f-group"><label class="f-label">Prix barré</label><input class="f-input" placeholder="1 100 €"></div></div>
-      <div class="f-group"><label class="f-label">Photos du produit</label><div class="upload-zone" onclick="toast('📸 Sélection de fichier...')"><div style="font-size:2rem;margin-bottom:8px;opacity:0.4;">📸</div><p>Cliquez ou glissez vos photos ici</p><p style="font-size:0.7rem;color:var(--gris-clair);margin-top:4px;">JPG, PNG · Max 10 Mo · Ratio 3/4 recommandé</p></div></div>
+      <div class="f-group">
+  <label class="f-label">Photos du produit</label>
+  <div class="photo-upload-zone" id="uploadZone">
+    <input type="file" id="photoInput" accept="image/*" multiple onchange="previewPhotos(this)">
+    <div style="font-size:2rem;margin-bottom:8px;opacity:0.4;">📸</div>
+    <p style="font-size:0.82rem;color:var(--gris);">Cliquez ou glissez vos photos ici</p>
+    <p style="font-size:0.7rem;color:var(--gris);margin-top:4px;">JPG, PNG · Max 10 Mo · Ratio 3/4 recommandé</p>
+  </div>
+  <div class="upload-progress" id="uploadProgress"><div class="upload-progress-bar" id="uploadProgressBar"></div></div>
+  <div class="upload-status" id="uploadStatus"></div>
+  <div class="photo-preview-grid" id="photoPreviewGrid"></div>
+</div>
       <div class="f-group"><label class="f-label">Tailles disponibles</label><input class="f-input" placeholder="XS, S, M, L, XL"></div>
     </div>
     <div class="modal-ftr"><button class="t-btn" onclick="closeModal()">Annuler</button><button class="d-btn primary" onclick="addProd()">Publier le produit</button></div>
@@ -1454,8 +1478,8 @@ function updateProductsTable(produits) {
   if(!body || produits.length === 0) return;
   body.innerHTML = produits.map(p => `
     <tr data-cat="${p.categorie||''}">
-      <td><div class="t-thumb" style="background:var(--creme);font-family:'Cormorant Garamond',serif;font-size:0.8rem;display:flex;align-items:center;justify-content:center;">
-        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover;">` : '✦'}
+      <td><div class="t-thumb" style="background:var(--creme);font-family:'Cormorant Garamond',serif;font-size:0.8rem;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        ${p.photo_url ? `<img src="${p.photo_url}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentNode.innerHTML='✦'">` : '✦'}
       </div></td>
       <td><div>${p.nom}</div><div style="font-size:0.68rem;color:var(--gris);">${p.categorie||''}</div></td>
       <td>${p.collection||'—'}</td>
@@ -1470,13 +1494,85 @@ function updateProductsTable(produits) {
   `).join('');
 }
 
-// ══ AJOUTER UN PRODUIT DANS SUPABASE ══
+
+
+
+// ══ PHOTO UPLOAD ══
+let uploadedPhotoUrls = [];
+
+function previewPhotos(input) {
+  const grid = document.getElementById('photoPreviewGrid');
+  grid.innerHTML = '';
+  uploadedPhotoUrls = [];
+  
+  Array.from(input.files).forEach((file, i) => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const div = document.createElement('div');
+      div.className = 'photo-preview-item';
+      div.innerHTML = `
+        <img src="${e.target.result}" alt="Photo ${i+1}">
+        <button class="photo-preview-remove" onclick="removePhoto(${i})">✕</button>
+      `;
+      grid.appendChild(div);
+    };
+    reader.readAsDataURL(file);
+  });
+  
+  document.getElementById('uploadStatus').textContent = `${input.files.length} photo(s) sélectionnée(s) — cliquez "Publier" pour uploader`;
+}
+
+function removePhoto(index) {
+  const grid = document.getElementById('photoPreviewGrid');
+  grid.children[index]?.remove();
+  document.getElementById('uploadStatus').textContent = 'Photo retirée';
+}
+
+async function uploadPhotosToSupabase(marqueId, produitId) {
+  if(!window.sb) return [];
+  const input = document.getElementById('photoInput');
+  if(!input.files.length) return [];
+  
+  const urls = [];
+  const progress = document.getElementById('uploadProgress');
+  const progressBar = document.getElementById('uploadProgressBar');
+  const status = document.getElementById('uploadStatus');
+  
+  progress.style.display = 'block';
+  
+  for(let i = 0; i < input.files.length; i++) {
+    const file = input.files[i];
+    const ext = file.name.split('.').pop();
+    const path = `${marqueId}/${produitId}/${Date.now()}_${i}.${ext}`;
+    
+    status.textContent = `Upload ${i+1}/${input.files.length} en cours...`;
+    progressBar.style.width = `${((i) / input.files.length) * 100}%`;
+    
+    const { data, error } = await window.sb.storage
+      .from('photos')
+      .upload(path, file, { contentType: file.type, upsert: true });
+    
+    if(!error) {
+      const { data: urlData } = window.sb.storage.from('photos').getPublicUrl(path);
+      urls.push(urlData.publicUrl);
+    } else {
+      console.error('Upload error:', error);
+    }
+  }
+  
+  progressBar.style.width = '100%';
+  status.textContent = `✅ ${urls.length} photo(s) uploadée(s) avec succès !`;
+  setTimeout(() => { progress.style.display = 'none'; }, 2000);
+  
+  return urls;
+}
+
+// ══ UPDATED addProduitSB with photo upload ══
 async function addProduitSB() {
-  if(!window.sb) { addProd(); return; }
+  if(!window.sb) { toast("Chargement en cours..."); return; }
   const { data:{session} } = await window.sb.auth.getSession();
   if(!session) { toast("⚠️ Connectez-vous dabord"); return; }
 
-  // Récupérer la marque
   const { data: marque } = await window.sb
     .from('marques').select('id').eq('user_id', session.user.id).single();
   if(!marque) { toast("⚠️ Marque introuvable"); return; }
@@ -1488,15 +1584,33 @@ async function addProduitSB() {
 
   if(!nom){ toast("⚠️ Entrez un nom de produit"); return; }
 
-  const { error } = await window.sb.from('produits').insert({
-    marque_id: marque.id,
-    nom, prix: parseFloat(prix)||0, categorie: cat, collection, statut: 'online'
-  });
+  toast("⏳ Publication en cours...");
 
-  if(error){ toast("❌ Erreur: " + error.message); return; }
+  // Insert produit first to get ID
+  const { data: produit, error } = await window.sb.from('produits').insert({
+    marque_id: marque.id,
+    nom, prix: parseFloat(prix)||0,
+    categorie: cat, collection, statut: 'online'
+  }).select().single();
+
+  if(error){ toast("❌ " + error.message); return; }
+
+  // Upload photos if any
+  const photoUrls = await uploadPhotosToSupabase(marque.id, produit.id);
+  
+  // Update produit with first photo URL
+  if(photoUrls.length > 0) {
+    await window.sb.from('produits').update({ photo_url: photoUrls[0] }).eq('id', produit.id);
+  }
+
   closeModal();
   toast("✦ Produit publié avec succès !");
   loadDashboardData(session.user);
+  
+  // Reset form
+  document.getElementById('photoPreviewGrid').innerHTML = '';
+  document.getElementById('uploadStatus').textContent = '';
+  if(document.getElementById('photoInput')) document.getElementById('photoInput').value = '';
 }
 
 // ══ SUPPRIMER UN PRODUIT ══
