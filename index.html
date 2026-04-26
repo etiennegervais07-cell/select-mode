@@ -582,11 +582,12 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 /* ══ SEARCH ══ */
 .s-qtag{border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);padding:5px 14px;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;background:none;font-family:'Outfit',sans-serif;transition:all .2s;}
 .s-qtag:hover,.s-qtag.active{border-color:var(--or);color:var(--or);background:rgba(184,150,74,0.1);}
-.f-opt{padding:9px 12px;font-size:0.82rem;cursor:pointer;color:var(--gris);border-left:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px;font-weight:300;}
+.f-opt{padding:9px 12px;font-size:0.82rem;cursor:pointer;color:var(--gris);border-left:2px solid transparent;transition:all .2s;display:flex;align-items:center;gap:8px;}
 .f-opt::before{content:'';width:13px;height:13px;border:1.5px solid rgba(0,0,0,0.2);flex-shrink:0;border-radius:2px;transition:all .2s;}
-.f-opt.active{color:var(--noir);border-left-color:var(--or);font-weight:400;}
+.f-opt.active{color:var(--noir);border-left-color:var(--or);}
 .f-opt.active::before{background:var(--or);border-color:var(--or);}
-.br-card{background:#fff;border:1px solid rgba(0,0,0,0.07);padding:22px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.f-opt:hover:not(.active){color:var(--noir);}
+.br-card{background:#fff;border:1px solid rgba(0,0,0,0.07);padding:22px;cursor:pointer;transition:all .22s;position:relative;}
 .br-card:hover{border-color:rgba(184,150,74,0.4);transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,0.08);}
 .br-card-init{width:44px;height:44px;border:1px solid rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1rem;font-weight:700;color:var(--or);margin-bottom:12px;}
 .br-card-name{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;margin-bottom:3px;}
@@ -594,44 +595,41 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .br-card-items{font-size:0.73rem;color:var(--or);}
 .br-card-badge{position:absolute;top:12px;right:12px;background:var(--or);color:var(--noir);font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;padding:3px 8px;font-weight:600;}
 .no-res{text-align:center;padding:70px 40px;color:var(--gris);display:none;}
-.no-res-icon{font-size:3rem;opacity:0.3;margin-bottom:14px;}
 .no-res h3{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--noir);margin-bottom:8px;}
 /* ══ LOGIN ══ */
 #page-login{min-height:100vh;display:flex;align-items:stretch;}
 #page-login.active{display:flex;}
-.login-left{flex:1;background:var(--noir);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;}
-.login-left::before{content:'SÉLECT';font-family:'Cormorant Garamond',serif;font-size:16vw;font-weight:700;color:rgba(255,255,255,0.03);position:absolute;bottom:-30px;left:-10px;line-height:1;pointer-events:none;white-space:nowrap;}
-.login-logo2{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;letter-spacing:0.2em;color:#fff;margin-bottom:36px;cursor:pointer;}
-.login-logo2 span{color:var(--or);}
-.login-quote{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-style:italic;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:14px;max-width:310px;text-align:center;}
-.login-author{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--or-clair);text-align:center;display:block;}
-.login-lstats{display:flex;gap:28px;margin-top:40px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.08);}
-.login-lstat-n{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:#fff;display:block;}
-.login-lstat-l{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.login-right{width:460px;display:flex;flex-direction:column;justify-content:center;padding:56px 48px;background:var(--blanc);}
-.ltab-wrap{display:flex;gap:0;margin-bottom:26px;border-bottom:2px solid var(--gris-clair);}
-.ltab{padding:11px 22px;font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;border:none;background:none;cursor:pointer;color:var(--gris);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Outfit',sans-serif;transition:all .2s;}
+.ll{flex:1;background:var(--noir);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 40px;position:relative;overflow:hidden;}
+.ll::before{content:'SÉLECT';font-family:'Cormorant Garamond',serif;font-size:16vw;font-weight:700;color:rgba(255,255,255,0.03);position:absolute;bottom:-30px;left:-10px;line-height:1;pointer-events:none;white-space:nowrap;}
+.ll-logo{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;letter-spacing:0.2em;color:#fff;margin-bottom:32px;cursor:pointer;}
+.ll-logo span{color:var(--or);}
+.ll-quote{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:rgba(255,255,255,0.6);line-height:1.5;margin-bottom:12px;max-width:300px;text-align:center;}
+.ll-author{font-size:0.66rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--or-clair);text-align:center;display:block;}
+.ll-stats{display:flex;gap:24px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);}
+.ll-sn{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;color:#fff;display:block;}
+.ll-sl{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+.lr{width:460px;display:flex;flex-direction:column;justify-content:center;padding:52px 44px;background:var(--blanc);}
+.ltab-w{display:flex;gap:0;margin-bottom:24px;border-bottom:2px solid var(--gris-clair);}
+.ltab{padding:10px 20px;font-size:0.74rem;letter-spacing:0.12em;text-transform:uppercase;border:none;background:none;cursor:pointer;color:var(--gris);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:'Outfit',sans-serif;transition:all .2s;}
 .ltab.active{color:var(--noir);border-bottom-color:var(--or);}
-.lsection{display:none;}
-.lsection.active{display:block;}
-.login-divider{display:flex;align-items:center;gap:12px;margin:16px 0;}
-.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.1);}
-.login-divider span{font-size:0.68rem;color:var(--gris);letter-spacing:0.1em;}
-.social-btn2{width:100%;border:1px solid rgba(0,0,0,0.13);padding:11px;font-family:'Outfit',sans-serif;font-size:0.8rem;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:9px;transition:all .2s;color:var(--noir);}
-.social-btn2:hover{border-color:var(--noir);background:var(--creme);}
-.forgot-lnk{font-size:0.72rem;color:var(--or);cursor:pointer;text-align:right;display:block;margin-top:-10px;margin-bottom:16px;}
-.forgot-lnk:hover{text-decoration:underline;}
-.lfooter{font-size:0.75rem;color:var(--gris);text-align:center;margin-top:16px;}
-.lfooter a{color:var(--or);cursor:pointer;}
-.pw-wrap{position:relative;}
-.pw-wrap .f-input{padding-right:44px;}
-.pw-eye{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:0.95rem;color:var(--gris);}
-.lsuccess{text-align:center;padding:20px 0;display:none;}
-.lsuccess-icon{width:56px;height:56px;background:var(--vert);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin:0 auto 12px;animation:popIn .5s cubic-bezier(0.34,1.56,0.64,1);}
+.lsec{display:none;} .lsec.active{display:block;}
+.ldiv{display:flex;align-items:center;gap:10px;margin:14px 0;}
+.ldiv::before,.ldiv::after{content:'';flex:1;height:1px;background:rgba(0,0,0,0.1);}
+.ldiv span{font-size:0.66rem;color:var(--gris);letter-spacing:0.1em;}
+.sbtn2{width:100%;border:1px solid rgba(0,0,0,0.13);padding:11px;font-family:'Outfit',sans-serif;font-size:0.8rem;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;margin-bottom:8px;transition:all .2s;color:var(--noir);}
+.sbtn2:hover{border-color:var(--noir);background:var(--creme);}
+.fl{font-size:0.7rem;color:var(--or);cursor:pointer;text-align:right;display:block;margin-top:-8px;margin-bottom:14px;}
+.fl:hover{text-decoration:underline;}
+.lfoot{font-size:0.74rem;color:var(--gris);text-align:center;margin-top:14px;}
+.lfoot a{color:var(--or);cursor:pointer;}
+.pw-w{position:relative;} .pw-w .f-input{padding-right:42px;}
+.pw-e{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:0.9rem;color:var(--gris);}
+.lsuc{text-align:center;padding:18px 0;display:none;}
+.lsuc-icon{width:52px;height:52px;background:var(--vert);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 10px;animation:popIn .5s cubic-bezier(0.34,1.56,0.64,1);}
 @media(max-width:768px){
   #page-login{flex-direction:column;}
-  .login-left{min-height:200px;padding:32px 22px;}
-  .login-right{width:100%;padding:32px 22px;}
+  .ll{min-height:200px;padding:32px 22px;}
+  .lr{width:100%;padding:32px 22px;}
 }
 
 </style>
@@ -667,7 +665,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <p class="hero-sub fu d2">Découvrez les collections de centaines de marques — du luxe à la mode accessible — sur une seule plateforme. Pour les marques, une vitrine premium accessible en abonnement mensuel.</p>
         <div class="hero-actions fu d3">
           <button class="btn-p" onclick="scrollTo2('marques')">Explorer les marques</button>
-          <button class="btn-o" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Référencer ma marque</button>
+          <button class="btn-o" onclick="goTo('checkout')">Référencer ma marque</button>
         </div>
         <div class="hero-stats fu d4">
           <div><span class="stat-num">200+</span><span class="stat-label">Marques partenaires</span></div>
@@ -748,7 +746,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="footer-top">
         <div><span class="f-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</span><p class="f-desc">La plateforme de référence pour découvrir et présenter les collections de mode.</p></div>
         <div class="f-col"><h5>Plateforme</h5><ul><li><a onclick="scrollTo2('marques')">Toutes les marques</a></li><li><a>Nouvelles collections</a></li><li><a>Tendances</a></li></ul></div>
-        <div class="f-col"><h5>Marques</h5><ul><li><a onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Référencer ma marque</a></li><li><a onclick="scrollTo2('tarifs')">Tarifs</a></li><li><a onclick="goTo('dashboard')">Mon espace</a></li></ul></div>
+        <div class="f-col"><h5>Marques</h5><ul><li><a onclick="goTo('checkout')">Référencer ma marque</a></li><li><a onclick="scrollTo2('tarifs')">Tarifs</a></li><li><a onclick="goTo('dashboard')">Mon espace</a></li></ul></div>
         <div class="f-col"><h5>Légal</h5><ul><li><a>Mentions légales</a></li><li><a>CGU</a></li><li><a>Confidentialité</a></li></ul></div>
       </div>
       <div class="footer-bottom"><p>© 2026 SÉLECT — Tous droits réservés.</p><p>Made in France 🇫🇷</p></div>
@@ -764,7 +762,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <nav class="brand-nav">
     <span class="brand-nav-back" onclick="goTo('home')">Toutes les marques</span>
     <span class="b-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</span>
-    <div class="brand-nav-right"><a>♡ Favoris</a><a onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">S'abonner</a></div>
+    <div class="brand-nav-right"><a>♡ Favoris</a><a onclick="goTo('checkout')">S'abonner</a></div>
   </nav>
 
   <div class="brand-hero-layout">
@@ -785,7 +783,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       </div>
     </div>
     <div class="brand-visual">
-      <button class="brand-hero-cta" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Voir la boutique →</button>
+      <button class="brand-hero-cta" onclick="goTo('checkout')">Voir la boutique →</button>
       <div class="bv-top">
         <div class="vb vb1">ROBE<span class="season-tag">SS 2026</span></div>
         <div class="vb vb2">MANTEAU<span class="season-tag">AW 2025</span></div>
@@ -808,14 +806,14 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <div class="catalogue">
     <div class="col-header"><h2 class="col-title">Printemps–Été <em>2026</em></h2><span class="col-year">Nouvelle collection</span></div>
     <div class="products-grid" id="brandProdsGrid">
-      <div class="prod-card" data-cat="robes"><div class="prod-img" style="background:linear-gradient(145deg,#e8e0d4,#c8bfb0);"><span class="prod-img-label">✦</span><span class="prod-badge">Nouveau</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Robes</div><div class="prod-name">Robe Lumière en soie</div><div class="prod-colors"><div class="c-dot" style="background:#e8d5c4;"></div><div class="c-dot" style="background:#2a1f0e;"></div></div><div class="prod-price-row"><span class="prod-price">890 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz out">L</span></div></div></div>
-      <div class="prod-card" data-cat="hauts"><div class="prod-img" style="background:linear-gradient(145deg,#d4cfc8,#b8b0a4);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Hauts</div><div class="prod-name">Blouse Brume en lin</div><div class="prod-colors"><div class="c-dot" style="background:#f0e8d8;"></div><div class="c-dot" style="background:#8a7060;"></div></div><div class="prod-price-row"><span class="prod-price">320 €</span><span class="prod-price-old">390 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
-      <div class="prod-card" data-cat="manteaux"><div class="prod-img" style="background:linear-gradient(145deg,#1a1814,#2e2820);"><span class="prod-img-label" style="color:rgba(255,255,255,0.15);">✦</span><span class="prod-badge dark">Édition limitée</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Manteaux</div><div class="prod-name">Trench Minuit en gabardine</div><div class="prod-colors"><div class="c-dot" style="background:#1a1a1a;"></div><div class="c-dot" style="background:#3c2a18;"></div></div><div class="prod-price-row"><span class="prod-price">1 250 €</span></div><div class="prod-sizes"><span class="sz">S</span><span class="sz">M</span></div></div></div>
-      <div class="prod-card" data-cat="accessoires"><div class="prod-img" style="background:linear-gradient(145deg,#e0d8cc,#ccc4b8);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Accessoires</div><div class="prod-name">Sac Aurore en cuir grainé</div><div class="prod-colors"><div class="c-dot" style="background:#c8a882;"></div><div class="c-dot" style="background:#1a1a1a;"></div></div><div class="prod-price-row"><span class="prod-price">680 €</span></div></div></div>
-      <div class="prod-card" data-cat="robes"><div class="prod-img" style="background:linear-gradient(145deg,#2a1830,#1a1a2e);"><span class="prod-img-label" style="color:rgba(255,255,255,0.12);">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Robes</div><div class="prod-name">Robe Velours Nuit</div><div class="prod-colors"><div class="c-dot" style="background:#2a1830;"></div></div><div class="prod-price-row"><span class="prod-price">1 100 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span></div></div></div>
-      <div class="prod-card" data-cat="hauts"><div class="prod-img" style="background:linear-gradient(145deg,#ddd6c8,#c4bfb0);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Hauts</div><div class="prod-name">Pull Douceur en cachemire</div><div class="prod-colors"><div class="c-dot" style="background:#e8d5c0;"></div><div class="c-dot" style="background:#704030;"></div></div><div class="prod-price-row"><span class="prod-price">560 €</span><span class="prod-price-old">680 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
+      <div class="prod-card" data-cat="robes"><div class="prod-img" style="background:linear-gradient(145deg,#e8e0d4,#c8bfb0);"><span class="prod-img-label">✦</span><span class="prod-badge">Nouveau</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Robes</div><div class="prod-name">Robe Lumière en soie</div><div class="prod-colors"><div class="c-dot" style="background:#e8d5c4;"></div><div class="c-dot" style="background:#2a1f0e;"></div></div><div class="prod-price-row"><span class="prod-price">890 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz out">L</span></div></div></div>
+      <div class="prod-card" data-cat="hauts"><div class="prod-img" style="background:linear-gradient(145deg,#d4cfc8,#b8b0a4);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Hauts</div><div class="prod-name">Blouse Brume en lin</div><div class="prod-colors"><div class="c-dot" style="background:#f0e8d8;"></div><div class="c-dot" style="background:#8a7060;"></div></div><div class="prod-price-row"><span class="prod-price">320 €</span><span class="prod-price-old">390 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
+      <div class="prod-card" data-cat="manteaux"><div class="prod-img" style="background:linear-gradient(145deg,#1a1814,#2e2820);"><span class="prod-img-label" style="color:rgba(255,255,255,0.15);">✦</span><span class="prod-badge dark">Édition limitée</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Manteaux</div><div class="prod-name">Trench Minuit en gabardine</div><div class="prod-colors"><div class="c-dot" style="background:#1a1a1a;"></div><div class="c-dot" style="background:#3c2a18;"></div></div><div class="prod-price-row"><span class="prod-price">1 250 €</span></div><div class="prod-sizes"><span class="sz">S</span><span class="sz">M</span></div></div></div>
+      <div class="prod-card" data-cat="accessoires"><div class="prod-img" style="background:linear-gradient(145deg,#e0d8cc,#ccc4b8);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Accessoires</div><div class="prod-name">Sac Aurore en cuir grainé</div><div class="prod-colors"><div class="c-dot" style="background:#c8a882;"></div><div class="c-dot" style="background:#1a1a1a;"></div></div><div class="prod-price-row"><span class="prod-price">680 €</span></div></div></div>
+      <div class="prod-card" data-cat="robes"><div class="prod-img" style="background:linear-gradient(145deg,#2a1830,#1a1a2e);"><span class="prod-img-label" style="color:rgba(255,255,255,0.12);">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Robes</div><div class="prod-name">Robe Velours Nuit</div><div class="prod-colors"><div class="c-dot" style="background:#2a1830;"></div></div><div class="prod-price-row"><span class="prod-price">1 100 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span></div></div></div>
+      <div class="prod-card" data-cat="hauts"><div class="prod-img" style="background:linear-gradient(145deg,#ddd6c8,#c4bfb0);"><span class="prod-img-label">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Hauts</div><div class="prod-name">Pull Douceur en cachemire</div><div class="prod-colors"><div class="c-dot" style="background:#e8d5c0;"></div><div class="c-dot" style="background:#704030;"></div></div><div class="prod-price-row"><span class="prod-price">560 €</span><span class="prod-price-old">680 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
       <div class="prod-card" data-cat="accessoires"><div class="prod-img" style="background:linear-gradient(145deg,#c8c0b4,#b0a898);"><span class="prod-img-label">✦</span><span class="prod-badge red">Épuisé</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn" style="background:var(--gris);cursor:default;">Épuisé</button><button class="ov-btn sec">M'alerter →</button></div></div><div class="prod-info"><div class="prod-cat">Accessoires</div><div class="prod-name">Ceinture Dorée en cuir</div><div class="prod-colors"><div class="c-dot" style="background:#c8a840;"></div></div><div class="prod-price-row"><span class="prod-price">290 €</span></div></div></div>
-      <div class="prod-card" data-cat="manteaux"><div class="prod-img" style="background:linear-gradient(145deg,#181614,#242018);"><span class="prod-img-label" style="color:rgba(255,255,255,0.12);">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Manteaux</div><div class="prod-name">Veste Smoking Noir</div><div class="prod-colors"><div class="c-dot" style="background:#0a0a0a;"></div></div><div class="prod-price-row"><span class="prod-price">1 490 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
+      <div class="prod-card" data-cat="manteaux"><div class="prod-img" style="background:linear-gradient(145deg,#181614,#242018);"><span class="prod-img-label" style="color:rgba(255,255,255,0.12);">✦</span><button class="prod-fav" onclick="toggleFav(this)">♡</button><div class="prod-overlay"><button class="ov-btn">Voir le produit</button><button class="ov-btn sec" onclick="goTo('checkout')">Acheter →</button></div></div><div class="prod-info"><div class="prod-cat">Manteaux</div><div class="prod-name">Veste Smoking Noir</div><div class="prod-colors"><div class="c-dot" style="background:#0a0a0a;"></div></div><div class="prod-price-row"><span class="prod-price">1 490 €</span></div><div class="prod-sizes"><span class="sz">XS</span><span class="sz">S</span><span class="sz">M</span><span class="sz">L</span></div></div></div>
     </div>
 
     <div class="brand-story">
@@ -869,7 +867,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <div class="pl-card dark sel" onclick="selPlan('pro',this)" id="pc-pro"><div class="pl-popular">Le plus choisi</div><div class="pl-check"></div><div class="pl-name">Pro</div><div class="pl-price"><sup>€</sup><span class="pv" data-m="149" data-a="119">149</span></div><div class="pl-period">/ mois</div><ul class="pl-feats"><li>Produits illimités</li><li>Collections illimitées</li><li>Badge vérifiée</li><li>Analytics & stats</li><li>Support prioritaire</li></ul></div>
           <div class="pl-card" onclick="selPlan('prestige',this)" id="pc-prestige"><div class="pl-check"></div><div class="pl-name">Prestige</div><div class="pl-price"><sup>€</sup><span class="pv" data-m="399" data-a="319">399</span></div><div class="pl-period">/ mois</div><ul class="pl-feats"><li>Page éditoriale</li><li>Homepage SÉLECT</li><li>Newsletter incluse</li><li>Account manager</li></ul></div>
         </div>
-        <div class="co-nav-btns"><span></span><button class="btn-next2" onclick="window.open(stripeLinks[selPlanKey],'_blank')">Payer maintenant →</button></div>
+        <div class="co-nav-btns"><span></span><button class="btn-next2" onclick="coGoTo(2)">Continuer →</button></div>
       </div>
 
       <!-- Step 2 -->
@@ -903,7 +901,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <div id="paypalForm" style="display:none;background:var(--creme);padding:28px;text-align:center;margin-bottom:20px;"><div style="font-size:2.4rem;margin-bottom:10px;">🅿️</div><p style="font-size:0.84rem;color:var(--gris);">Vous serez redirigé vers PayPal pour finaliser le paiement.</p></div>
         <div id="sepaForm" style="display:none;"><div class="f-group"><label class="f-label">IBAN *</label><input class="f-input" placeholder="FR76 3000 6000 0112 3456 7890 189"></div><div class="f-group"><label class="f-label">BIC *</label><input class="f-input" placeholder="BNPAFRPPXXX"></div></div>
         <div id="invoiceForm" style="display:none;"><div class="f-group"><label class="f-label">Email facturation *</label><input class="f-input" type="email" placeholder="compta@mamarque.com"></div></div>
-        <button class="submit-btn" id="submitBtn" onclick="openStripeLink()"><span class="btn-lbl">🔒 &nbsp; Confirmer et payer — <span id="submitAmt">149 €/mois</span></span><div class="spinner"></div></button>
+        <button class="submit-btn" id="submitBtn" onclick="doPayment()"><span class="btn-lbl">🔒 &nbsp; Confirmer et payer — <span id="submitAmt">149 €/mois</span></span><div class="spinner"></div></button>
         <div class="sec-row"><span>🔒 SSL 256-bit</span><span>✓ PCI DSS</span><span>↺ Résiliable</span><span>📄 Facture TVA</span></div>
         <div class="co-nav-btns" style="margin-top:16px;"><button class="btn-back2" onclick="coGoTo(2)">← Retour</button><span style="font-size:0.7rem;color:var(--gris);">Powered by <strong style="color:#6772e5;">Stripe</strong></span></div>
       </div>
@@ -1309,205 +1307,109 @@ function toast(msg) {
 }
 
 
-
-// ══ STRIPE LINKS ══
-const stripeLinks = {
-  starter: 'https://buy.stripe.com/dRm6oBf6afWrcn02fJ6kg00',
-  pro:     'https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01',
-  prestige:'https://buy.stripe.com/7sY14h9LQeSn86Kf2v6kg02'
-};
-function openStripeLink() {
-  window.open(stripeLinks[selPlanKey], '_blank');
+// ══ SUPABASE ══
+const SB_URL = 'https://ivhdcfyddhmskjuyxoha.supabase.co';
+const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
+(function loadSB(){
+  const s = document.createElement('script');
+  s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  s.onload = () => {
+    window.sb = supabase.createClient(SB_URL, SB_KEY);
+    window.sb.auth.getSession().then(({data:{session}}) => {
+      if(session) updateNavUser(session.user.email);
+    });
+  };
+  document.head.appendChild(s);
+})();
+function updateNavUser(email){
+  const el = document.querySelector('a[onclick*="goTo('login')"]');
+  if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"goTo('dashboard')"); }
 }
 
 // ══ SEARCH ══
-let srchTxt='', srchCat='all', srchPlan='all';
-function doSearch(v){
-  srchTxt=v.toLowerCase();
-  document.getElementById('srchLabel').textContent=v||'Toutes';
-  runSearch();
+let sCat='all', sPlan='all';
+function runSearch(){
+  const txt = (document.getElementById('srchInput').value||'').toLowerCase();
+  const cards = document.querySelectorAll('#brandGrid .br-card');
+  let n=0;
+  cards.forEach(c=>{
+    const ok = (!txt||c.dataset.name.includes(txt)||c.dataset.cat.includes(txt))
+      && (sCat==='all'||c.dataset.cat===sCat)
+      && (sPlan==='all'||c.dataset.plan===sPlan);
+    c.style.display = ok?'block':'none';
+    if(ok)n++;
+  });
+  document.getElementById('srchCount').textContent = n;
+  document.getElementById('srchNoRes').style.display = n===0?'block':'none';
 }
 function quickSearch(cat,btn){
   document.querySelectorAll('.s-qtag').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  srchCat=cat||'all';
-  srchTxt='';
+  sCat = cat||'all';
   document.getElementById('srchInput').value='';
-  document.getElementById('srchLabel').textContent=cat||'Toutes';
-  document.querySelectorAll('#catFL .f-opt').forEach(o=>o.classList.toggle('active',o.dataset.val===srchCat||(srchCat==='all'&&o.dataset.val==='all')));
+  document.getElementById('srchLabel').textContent = cat||'Toutes';
+  document.querySelectorAll('#catFL .f-opt').forEach((o,i)=>o.classList.toggle('active',i===0||(cat&&o.dataset&&o.dataset.v===cat)));
   runSearch();
 }
-function setCatF(v,el){srchCat=v;document.querySelectorAll('#catFL .f-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');runSearch();}
-function setPlanF(v,el){srchPlan=v;document.querySelectorAll('#planFL .f-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');runSearch();}
-function setSortF(v,el){document.querySelectorAll('#sortFL .f-opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');runSearch();}
-function resetCatF(){srchCat='all';document.querySelectorAll('#catFL .f-opt').forEach((o,i)=>o.classList.toggle('active',i===0));runSearch();}
-function resetPlanF(){srchPlan='all';document.querySelectorAll('#planFL .f-opt').forEach((o,i)=>o.classList.toggle('active',i===0));runSearch();}
-function resetAllF(){
-  srchTxt='';srchCat='all';srchPlan='all';
+function setCat(v,el){ sCat=v; document.querySelectorAll('#catFL .f-opt').forEach(o=>o.classList.remove('active')); el.classList.add('active'); document.getElementById('srchLabel').textContent=v==='all'?'Toutes':v; runSearch(); }
+function setPlan(v,el){ sPlan=v; document.querySelectorAll('#planFL .f-opt').forEach(o=>o.classList.remove('active')); el.classList.add('active'); runSearch(); }
+function resetCat(){ sCat='all'; document.querySelectorAll('#catFL .f-opt').forEach((o,i)=>o.classList.toggle('active',i===0)); document.getElementById('srchLabel').textContent='Toutes'; runSearch(); }
+function resetPlan(){ sPlan='all'; document.querySelectorAll('#planFL .f-opt').forEach((o,i)=>o.classList.toggle('active',i===0)); runSearch(); }
+function resetAll(){
+  sCat='all'; sPlan='all';
   document.getElementById('srchInput').value='';
   document.getElementById('srchLabel').textContent='Toutes';
-  document.querySelectorAll('#catFL .f-opt,#planFL .f-opt,#sortFL .f-opt').forEach((o,i,arr)=>{
-    o.classList.toggle('active',o===o.closest('[id]').querySelector('.f-opt'));
-  });
+  document.querySelectorAll('.s-qtag').forEach((b,i)=>b.classList.toggle('active',i===0));
+  document.querySelectorAll('#catFL .f-opt, #planFL .f-opt').forEach((o,i,arr)=>o.classList.toggle('active',o===o.closest('[id]').querySelector('.f-opt')));
   runSearch();
-}
-function runSearch(){
-  const cards=document.querySelectorAll('#brandGrid .br-card');
-  let n=0;
-  cards.forEach(c=>{
-    const ok=(!srchTxt||c.dataset.name.includes(srchTxt)||c.dataset.cat.includes(srchTxt))
-      &&(srchCat==='all'||c.dataset.cat===srchCat)
-      &&(srchPlan==='all'||c.dataset.plan===srchPlan);
-    c.style.display=ok?'block':'none';
-    if(ok)n++;
-  });
-  document.getElementById('srchCount').textContent=n;
-  document.getElementById('srchNoRes').style.display=n===0?'block':'none';
 }
 
 // ══ LOGIN ══
-function setLTab(tab,btn){
-  document.querySelectorAll('.ltab').forEach(t=>t.classList.remove('active'));
+function setLTab(t,btn){
+  document.querySelectorAll('.ltab').forEach(x=>x.classList.remove('active'));
   if(btn)btn.classList.add('active');
-  document.querySelectorAll('.lsection').forEach(s=>s.classList.remove('active'));
-  document.getElementById('ls-'+tab).classList.add('active');
+  document.querySelectorAll('.lsec').forEach(x=>x.classList.remove('active'));
+  document.getElementById('ls-'+t).classList.add('active');
 }
 function togglePw(id,btn){
-  const inp=document.getElementById(id);
-  if(inp.type==='password'){inp.type='text';btn.textContent='🙈';}
-  else{inp.type='password';btn.textContent='👁';}
+  const i=document.getElementById(id);
+  if(i.type==='password'){i.type='text';btn.textContent='🙈';}
+  else{i.type='password';btn.textContent='👁';}
 }
-function doLogin(){
+async function doLogin(){
   const email=document.getElementById('lEmail').value;
   const pw=document.getElementById('lPw').value;
-  if(!email||!pw){toast('⚠️ Veuillez remplir tous les champs');return;}
-  document.getElementById('lSuccess').style.display='block';
-  setTimeout(()=>{document.getElementById('lSuccess').style.display='none';goTo('dashboard');},1800);
+  if(!email||!pw){toast('⚠️ Remplissez tous les champs');return;}
+  if(!window.sb){toast('⏳ Chargement, réessayez...');return;}
+  toast('⏳ Connexion...');
+  const {data,error} = await window.sb.auth.signInWithPassword({email,password:pw});
+  if(error){toast('❌ Email ou mot de passe incorrect');return;}
+  document.getElementById('lSuc').style.display='block';
+  updateNavUser(data.user.email);
+  setTimeout(()=>{document.getElementById('lSuc').style.display='none';goTo('dashboard');},1600);
 }
-function doRegister(){
+async function doRegister(){
   const brand=document.getElementById('rBrand').value;
+  const first=document.getElementById('rFirst').value;
+  const last=document.getElementById('rLast').value;
   const email=document.getElementById('rEmail').value;
   const pw=document.getElementById('rPw').value;
   const terms=document.getElementById('rTerms').checked;
-  if(!brand||!email||!pw){toast('⚠️ Veuillez remplir tous les champs');return;}
-  if(!terms){toast('⚠️ Acceptez les CGU pour continuer');return;}
-  toast('✦ Compte créé ! Redirection...');
-  setTimeout(()=>goTo('checkout'),1600);
-}
-
-
-// ══ SUPABASE ══
-const SUPABASE_URL = 'https://ivhdcfyddhmskjuyxoha.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
-
-// Charger Supabase dynamiquement
-const sbScript = document.createElement('script');
-sbScript.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-sbScript.onload = () => {
-  window.sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-  console.log('✅ Supabase connecté !');
-  checkSession();
-};
-document.head.appendChild(sbScript);
-
-// Vérifier si un utilisateur est déjà connecté
-async function checkSession() {
-  if (!window.sb) return;
-  const { data: { session } } = await window.sb.auth.getSession();
-  if (session) {
-    updateNavForLoggedIn(session.user.email);
-  }
-}
-
-// Mettre à jour la nav si connecté
-function updateNavForLoggedIn(email) {
-  const loginLink = document.querySelector('a[onclick*="goTo('login')"]');
-  if (loginLink) {
-    loginLink.textContent = '👤 Mon compte';
-    loginLink.setAttribute('onclick', "goTo('dashboard')");
-  }
-}
-
-// ══ CONNEXION RÉELLE avec Supabase ══
-async function doLogin() {
-  const email = document.getElementById('lEmail').value;
-  const pw = document.getElementById('lPw').value;
-  if (!email || !pw) { toast('⚠️ Veuillez remplir tous les champs'); return; }
-
-  if (!window.sb) { toast('⏳ Chargement en cours, réessayez...'); return; }
-
-  toast('⏳ Connexion en cours...');
-
-  const { data, error } = await window.sb.auth.signInWithPassword({
-    email: email,
-    password: pw
-  });
-
-  if (error) {
-    toast('❌ ' + (error.message === 'Invalid login credentials' ? 'Email ou mot de passe incorrect' : error.message));
-    return;
-  }
-
-  document.getElementById('lSuccess').style.display = 'block';
-  updateNavForLoggedIn(data.user.email);
-  setTimeout(() => {
-    document.getElementById('lSuccess').style.display = 'none';
-    goTo('dashboard');
-  }, 1800);
-}
-
-// ══ INSCRIPTION RÉELLE avec Supabase ══
-async function doRegister() {
-  const brand  = document.getElementById('rBrand').value;
-  const first  = document.getElementById('rFirst').value;
-  const last   = document.getElementById('rLast').value;
-  const email  = document.getElementById('rEmail').value;
-  const pw     = document.getElementById('rPw').value;
-  const terms  = document.getElementById('rTerms').checked;
-
-  if (!brand || !email || !pw || !first || !last) { toast('⚠️ Veuillez remplir tous les champs'); return; }
-  if (!terms) { toast('⚠️ Acceptez les CGU pour continuer'); return; }
-  if (pw.length < 8) { toast('⚠️ Mot de passe trop court (8 caractères minimum)'); return; }
-
-  if (!window.sb) { toast('⏳ Chargement en cours, réessayez...'); return; }
-
+  if(!brand||!first||!last||!email||!pw){toast('⚠️ Remplissez tous les champs');return;}
+  if(!terms){toast('⚠️ Acceptez les CGU');return;}
+  if(pw.length<8){toast('⚠️ Mot de passe trop court (8 min)');return;}
+  if(!window.sb){toast('⏳ Chargement, réessayez...');return;}
   toast('⏳ Création du compte...');
-
-  const { data, error } = await window.sb.auth.signUp({
-    email: email,
-    password: pw,
-    options: {
-      data: {
-        brand_name: brand,
-        first_name: first,
-        last_name: last
-      }
-    }
-  });
-
-  if (error) {
-    toast('❌ ' + error.message);
-    return;
-  }
-
-  toast('✅ Compte créé ! Vérifiez votre email pour confirmer.');
-  setTimeout(() => goTo('checkout'), 2500);
+  const {data,error} = await window.sb.auth.signUp({email,password:pw,options:{data:{brand_name:brand,first_name:first,last_name:last}}});
+  if(error){toast('❌ '+error.message);return;}
+  toast('✅ Compte créé ! Vérifiez votre email.');
+  setTimeout(()=>window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank'),2000);
 }
-
-// ══ DÉCONNEXION ══
-async function doLogout() {
-  if (window.sb) await window.sb.auth.signOut();
-  toast('👋 Déconnecté avec succès');
-  goTo('home');
-}
-
-// ══ MOT DE PASSE OUBLIÉ ══
-async function forgotPassword() {
-  const email = document.getElementById('lEmail').value;
-  if (!email) { toast('⚠️ Entrez votre email d abord'); return; }
-  if (!window.sb) return;
-  const { error } = await window.sb.auth.resetPasswordForEmail(email);
-  if (error) { toast('❌ ' + error.message); return; }
+async function forgotPw(){
+  const email=document.getElementById('lEmail').value;
+  if(!email){toast('⚠️ Entrez votre email d abord');return;}
+  if(!window.sb)return;
+  await window.sb.auth.resetPasswordForEmail(email);
   toast('📧 Email de réinitialisation envoyé !');
 }
 
@@ -1523,8 +1425,8 @@ updateSummary();
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:400;color:#fff;margin-bottom:8px;">Trouvez votre <em style="font-style:italic;color:var(--or);">marque idéale</em></h2>
       <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:24px;">200+ marques · 50 000 produits · Toutes les catégories</p>
       <div style="max-width:600px;margin:0 auto;position:relative;">
-        <input id="srchInput" type="text" placeholder="Rechercher une marque, un style..." oninput="doSearch(this.value)" style="width:100%;border:none;padding:16px 54px 16px 20px;font-family:'Outfit',sans-serif;font-size:0.95rem;background:#fff;color:var(--noir);outline:none;">
-        <button onclick="doSearch(document.getElementById('srchInput').value)" style="position:absolute;right:0;top:0;bottom:0;background:var(--or);border:none;padding:0 18px;font-size:1.1rem;cursor:pointer;">🔍</button>
+        <input id="srchInput" type="text" placeholder="Rechercher une marque, un style..." oninput="runSearch()" style="width:100%;border:none;padding:16px 54px 16px 20px;font-family:'Outfit',sans-serif;font-size:0.95rem;background:#fff;color:var(--noir);outline:none;">
+        <button onclick="runSearch()" style="position:absolute;right:0;top:0;bottom:0;background:var(--or);border:none;padding:0 18px;font-size:1.1rem;cursor:pointer;">🔍</button>
       </div>
       <div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:14px;">
         <button class="s-qtag active" onclick="quickSearch('',this)">Tout</button>
@@ -1538,35 +1440,29 @@ updateSummary();
     </div>
     <div style="display:grid;grid-template-columns:230px 1fr;min-height:60vh;">
       <div style="background:var(--creme);padding:24px 20px;border-right:1px solid rgba(0,0,0,0.07);">
-        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:flex;justify-content:space-between;">Catégorie <span style="color:var(--or);cursor:pointer;" onclick="resetCatF()">Reset</span></div>
+        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">Catégorie <span style="color:var(--or);cursor:pointer;font-size:0.6rem;" onclick="resetCat()">Reset</span></div>
         <div id="catFL" style="margin-bottom:20px;">
-          <div class="f-opt active" onclick="setCatF('all',this)" data-val="all">Toutes</div>
-          <div class="f-opt" onclick="setCatF('luxe',this)" data-val="luxe">Luxe</div>
-          <div class="f-opt" onclick="setCatF('streetwear',this)" data-val="streetwear">Streetwear</div>
-          <div class="f-opt" onclick="setCatF('durable',this)" data-val="durable">Éco-responsable</div>
-          <div class="f-opt" onclick="setCatF('soiree',this)" data-val="soiree">Soirée</div>
-          <div class="f-opt" onclick="setCatF('accessoires',this)" data-val="accessoires">Accessoires</div>
-          <div class="f-opt" onclick="setCatF('homme',this)" data-val="homme">Homme</div>
+          <div class="f-opt active" onclick="setCat('all',this)">Toutes</div>
+          <div class="f-opt" onclick="setCat('luxe',this)" data-v="luxe">Luxe</div>
+          <div class="f-opt" onclick="setCat('streetwear',this)" data-v="streetwear">Streetwear</div>
+          <div class="f-opt" onclick="setCat('durable',this)" data-v="durable">Éco-responsable</div>
+          <div class="f-opt" onclick="setCat('soiree',this)" data-v="soiree">Soirée</div>
+          <div class="f-opt" onclick="setCat('accessoires',this)" data-v="accessoires">Accessoires</div>
+          <div class="f-opt" onclick="setCat('homme',this)" data-v="homme">Homme</div>
         </div>
-        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:flex;justify-content:space-between;">Plan <span style="color:var(--or);cursor:pointer;" onclick="resetPlanF()">Reset</span></div>
+        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;">Plan <span style="color:var(--or);cursor:pointer;" onclick="resetPlan()">Reset</span></div>
         <div id="planFL" style="margin-bottom:20px;">
-          <div class="f-opt active" onclick="setPlanF('all',this)" data-val="all">Tous</div>
-          <div class="f-opt" onclick="setPlanF('prestige',this)" data-val="prestige">✦ Prestige</div>
-          <div class="f-opt" onclick="setPlanF('pro',this)" data-val="pro">Pro</div>
-          <div class="f-opt" onclick="setPlanF('starter',this)" data-val="starter">Starter</div>
+          <div class="f-opt active" onclick="setPlan('all',this)">Tous</div>
+          <div class="f-opt" onclick="setPlan('prestige',this)" data-v="prestige">✦ Prestige</div>
+          <div class="f-opt" onclick="setPlan('pro',this)" data-v="pro">Pro</div>
+          <div class="f-opt" onclick="setPlan('starter',this)" data-v="starter">Starter</div>
         </div>
-        <div style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:8px;">Trier par</div>
-        <div id="sortFL">
-          <div class="f-opt active" onclick="setSortF('recent',this)">Nouveautés</div>
-          <div class="f-opt" onclick="setSortF('popular',this)">Popularité</div>
-          <div class="f-opt" onclick="setSortF('alpha',this)">A → Z</div>
-          <div class="f-opt" onclick="setSortF('products',this)">Nb produits</div>
-        </div>
+        <button onclick="resetAll()" style="width:100%;background:var(--noir);color:#fff;border:none;padding:10px;font-family:'Outfit',sans-serif;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;margin-top:8px;">Tout réinitialiser</button>
       </div>
       <div style="padding:24px 28px;">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(0,0,0,0.07);">
-          <span style="font-size:0.82rem;color:var(--gris);">Affichage de <strong id="srchCount" style="color:var(--noir);">8</strong> marques</span>
-          <span style="font-size:0.7rem;color:var(--gris);">Filtre actif : <strong id="srchLabel" style="color:var(--or);">Toutes</strong></span>
+          <span style="font-size:0.82rem;color:var(--gris);"><strong id="srchCount" style="color:var(--noir);font-size:1rem;">8</strong> marques trouvées</span>
+          <span style="font-size:0.7rem;color:var(--gris);">Filtre : <strong id="srchLabel" style="color:var(--or);">Toutes</strong></span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" id="brandGrid">
           <div class="br-card" onclick="goTo('brand')" data-cat="luxe" data-plan="prestige" data-name="maison eclat"><span class="br-card-badge">Prestige ✦</span><div class="br-card-init">ME</div><div class="br-card-name">Maison Éclat</div><div class="br-card-cat">Luxe · Prêt-à-porter</div><div class="br-card-items">124 produits · Paris</div></div>
@@ -1579,10 +1475,10 @@ updateSummary();
           <div class="br-card" onclick="goTo('brand')" data-cat="accessoires" data-plan="pro" data-name="noir et or"><div class="br-card-init">NO</div><div class="br-card-name">Noir &amp; Or</div><div class="br-card-cat">Accessoires · Maroquinerie</div><div class="br-card-items">144 produits · Paris</div></div>
         </div>
         <div class="no-res" id="srchNoRes">
-          <div class="no-res-icon">🔍</div>
+          <p style="font-size:3rem;opacity:0.3;margin-bottom:14px;">🔍</p>
           <h3>Aucun résultat</h3>
           <p style="font-size:0.82rem;margin-bottom:16px;">Essayez d'autres mots-clés ou réinitialisez les filtres.</p>
-          <button onclick="resetAllF()" style="border:1px solid var(--noir);padding:10px 26px;font-family:'Outfit',sans-serif;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;background:none;transition:all .2s;">Réinitialiser</button>
+          <button onclick="resetAll()" style="border:1px solid var(--noir);padding:10px 26px;font-family:'Outfit',sans-serif;font-size:0.74rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;background:none;">Réinitialiser</button>
         </div>
       </div>
     </div>
@@ -1591,60 +1487,52 @@ updateSummary();
 
 <!-- ══ PAGE CONNEXION ══ -->
 <div class="page" id="page-login">
-  <div class="login-left">
-    <div class="login-logo2" onclick="goTo('home')">SÉL<span>✦</span>CT</div>
-    <p class="login-quote">"En rejoignant SÉLECT, notre visibilité a explosé en deux semaines."</p>
-    <span class="login-author">— Clara M., fondatrice de Velours Studio</span>
-    <div class="login-lstats">
-      <div><span class="login-lstat-n">200+</span><span class="login-lstat-l">Marques</span></div>
-      <div><span class="login-lstat-n">50k</span><span class="login-lstat-l">Produits</span></div>
-      <div><span class="login-lstat-n">12k</span><span class="login-lstat-l">Visiteurs/mois</span></div>
+  <div class="ll">
+    <div class="ll-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</div>
+    <p class="ll-quote">"En rejoignant SÉLECT, notre visibilité a explosé en deux semaines."</p>
+    <span class="ll-author">— Clara M., fondatrice de Velours Studio</span>
+    <div class="ll-stats">
+      <div><span class="ll-sn">200+</span><span class="ll-sl">Marques</span></div>
+      <div><span class="ll-sn">50k</span><span class="ll-sl">Produits</span></div>
+      <div><span class="ll-sn">12k</span><span class="ll-sl">Visiteurs/mois</span></div>
     </div>
   </div>
-  <div class="login-right">
-    <div class="ltab-wrap">
+  <div class="lr">
+    <div class="ltab-w">
       <button class="ltab active" onclick="setLTab('con',this)">Connexion</button>
       <button class="ltab" onclick="setLTab('ins',this)">Inscription</button>
     </div>
-
-    <!-- Connexion -->
-    <div class="lsection active" id="ls-con">
+    <div class="lsec active" id="ls-con">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;margin-bottom:6px;">Bon retour, <em style="font-style:italic;color:var(--or);">bienvenue</em></h2>
-      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:26px;line-height:1.6;">Connectez-vous à votre espace marque SÉLECT.</p>
-      <button class="social-btn2" onclick="toast('🌐 Connexion Google...')"><span>🌐</span> Continuer avec Google</button>
-      <button class="social-btn2" onclick="toast('💼 Connexion LinkedIn...')"><span>💼</span> Continuer avec LinkedIn</button>
-      <div class="login-divider"><span>ou avec votre email</span></div>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Connectez-vous à votre espace marque SÉLECT.</p>
+      <button class="sbtn2" onclick="toast('🌐 Connexion Google...')"><span>🌐</span> Continuer avec Google</button>
+      <button class="sbtn2" onclick="toast('💼 Connexion LinkedIn...')"><span>💼</span> Continuer avec LinkedIn</button>
+      <div class="ldiv"><span>ou avec votre email</span></div>
       <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="contact@mamarque.com" id="lEmail"></div>
-      <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-wrap"><input class="f-input" type="password" placeholder="••••••••" id="lPw"><button class="pw-eye" onclick="togglePw('lPw',this)" type="button">👁</button></div></div>
-      <span class="forgot-lnk" onclick="forgotPassword()">Mot de passe oublié ?</span>
+      <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="••••••••" id="lPw"><button class="pw-e" onclick="togglePw('lPw',this)" type="button">👁</button></div></div>
+      <span class="fl" onclick="forgotPw()">Mot de passe oublié ?</span>
       <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doLogin()">Se connecter →</button>
-      <div class="lsuccess" id="lSuccess">
-        <div class="lsuccess-icon">✓</div>
-        <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:6px;">Connexion réussie !</p>
-        <p style="font-size:0.8rem;color:var(--gris);">Redirection vers votre espace...</p>
-      </div>
-      <p class="lfooter">Pas encore de compte ? <a onclick="setLTab('ins',document.querySelectorAll('.ltab')[1])">S'inscrire</a></p>
+      <div class="lsuc" id="lSuc"><div class="lsuc-icon">✓</div><p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:4px;">Connexion réussie !</p><p style="font-size:0.78rem;color:var(--gris);">Redirection...</p></div>
+      <p class="lfoot">Pas encore de compte ? <a onclick="setLTab('ins',document.querySelectorAll('.ltab')[1])">S'inscrire</a></p>
     </div>
-
-    <!-- Inscription -->
-    <div class="lsection" id="ls-ins">
+    <div class="lsec" id="ls-ins">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;margin-bottom:6px;">Créer votre <em style="font-style:italic;color:var(--or);">compte</em></h2>
-      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:26px;line-height:1.6;">Rejoignez 200+ marques sur SÉLECT en quelques minutes.</p>
-      <button class="social-btn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> S'inscrire avec Google</button>
-      <div class="login-divider"><span>ou avec votre email</span></div>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Rejoignez 200+ marques sur SÉLECT.</p>
+      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> S'inscrire avec Google</button>
+      <div class="ldiv"><span>ou avec votre email</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="f-group"><label class="f-label">Prénom *</label><input class="f-input" placeholder="Isabelle" id="rFirst"></div>
         <div class="f-group"><label class="f-label">Nom *</label><input class="f-input" placeholder="Marchand" id="rLast"></div>
       </div>
       <div class="f-group"><label class="f-label">Nom de la marque *</label><input class="f-input" placeholder="Ex: Maison Éclat" id="rBrand"></div>
       <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="contact@mamarque.com" id="rEmail"></div>
-      <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-wrap"><input class="f-input" type="password" placeholder="8 caractères minimum" id="rPw"><button class="pw-eye" onclick="togglePw('rPw',this)" type="button">👁</button></div></div>
-      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:18px;font-size:0.78rem;color:var(--gris);">
+      <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="8 caractères minimum" id="rPw"><button class="pw-e" onclick="togglePw('rPw',this)" type="button">👁</button></div></div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;font-size:0.76rem;color:var(--gris);">
         <input type="checkbox" id="rTerms" style="margin-top:3px;cursor:pointer;accent-color:var(--or);">
         <label for="rTerms" style="cursor:pointer;line-height:1.5;">J'accepte les <span style="color:var(--or);">CGU</span> et la <span style="color:var(--or);">politique de confidentialité</span></label>
       </div>
       <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doRegister()">Créer mon compte →</button>
-      <p class="lfooter" style="margin-top:14px;">Déjà un compte ? <a onclick="setLTab('con',document.querySelectorAll('.ltab')[0])">Se connecter</a></p>
+      <p class="lfoot" style="margin-top:14px;">Déjà un compte ? <a onclick="setLTab('con',document.querySelectorAll('.ltab')[0])">Se connecter</a></p>
     </div>
   </div>
 </div>
