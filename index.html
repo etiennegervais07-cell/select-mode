@@ -393,7 +393,20 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 #page-dashboard { display: flex; }
 #page-dashboard.active { display: flex; }
 
-.sidebar { width: 230px; flex-shrink: 0; background: var(--sidebar-bg); display: flex; flex-direction: column; min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; z-index: 300; overflow-y: auto; }
+.sidebar { width: 230px; flex-shrink: 0; background: var(--sidebar-bg); display: flex; flex-direction: column; min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; z-index: 300; overflow-y: auto; transition: width .25s ease, transform .25s ease; }
+.sidebar.collapsed { width: 60px; }
+.sidebar.collapsed .sb-logo p,
+.sidebar.collapsed .sb-brand,
+.sidebar.collapsed .sb-item span:not(.sb-icon),
+.sidebar.collapsed .sb-sec-lbl,
+.sidebar.collapsed .sb-footer,
+.sidebar.collapsed .sb-badge { display: none; }
+.sidebar.collapsed .sb-item { justify-content: center; padding: 12px; }
+.sidebar.collapsed .sb-logo-txt { font-size: 1rem; letter-spacing: 0; }
+.sb-toggle { position: absolute; top: 20px; right: -14px; width: 28px; height: 28px; background: var(--or); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--noir); z-index: 400; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: transform .25s; }
+.sidebar.collapsed .sb-toggle { transform: rotate(180deg); }
+.dash-main { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; transition: margin-left .25s ease; }
+.dash-main.expanded { margin-left: 60px; }
 .sb-logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
 .sb-logo-txt { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 700; letter-spacing: 0.2em; color: #fff; cursor: pointer; }
 .sb-logo-txt span { color: var(--or); }
@@ -414,7 +427,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .sb-footer { padding: 14px 20px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.7rem; color: rgba(255,255,255,0.25); }
 .sb-footer a { color: var(--or-clair); cursor: pointer; }
 
-.dash-main { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; }
+/* dash-main handled above */
 .dash-topbar { background: var(--blanc); border-bottom: 1px solid rgba(0,0,0,0.07); padding: 0 32px; height: 58px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
 .dash-topbar-left { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gris); display: flex; align-items: center; gap: 8px; }
 .dash-topbar-left strong { color: var(--noir); font-weight: 500; }
@@ -940,7 +953,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
      PAGE 4 — DASHBOARD
 ════════════════════════════ -->
 <div class="page" id="page-dashboard">
-  <aside class="sidebar">
+  <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
     <div class="sb-brand"><div class="sb-brand-name">Maison Éclat</div><div class="sb-brand-plan"><span class="pulse"></span>Plan Pro · Actif</div></div>
     <nav class="sb-nav">
@@ -1504,6 +1517,24 @@ async function doLogout() {
   const el = document.querySelector('[onclick*="dashboard"]');
   if(el){ el.textContent = 'Mon espace'; el.setAttribute('onclick',"goTo('login')"); }
 }
+
+
+// ══ SIDEBAR TOGGLE ══
+function toggleSidebar() {
+  const sidebar = document.getElementById('dashSidebar');
+  const main = document.querySelector('.dash-main');
+  sidebar.classList.toggle('collapsed');
+  main.classList.toggle('expanded');
+  localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+}
+// Restore sidebar state
+document.addEventListener('DOMContentLoaded', () => {
+  if(localStorage.getItem('sidebarCollapsed') === 'true') {
+    const sidebar = document.getElementById('dashSidebar');
+    const main = document.querySelector('.dash-main');
+    if(sidebar) { sidebar.classList.add('collapsed'); main && main.classList.add('expanded'); }
+  }
+});
 
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
