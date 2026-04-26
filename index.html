@@ -658,6 +658,34 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .upload-progress-bar { height: 100%; background: var(--or); border-radius: 2px; transition: width .3s; width: 0%; }
 .upload-status { font-size: 0.76rem; color: var(--gris); margin-top: 6px; text-align: center; }
 
+
+/* ══ LEGAL PAGE ══ */
+#page-legal { padding-top: 80px; background: var(--blanc); }
+.legal-hero { background: var(--noir); padding: 60px; text-align: center; }
+.legal-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3.2rem); font-weight: 400; color: #fff; margin-bottom: 8px; }
+.legal-hero h1 em { font-style: italic; color: var(--or); }
+.legal-hero p { font-size: 0.84rem; color: rgba(255,255,255,0.4); }
+.legal-nav-tabs { display: flex; border-bottom: 2px solid var(--gris-clair); padding: 0 60px; background: var(--blanc); position: sticky; top: 80px; z-index: 50; }
+.legal-tab { padding: 16px 24px; font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase; border: none; background: none; cursor: pointer; color: var(--gris); border-bottom: 2px solid transparent; margin-bottom: -2px; font-family: 'Outfit', sans-serif; transition: all .2s; }
+.legal-tab.active { color: var(--noir); border-bottom-color: var(--or); }
+.legal-content { max-width: 860px; margin: 0 auto; padding: 60px; }
+.legal-section { display: none; }
+.legal-section.active { display: block; }
+.legal-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; margin-bottom: 6px; color: var(--noir); }
+.legal-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; margin: 32px 0 10px; color: var(--noir); padding-top: 16px; border-top: 1px solid var(--gris-clair); }
+.legal-content p { font-size: 0.88rem; line-height: 1.85; color: #555; margin-bottom: 14px; }
+.legal-content ul { margin: 10px 0 14px 20px; }
+.legal-content ul li { font-size: 0.88rem; line-height: 1.8; color: #555; margin-bottom: 6px; }
+.legal-date { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--or); margin-bottom: 32px; display: block; }
+.legal-highlight { background: var(--creme); border-left: 3px solid var(--or); padding: 16px 20px; margin: 20px 0; font-size: 0.85rem; line-height: 1.7; color: #555; }
+.legal-contact-box { background: var(--noir); color: #fff; padding: 28px 32px; margin-top: 40px; }
+.legal-contact-box h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 12px; }
+.legal-contact-box p { font-size: 0.84rem; color: rgba(255,255,255,0.6); margin-bottom: 6px; }
+.legal-contact-box a { color: var(--or-clair); }
+.legal-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gris); cursor: pointer; margin-bottom: 32px; transition: color .2s; }
+.legal-back:hover { color: var(--or); }
+.legal-back::before { content: '←'; }
+
 </style>
 </head>
 <body>
@@ -1202,7 +1230,7 @@ const planData = {
 function goTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  const showNav = ['home','brand','search','login'].includes(page);
+  const showNav = ['home','brand','search','login','legal'].includes(page);
   document.getElementById('gNav').style.display = showNav ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -1650,6 +1678,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+
+// ══ LEGAL TABS ══
+function setLegalTab(tab, btn) {
+  document.querySelectorAll('.legal-tab').forEach(t => t.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+  document.getElementById('lt-' + tab).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -1860,6 +1898,224 @@ updateSummary();
       <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doRegister()">Créer mon compte →</button>
       <p class="lfoot" style="margin-top:14px;">Déjà un compte ? <a onclick="setLTab('con',document.querySelectorAll('.ltab')[0])">Se connecter</a></p>
     </div>
+  </div>
+</div>
+
+
+<!-- ══ PAGE MENTIONS LÉGALES ══ -->
+<div class="page" id="page-legal">
+  <div class="legal-hero">
+    <h1>Informations <em>légales</em></h1>
+    <p>Mentions légales · CGU · Politique de confidentialité · RGPD</p>
+  </div>
+
+  <div class="legal-nav-tabs">
+    <button class="legal-tab active" onclick="setLegalTab('mentions',this)">Mentions légales</button>
+    <button class="legal-tab" onclick="setLegalTab('cgu',this)">CGU</button>
+    <button class="legal-tab" onclick="setLegalTab('confidentialite',this)">Confidentialité</button>
+    <button class="legal-tab" onclick="setLegalTab('cookies',this)">Cookies</button>
+  </div>
+
+  <div class="legal-content">
+    <span class="legal-back" onclick="goTo('home')">Retour à l'accueil</span>
+
+    <!-- MENTIONS LÉGALES -->
+    <div class="legal-section active" id="lt-mentions">
+      <h2>Mentions légales</h2>
+      <span class="legal-date">Dernière mise à jour : 26 avril 2026</span>
+
+      <div class="legal-highlight">
+        Conformément aux lois applicables au Canada et dans la province de Québec, voici les informations légales relatives à la plateforme SÉLECT.
+      </div>
+
+      <h3>1. Éditeur du site</h3>
+      <p>Le site SÉLECT (select-mode.vercel.app) est édité par :</p>
+      <ul>
+        <li><strong>Nom :</strong> Étienne Gervais</li>
+        <li><strong>Statut :</strong> Travailleur autonome (auto-entrepreneur)</li>
+        <li><strong>Adresse :</strong> Victoriaville, Québec, Canada</li>
+        <li><strong>Email :</strong> <a href="mailto:etiennegervais07@gmail.com" style="color:var(--or);">etiennegervais07@gmail.com</a></li>
+        <li><strong>Numéro d'entreprise :</strong> En cours d'enregistrement</li>
+      </ul>
+
+      <h3>2. Hébergement</h3>
+      <p>Le site est hébergé par :</p>
+      <ul>
+        <li><strong>Vercel Inc.</strong></li>
+        <li>340 Pine Street, Suite 701, San Francisco, CA 94104, États-Unis</li>
+        <li>Site : <a href="https://vercel.com" style="color:var(--or);">vercel.com</a></li>
+      </ul>
+
+      <h3>3. Base de données</h3>
+      <p>Les données sont stockées par :</p>
+      <ul>
+        <li><strong>Supabase Inc.</strong></li>
+        <li>970 Toa Payoh North, Singapour</li>
+        <li>Site : <a href="https://supabase.com" style="color:var(--or);">supabase.com</a></li>
+      </ul>
+
+      <h3>4. Paiements</h3>
+      <p>Les paiements sont traités par :</p>
+      <ul>
+        <li><strong>Stripe Inc.</strong></li>
+        <li>510 Townsend Street, San Francisco, CA 94103, États-Unis</li>
+        <li>Site : <a href="https://stripe.com" style="color:var(--or);">stripe.com</a></li>
+      </ul>
+
+      <h3>5. Propriété intellectuelle</h3>
+      <p>L'ensemble du contenu du site SÉLECT (textes, images, design, code) est la propriété exclusive d'Étienne Gervais, sauf mention contraire. Toute reproduction, distribution ou utilisation sans autorisation écrite préalable est strictement interdite.</p>
+
+      <h3>6. Responsabilité</h3>
+      <p>SÉLECT agit en tant que plateforme intermédiaire entre les marques de vêtements et les consommateurs. SÉLECT ne peut être tenu responsable des produits vendus par les marques partenaires, ni des transactions effectuées directement entre les marques et leurs clients.</p>
+
+      <div class="legal-contact-box">
+        <h4>Une question légale ?</h4>
+        <p>Contactez-nous par email :</p>
+        <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
+        <p>Victoriaville, Québec, Canada</p>
+      </div>
+    </div>
+
+    <!-- CGU -->
+    <div class="legal-section" id="lt-cgu">
+      <h2>Conditions Générales d'Utilisation</h2>
+      <span class="legal-date">Dernière mise à jour : 26 avril 2026</span>
+
+      <div class="legal-highlight">
+        En utilisant la plateforme SÉLECT, vous acceptez les présentes conditions générales d'utilisation. Veuillez les lire attentivement avant toute utilisation.
+      </div>
+
+      <h3>1. Objet</h3>
+      <p>SÉLECT est une plateforme en ligne permettant aux marques de vêtements de présenter leurs collections moyennant un abonnement mensuel, et aux visiteurs de découvrir ces collections gratuitement.</p>
+
+      <h3>2. Accès à la plateforme</h3>
+      <p>L'accès à SÉLECT est gratuit pour les visiteurs. Les marques doivent souscrire à un abonnement mensuel pour afficher leurs produits. SÉLECT se réserve le droit de refuser l'accès à toute marque ne respectant pas les présentes conditions.</p>
+
+      <h3>3. Abonnements marques</h3>
+      <ul>
+        <li><strong>Plan Starter :</strong> 49 $ CAD / mois — jusqu'à 30 produits</li>
+        <li><strong>Plan Pro :</strong> 149 $ CAD / mois — produits illimités</li>
+        <li><strong>Plan Prestige :</strong> 399 $ CAD / mois — visibilité maximale</li>
+      </ul>
+      <p>Les abonnements sont renouvelés automatiquement chaque mois. Vous pouvez résilier à tout moment depuis votre espace marque. Aucun remboursement ne sera effectué pour les mois déjà facturés, sauf dans le cadre de la garantie satisfait ou remboursé de 14 jours.</p>
+
+      <h3>4. Garantie satisfait ou remboursé</h3>
+      <p>Si vous n'êtes pas satisfait de votre abonnement dans les 14 premiers jours suivant votre souscription, contactez-nous à <a href="mailto:etiennegervais07@gmail.com" style="color:var(--or);">etiennegervais07@gmail.com</a> pour obtenir un remboursement complet, sans condition.</p>
+
+      <h3>5. Responsabilités des marques</h3>
+      <p>Les marques s'engagent à :</p>
+      <ul>
+        <li>Fournir des informations exactes et à jour sur leurs produits</li>
+        <li>Ne pas publier de contenu illégal, trompeur ou offensant</li>
+        <li>Respecter les droits de propriété intellectuelle</li>
+        <li>Gérer directement les commandes et livraisons avec leurs clients</li>
+      </ul>
+
+      <h3>6. Responsabilité de SÉLECT</h3>
+      <p>SÉLECT est une plateforme de mise en vitrine uniquement. SÉLECT n'est pas responsable des transactions entre marques et clients, de la qualité des produits, ni des livraisons. SÉLECT se réserve le droit de retirer tout contenu inapproprié sans préavis.</p>
+
+      <h3>7. Droit applicable</h3>
+      <p>Les présentes CGU sont soumises au droit de la province de Québec, Canada. Tout litige sera soumis aux tribunaux compétents de la province de Québec.</p>
+
+      <div class="legal-contact-box">
+        <h4>Questions sur nos CGU ?</h4>
+        <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
+      </div>
+    </div>
+
+    <!-- CONFIDENTIALITÉ -->
+    <div class="legal-section" id="lt-confidentialite">
+      <h2>Politique de confidentialité</h2>
+      <span class="legal-date">Dernière mise à jour : 26 avril 2026</span>
+
+      <div class="legal-highlight">
+        Étienne Gervais, exploitant SÉLECT, s'engage à protéger votre vie privée conformément à la Loi 25 du Québec (Loi modernisant des dispositions législatives en matière de protection des renseignements personnels).
+      </div>
+
+      <h3>1. Données collectées</h3>
+      <p>Nous collectons les données suivantes :</p>
+      <ul>
+        <li><strong>Données d'inscription :</strong> nom, prénom, email, nom de la marque</li>
+        <li><strong>Données de paiement :</strong> traitées exclusivement par Stripe — nous ne stockons aucune donnée bancaire</li>
+        <li><strong>Données de navigation :</strong> pages visitées, durée de visite (données anonymisées)</li>
+        <li><strong>Données produits :</strong> photos et descriptions uploadées par les marques</li>
+      </ul>
+
+      <h3>2. Utilisation des données</h3>
+      <p>Vos données sont utilisées pour :</p>
+      <ul>
+        <li>Gérer votre compte et votre abonnement</li>
+        <li>Vous envoyer des emails de confirmation et factures</li>
+        <li>Améliorer la plateforme</li>
+        <li>Vous contacter en cas de problème avec votre compte</li>
+      </ul>
+      <p>Nous ne vendons jamais vos données à des tiers.</p>
+
+      <h3>3. Conservation des données</h3>
+      <p>Vos données sont conservées pendant toute la durée de votre abonnement, puis supprimées dans un délai de 12 mois après la résiliation de votre compte, sauf obligation légale contraire.</p>
+
+      <h3>4. Vos droits (Loi 25 Québec)</h3>
+      <p>Conformément à la Loi 25, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès :</strong> consulter vos données personnelles</li>
+        <li><strong>Droit de rectification :</strong> corriger vos données</li>
+        <li><strong>Droit à l'effacement :</strong> demander la suppression de vos données</li>
+        <li><strong>Droit à la portabilité :</strong> recevoir vos données dans un format lisible</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous à <a href="mailto:etiennegervais07@gmail.com" style="color:var(--or);">etiennegervais07@gmail.com</a>.</p>
+
+      <h3>5. Sécurité</h3>
+      <p>Vos données sont protégées par un chiffrement SSL 256-bit. L'accès à votre compte est sécurisé par authentification via Supabase. Nous appliquons les meilleures pratiques de sécurité informatique pour protéger vos informations.</p>
+
+      <h3>6. Sous-traitants</h3>
+      <ul>
+        <li><strong>Supabase</strong> — stockage des données (serveurs en Europe)</li>
+        <li><strong>Stripe</strong> — traitement des paiements</li>
+        <li><strong>Vercel</strong> — hébergement du site</li>
+      </ul>
+
+      <div class="legal-contact-box">
+        <h4>Responsable de la protection des données</h4>
+        <p>Étienne Gervais</p>
+        <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
+        <p>Victoriaville, Québec, Canada</p>
+      </div>
+    </div>
+
+    <!-- COOKIES -->
+    <div class="legal-section" id="lt-cookies">
+      <h2>Politique de cookies</h2>
+      <span class="legal-date">Dernière mise à jour : 26 avril 2026</span>
+
+      <div class="legal-highlight">
+        SÉLECT utilise un nombre minimal de cookies, strictement nécessaires au fonctionnement de la plateforme.
+      </div>
+
+      <h3>1. Qu'est-ce qu'un cookie ?</h3>
+      <p>Un cookie est un petit fichier texte stocké sur votre appareil lors de votre visite sur un site web. Il permet de mémoriser certaines informations pour améliorer votre expérience.</p>
+
+      <h3>2. Cookies utilisés par SÉLECT</h3>
+      <ul>
+        <li><strong>Cookie de session (Supabase) :</strong> maintient votre connexion active — durée : session</li>
+        <li><strong>Cookie de préférence :</strong> mémorise vos préférences d'interface (ex: menu réduit) — durée : 30 jours</li>
+        <li><strong>Cookie Stripe :</strong> sécurisation des paiements — durée : session</li>
+      </ul>
+
+      <h3>3. Cookies tiers</h3>
+      <p>Nous n'utilisons pas de cookies publicitaires ou de tracking. Aucune donnée n'est partagée avec des régies publicitaires.</p>
+
+      <h3>4. Gestion des cookies</h3>
+      <p>Vous pouvez à tout moment désactiver les cookies dans les paramètres de votre navigateur. Cependant, la désactivation des cookies essentiels peut empêcher le bon fonctionnement de votre espace marque.</p>
+
+      <h3>5. Consentement</h3>
+      <p>En utilisant SÉLECT, vous consentez à l'utilisation des cookies essentiels décrits ci-dessus. Aucun cookie non essentiel n'est déposé sans votre consentement explicite.</p>
+
+      <div class="legal-contact-box">
+        <h4>Une question sur les cookies ?</h4>
+        <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
+      </div>
+    </div>
+
   </div>
 </div>
 
