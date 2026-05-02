@@ -1862,12 +1862,21 @@ function resetAll(){
 }
 
 // ══ LOGIN ══
-function setLTab(t,btn){
-  document.querySelectorAll('.ltab').forEach(x=>x.classList.remove('active'));
-  if(btn)btn.classList.add('active');
-  document.querySelectorAll('.lsec').forEach(x=>x.classList.remove('active'));
-  document.getElementById('ls-'+t).classList.add('active');
+function showLogin(tab) {
+  ['ls-con','ls-vis','ls-ins'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) { el.style.display = 'none'; el.classList.remove('active'); }
+  });
+  ['tab-con','tab-vis','tab-ins'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.classList.remove('active');
+  });
+  const target = document.getElementById('ls-' + tab);
+  const tabBtn = document.getElementById('tab-' + tab);
+  if(target) { target.style.display = 'block'; target.classList.add('active'); }
+  if(tabBtn) tabBtn.classList.add('active');
 }
+function setLTab(t,btn){ showLogin(t); }
 function togglePw(id,btn){
   const i=document.getElementById(id);
   if(i.type==='password'){i.type='text';btn.textContent='🙈';}
@@ -2014,27 +2023,49 @@ updateSummary();
     </div>
   </div>
   <div class="lr">
+    <!-- 3 onglets clairs -->
     <div class="ltab-w">
-      <button class="ltab active" onclick="setLTab('con',this)">Connexion</button>
-      <button class="ltab" onclick="setLTab('ins',this)">Inscription</button>
+      <button class="ltab active" id="tab-con" onclick="showLogin('con')">Connexion</button>
+      <button class="ltab" id="tab-vis" onclick="showLogin('vis')">Créer un compte</button>
+      <button class="ltab" id="tab-ins" onclick="showLogin('ins')">Ma marque</button>
     </div>
+
+    <!-- CONNEXION -->
     <div class="lsec active" id="ls-con">
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;margin-bottom:6px;">Bon retour, <em style="font-style:italic;color:var(--or);">bienvenue</em></h2>
-      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Connectez-vous à votre espace marque SÉLECT.</p>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Bon retour, <em style="font-style:italic;color:var(--or);">bienvenue</em></h2>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Connectez-vous à votre espace SÉLECT.</p>
       <button class="sbtn2" onclick="toast('🌐 Connexion Google...')"><span>🌐</span> Continuer avec Google</button>
-      <button class="sbtn2" onclick="toast('💼 Connexion LinkedIn...')"><span>💼</span> Continuer avec LinkedIn</button>
       <div class="ldiv"><span>ou avec votre email</span></div>
-      <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="contact@mamarque.com" id="lEmail"></div>
+      <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="votre@email.com" id="lEmail"></div>
       <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="••••••••" id="lPw"><button class="pw-e" onclick="togglePw('lPw',this)" type="button">👁</button></div></div>
       <span class="fl" onclick="forgotPw()">Mot de passe oublié ?</span>
       <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doLogin()">Se connecter →</button>
       <div class="lsuc" id="lSuc"><div class="lsuc-icon">✓</div><p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:4px;">Connexion réussie !</p><p style="font-size:0.78rem;color:var(--gris);">Redirection...</p></div>
-      <p class="lfoot">Pas encore de compte ? <a onclick="setLTab('ins',document.querySelectorAll('.ltab')[1])">S'inscrire</a></p>
+      <p class="lfoot" style="margin-top:14px;">Pas de compte ? <a onclick="showLogin('vis')" style="color:var(--or);cursor:pointer;">Créer un compte</a> · <a onclick="showLogin('ins')" style="color:var(--or);cursor:pointer;">Inscrire ma marque</a></p>
     </div>
+
+    <!-- VISITEUR -->
+    <div class="lsec" id="ls-vis">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Créer un <em style="font-style:italic;color:var(--or);">compte</em></h2>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Explorez les collections et sauvegardez vos marques favorites.</p>
+      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> Continuer avec Google</button>
+      <div class="ldiv"><span>ou avec votre email</span></div>
+      <div class="f-group"><label class="f-label">Prénom *</label><input class="f-input" placeholder="Votre prénom" id="vFirst"></div>
+      <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="votre@email.com" id="vEmail"></div>
+      <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="8 caractères minimum" id="vPw"><button class="pw-e" onclick="togglePw('vPw',this)" type="button">👁</button></div></div>
+      <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;font-size:0.78rem;color:var(--gris);">
+        <input type="checkbox" id="vTerms" style="margin-top:3px;cursor:pointer;accent-color:var(--or);">
+        <label for="vTerms" style="cursor:pointer;line-height:1.5;">J'accepte les <span style="color:var(--or);cursor:pointer;" onclick="goTo('legal')">CGU</span></label>
+      </div>
+      <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doRegisterVisiteur()">Créer mon compte gratuit →</button>
+      <p class="lfoot" style="margin-top:14px;">Déjà un compte ? <a onclick="showLogin('con')" style="color:var(--or);cursor:pointer;">Se connecter</a></p>
+    </div>
+
+    <!-- MARQUE -->
     <div class="lsec" id="ls-ins">
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;margin-bottom:6px;">Créer votre <em style="font-style:italic;color:var(--or);">compte</em></h2>
-      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Rejoignez 200+ marques sur SÉLECT.</p>
-      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> S'inscrire avec Google</button>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Inscrire <em style="font-style:italic;color:var(--or);">ma marque</em></h2>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">✦ 1er mois 100% gratuit · Aucune carte requise</p>
+      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> Continuer avec Google</button>
       <div class="ldiv"><span>ou avec votre email</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="f-group"><label class="f-label">Prénom *</label><input class="f-input" placeholder="Isabelle" id="rFirst"></div>
@@ -2042,13 +2073,14 @@ updateSummary();
       </div>
       <div class="f-group"><label class="f-label">Nom de la marque *</label><input class="f-input" placeholder="Ex: Maison Éclat" id="rBrand"></div>
       <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="contact@mamarque.com" id="rEmail"></div>
+      <div class="f-group"><label class="f-label">Lien boutique (optionnel)</label><input class="f-input" type="url" placeholder="https://votre-boutique.com" id="rBoutiqueLink"></div>
       <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="8 caractères minimum" id="rPw"><button class="pw-e" onclick="togglePw('rPw',this)" type="button">👁</button></div></div>
       <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:16px;font-size:0.76rem;color:var(--gris);">
         <input type="checkbox" id="rTerms" style="margin-top:3px;cursor:pointer;accent-color:var(--or);">
-        <label for="rTerms" style="cursor:pointer;line-height:1.5;">J'accepte les <span style="color:var(--or);">CGU</span> et la <span style="color:var(--or);">politique de confidentialité</span></label>
+        <label for="rTerms" style="cursor:pointer;line-height:1.5;">J'accepte les <span style="color:var(--or);cursor:pointer;" onclick="goTo('legal')">CGU</span> et la <span style="color:var(--or);cursor:pointer;" onclick="goTo('legal')">politique de confidentialité</span></label>
       </div>
-      <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doRegister()">Créer mon compte →</button>
-      <p class="lfoot" style="margin-top:14px;">Déjà un compte ? <a onclick="setLTab('con',document.querySelectorAll('.ltab')[0])">Se connecter</a></p>
+      <button class="btn-p" style="width:100%;padding:15px;text-align:center;" onclick="doRegister()">Commencer gratuitement →</button>
+      <p class="lfoot" style="margin-top:14px;">Déjà un compte ? <a onclick="showLogin('con')" style="color:var(--or);cursor:pointer;">Se connecter</a></p>
     </div>
   </div>
 </div>
