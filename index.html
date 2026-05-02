@@ -1784,6 +1784,16 @@ async function doRegisterVisiteur() {
     options: { data: { first_name: first, user_type: 'visiteur' } }
   });
   if(error) { toast("❌ " + error.message); return; }
+  // Envoyer email de bienvenue visiteur
+  fetch('/api/send-email', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({
+      type: 'welcome_visitor',
+      to: email,
+      data: { firstName: first }
+    })
+  });
   toast("✅ Compte créé ! Vérifiez votre email.");
   setTimeout(() => goTo('home'), 2000);
 }
