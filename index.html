@@ -724,6 +724,29 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   .favorites-grid { grid-template-columns: 1fr 1fr; }
 }
 
+
+/* ══ NAV SEARCH ══ */
+.nav-search-wrap { position: relative; }
+.nav-result-item { padding: 12px 16px; cursor: pointer; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); transition: background .15s; }
+.nav-result-item:hover { background: var(--creme); }
+.nav-result-item:last-child { border: none; }
+.nav-result-init { width: 36px; height: 36px; background: var(--creme); border: 1px solid rgba(0,0,0,0.08); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-weight: 700; color: var(--or); flex-shrink: 0; }
+.nav-result-name { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 600; }
+.nav-result-cat { font-size: 0.68rem; color: var(--gris); letter-spacing: 0.1em; text-transform: uppercase; }
+.nav-no-result { padding: 20px 16px; text-align: center; color: var(--gris); font-size: 0.82rem; }
+
+
+/* ══ CHOOSE PLAN PAGE ══ */
+#page-choose-plan { min-height: 100vh; background: var(--blanc); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 24px; }
+.choose-plan-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.2em; color: var(--noir); margin-bottom: 8px; cursor: pointer; text-align: center; }
+.choose-plan-logo span { color: var(--or); }
+.choose-plan-box { max-width: 900px; width: 100%; }
+.choose-plan-header { text-align: center; margin-bottom: 48px; }
+.choose-plan-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 400; margin-bottom: 8px; }
+.choose-plan-header h2 em { font-style: italic; color: var(--or); }
+.choose-plan-header p { font-size: 0.88rem; color: var(--gris); }
+.trial-badge { display: inline-block; background: var(--vert); color: #fff; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 16px; font-weight: 500; }
+
 </style>
 </head>
 <body>
@@ -733,9 +756,11 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 ════════════════════════════ -->
 <nav class="g-nav" id="gNav">
   <div class="g-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</div>
+  <div class="nav-search-wrap" id="navSearchWrap">
+    <input type="text" id="navSearchInput" placeholder="🔍  Rechercher une marque..." oninput="navSearch(this.value)" onfocus="showNavResults()" style="border:1px solid rgba(0,0,0,0.12);padding:8px 16px;font-family:'Outfit',sans-serif;font-size:0.82rem;background:#fff;color:var(--noir);outline:none;width:260px;transition:width .3s;" onfocus="this.style.width='320px'" onblur="this.style.width='260px'">
+    <div id="navDropdown" style="display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid rgba(0,0,0,0.1);width:320px;max-height:320px;overflow-y:auto;box-shadow:0 8px 28px rgba(0,0,0,0.1);z-index:200;"></div>
+  </div>
   <ul class="g-nav-links">
-    <li><a onclick="scrollTo2('comment')">Comment ça marche</a></li>
-    <li><a onclick="goTo('search')">🔍 Rechercher</a></li>
     <li><a onclick="scrollTo2('marques')">Les marques</a></li>
     <li><a onclick="scrollTo2('tarifs')">Tarifs</a></li>
     <li><a onclick="goTo('login')" style="opacity:.7;">Mon espace</a></li>
@@ -1292,7 +1317,7 @@ function goTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
-  document.getElementById('gNav').style.display = showNav ? 'flex' : 'none';
+  document.getElementById('gNav').style.display = (showNav && page !== 'choose-plan') ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -1453,7 +1478,7 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
 
 function updateNavUser(email){
   const el = document.querySelector('[onclick*="login"]');
-  if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"goTo('dashboard')"); }
+  if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"checkAndRedirect()"); }
 }
 
 // ══ CHARGER LES MARQUES DEPUIS SUPABASE ══
@@ -1823,6 +1848,91 @@ function removeFav(btn) {
 
 // Update doLogin to redirect based on user type
 
+
+// ══ NAV SEARCH ══
+const navBrands = [
+  {name:'Maison Éclat', cat:'Luxe · Prêt-à-porter', init:'ME'},
+  {name:'Urbain Co.', cat:'Streetwear · Casual', init:'UC'},
+  {name:'Terra Lin', cat:'Éco-responsable', init:'TL'},
+  {name:'Nuit Blanche', cat:'Soirée · Couture', init:'NB'},
+  {name:'Atelier 12', cat:'Artisanal · Femme', init:'A12'},
+  {name:'Velours Studio', cat:'Homme · Luxe casual', init:'VS'},
+  {name:'Le Jardin', cat:'Bohème · Lifestyle', init:'LJ'},
+  {name:'Noir & Or', cat:'Accessoires', init:'NO'}
+];
+
+function navSearch(val) {
+  const dropdown = document.getElementById('navDropdown');
+  if(!val || val.length < 1) { dropdown.style.display = 'none'; return; }
+  const results = navBrands.filter(b =>
+    b.name.toLowerCase().includes(val.toLowerCase()) ||
+    b.cat.toLowerCase().includes(val.toLowerCase())
+  );
+  if(results.length === 0) {
+    dropdown.innerHTML = '<div class="nav-no-result">Aucune marque trouvée</div>';
+  } else {
+    dropdown.innerHTML = results.map(b => `
+      <div class="nav-result-item" onclick="goTo('brand');document.getElementById('navDropdown').style.display='none';document.getElementById('navSearchInput').value='';">
+        <div class="nav-result-init">${b.init}</div>
+        <div><div class="nav-result-name">${b.name}</div><div class="nav-result-cat">${b.cat}</div></div>
+      </div>
+    `).join('');
+  }
+  dropdown.style.display = 'block';
+}
+
+function showNavResults() {
+  const val = document.getElementById('navSearchInput').value;
+  if(val) navSearch(val);
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (e) => {
+  if(!e.target.closest('#navSearchWrap')) {
+    const d = document.getElementById('navDropdown');
+    if(d) d.style.display = 'none';
+  }
+});
+
+
+// ══ CHECK AND REDIRECT ══
+async function checkAndRedirect() {
+  if(!window.sb) { goTo('login'); return; }
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) { goTo('login'); return; }
+  const { data: marque } = await window.sb
+    .from('marques')
+    .select('id, abonnement_actif')
+    .eq('user_id', session.user.id)
+    .single();
+  if(marque && marque.abonnement_actif) {
+    goTo('dashboard');
+    loadDashboardData(session.user);
+  } else if(marque) {
+    goTo('choose-plan');
+  } else {
+    goTo('visitor');
+  }
+}
+
+async function checkPaymentAndActivate() {
+  if(!window.sb) return;
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) return;
+  const { data: marque } = await window.sb
+    .from('marques')
+    .select('id, abonnement_actif')
+    .eq('user_id', session.user.id)
+    .single();
+  if(marque && marque.abonnement_actif) {
+    toast("✅ Abonnement actif !");
+    goTo('dashboard');
+    loadDashboardData(session.user);
+  } else {
+    toast("⏳ Paiement non encore détecté - réessayez dans quelques minutes");
+  }
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -1898,13 +2008,16 @@ async function doLogin(){
     if(!window.sb) { goTo('dashboard'); return; }
     const { data: marque } = await window.sb
       .from('marques')
-      .select('id')
+      .select('id, abonnement_actif, plan')
       .eq('user_id', data.user.id)
       .single();
-    if(marque) {
-      // A une marque → dashboard marque
+    if(marque && marque.abonnement_actif) {
+      // Marque avec abonnement actif → dashboard complet
       goTo('dashboard');
       loadDashboardData(data.user);
+    } else if(marque && !marque.abonnement_actif) {
+      // Marque sans abonnement → page pour choisir un plan
+      goTo('choose-plan');
     } else {
       // Pas de marque → dashboard visiteur
       goTo('visitor');
@@ -2409,6 +2522,62 @@ updateSummary();
       </div>
     </div>
 
+  </div>
+</div>
+
+
+<!-- ══ PAGE CHOOSE PLAN ══ -->
+<div class="page" id="page-choose-plan">
+  <div class="choose-plan-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</div>
+  <p style="font-size:0.76rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gris);margin-bottom:48px;">Choisissez votre abonnement</p>
+  <div class="choose-plan-box">
+    <div class="choose-plan-header">
+      <span class="trial-badge">✦ 1er mois 100% gratuit</span>
+      <h2>Votre marque est inscrite !<br><em>Choisissez votre plan.</em></h2>
+      <p>Commencez gratuitement pendant 30 jours — aucune carte requise pour le mois d'essai.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:32px;">
+      <div style="background:var(--creme);padding:36px 28px;position:relative;">
+        <div style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Starter</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1;">49<span style="font-size:1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:var(--gris);margin-bottom:20px;">/ mois après 30 jours gratuits</div>
+        <ul style="list-style:none;margin-bottom:28px;">
+          <li style="padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>25 produits maximum</li>
+          <li style="padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Page marque personnalisée</li>
+          <li style="padding:7px 0;font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Lien vers votre boutique</li>
+        </ul>
+        <button class="btn-o" style="width:100%;text-align:center;" onclick="window.open('https://buy.stripe.com/dRm6oBf6afWrcn02fJ6kg00','_blank')">Choisir Starter →</button>
+      </div>
+      <div style="background:var(--noir);color:#fff;padding:36px 28px;position:relative;">
+        <div style="position:absolute;top:0;right:0;background:var(--or);color:var(--noir);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;padding:4px 12px;font-weight:600;">Le plus choisi</div>
+        <div style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Pro</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1;color:#fff;">149<span style="font-size:1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:rgba(255,255,255,0.4);margin-bottom:20px;">/ mois après 30 jours gratuits</div>
+        <ul style="list-style:none;margin-bottom:28px;">
+          <li style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;color:rgba(255,255,255,0.8);"><span style="color:var(--or);">✓</span>Produits illimités</li>
+          <li style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;color:rgba(255,255,255,0.8);"><span style="color:var(--or);">✓</span>Badge Marque vérifiée ✦</li>
+          <li style="padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;color:rgba(255,255,255,0.8);"><span style="color:var(--or);">✓</span>Analytics & statistiques</li>
+          <li style="padding:7px 0;font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;color:rgba(255,255,255,0.8);"><span style="color:var(--or);">✓</span>Support prioritaire</li>
+        </ul>
+        <button class="btn-p" style="width:100%;text-align:center;background:var(--or);color:var(--noir);" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Choisir Pro →</button>
+      </div>
+      <div style="background:var(--creme);padding:36px 28px;position:relative;">
+        <div style="font-size:0.68rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:16px;">Prestige</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;line-height:1;">399<span style="font-size:1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:var(--gris);margin-bottom:20px;">/ mois après 30 jours gratuits</div>
+        <ul style="list-style:none;margin-bottom:28px;">
+          <li style="padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Produits illimités</li>
+          <li style="padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Mis en avant homepage</li>
+          <li style="padding:7px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Newsletter incluse</li>
+          <li style="padding:7px 0;font-size:0.84rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--or);">✓</span>Account manager dédié</li>
+        </ul>
+        <button class="btn-o" style="width:100%;text-align:center;" onclick="window.open('https://buy.stripe.com/7sY14h9LQeSn86Kf2v6kg02','_blank')">Choisir Prestige →</button>
+      </div>
+    </div>
+    <p style="text-align:center;font-size:0.78rem;color:var(--gris);">
+      Déjà payé ? <span style="color:var(--or);cursor:pointer;" onclick="checkPaymentAndActivate()">Vérifier mon abonnement</span> · 
+      <span style="color:var(--gris);cursor:pointer;" onclick="doLogout()">Se déconnecter</span>
+    </p>
   </div>
 </div>
 
