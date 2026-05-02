@@ -1326,8 +1326,13 @@ const planData = {
 
 // ══ ROUTER ══
 function goTo(page) {
+  // Block dashboard access without active subscription
+  if(page === 'dashboard' && !currentUserSubscribed) {
+    page = 'choose-plan';
+  }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page).classList.add('active');
+  const target = document.getElementById('page-' + page);
+  if(target) target.classList.add('active');
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
   document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1456,7 +1461,15 @@ function sTab(tab, el) {
 }
 
 // ══ MODAL ══
-function openModal() { document.getElementById('modalOv').classList.add('open'); document.body.style.overflow='hidden'; }
+function openModal() {
+  if(!currentUserSubscribed) {
+    toast("🔒 Abonnement requis pour ajouter des produits");
+    setTimeout(() => goTo('choose-plan'), 1000);
+    return;
+  }
+  document.getElementById('modalOv').classList.add('open');
+  document.body.style.overflow='hidden';
+}
 function closeModal() { document.getElementById('modalOv').classList.remove('open'); document.body.style.overflow=''; }
 function addProd() { addProduitSB(); }
 
@@ -1471,6 +1484,10 @@ function toast(msg) {
 }
 
 
+// ══ GLOBAL STATE ══
+let currentUserPlan = null;
+let currentUserSubscribed = false;
+
 // ══ SUPABASE ══
 const SB_URL = 'https://ivhdcfyddhmskjuyxoha.supabase.co';
 const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
@@ -1479,8 +1496,20 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
   s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
   s.onload = () => {
     window.sb = supabase.createClient(SB_URL, SB_KEY);
-    window.sb.auth.getSession().then(({data:{session}}) => {
-      if(session){ updateNavUser(session.user.email); loadDashboardData(session.user); }
+    window.sb.auth.getSession().then(async ({data:{session}}) => {
+      if(session){ 
+        updateNavUser(session.user.email);
+        // Check subscription status on load
+        const { data: marque } = await window.sb
+          .from('marques')
+          .select('abonnement_actif, plan')
+          .eq('user_id', session.user.id)
+          .single();
+        if(marque) {
+          currentUserSubscribed = marque.abonnement_actif === true;
+          currentUserPlan = marque.plan;
+        }
+      }
     });
     // Charger les marques dès que Supabase est prêt
     loadMarques();
@@ -1568,6 +1597,16 @@ async function loadDashboardData(user) {
       .single();
 
     if(!marque) return;
+    
+    // Set global subscription status
+    currentUserSubscribed = marque.abonnement_actif === true;
+    currentUserPlan = marque.plan;
+    
+    // If not subscribed, redirect to choose-plan
+    if(!currentUserSubscribed) {
+      goTo('choose-plan');
+      return;
+    }
 
     // Mettre à jour le nom dans le sidebar
     const sbName = document.querySelector('.sb-brand-name');
@@ -1695,6 +1734,7 @@ async function uploadPhotosToSupabase(marqueId, produitId) {
 
 // ══ UPDATED addProduitSB with photo upload ══
 async function addProduitSB() {
+  if(!currentUserSubscribed) { toast("🔒 Abonnement requis"); goTo('choose-plan'); return; }
   if(!window.sb) { toast("Chargement en cours..."); return; }
   const { data:{session} } = await window.sb.auth.getSession();
   if(!session) { toast("⚠️ Connectez-vous dabord"); return; }
@@ -1713,6 +1753,19 @@ async function addProduitSB() {
   toast("⏳ Publication en cours...");
 
   // Insert produit first to get ID
+  // Check product limit for Starter plan
+  if(currentUserPlan === 'starter') {
+    const { count } = await window.sb
+      .from('produits')
+      .select('id', { count: 'exact', head: true })
+      .eq('marque_id', marque.id);
+    if(count >= 25) {
+      toast("⚠️ Limite de 25 produits atteinte — passez au plan Pro pour continuer");
+      closeModal();
+      return;
+    }
+  }
+
   const { data: produit, error } = await window.sb.from('produits').insert({
     marque_id: marque.id,
     nom, prix: parseFloat(prix)||0,
