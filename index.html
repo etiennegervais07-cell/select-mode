@@ -747,6 +747,21 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .choose-plan-header p { font-size: 0.88rem; color: var(--gris); }
 .trial-badge { display: inline-block; background: var(--vert); color: #fff; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 16px; margin-bottom: 16px; font-weight: 500; }
 
+
+/* ══ PAGE MARQUE PRO ══ */
+#page-marque-pro { background: var(--blanc); }
+.mp-hero { background: var(--noir); padding: 80px 60px; text-align: center; position: relative; overflow: hidden; }
+.mp-hero::before { content: 'SÉLECT'; font-family: 'Cormorant Garamond', serif; font-size: 18vw; font-weight: 700; color: rgba(255,255,255,0.03); position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; }
+.mp-hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--or); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 12px; }
+.mp-hero-eyebrow::before,.mp-hero-eyebrow::after { content: ''; display: block; width: 32px; height: 1px; background: var(--or); }
+.mp-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 5rem); font-weight: 400; color: #fff; line-height: 1.05; margin-bottom: 20px; }
+.mp-hero h1 em { font-style: italic; color: var(--or); }
+.mp-hero p { font-size: 1rem; color: rgba(255,255,255,0.5); max-width: 520px; margin: 0 auto 40px; line-height: 1.8; }
+.mp-hero-stats { display: flex; gap: 48px; justify-content: center; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.08); flex-wrap: wrap; }
+.mp-stat-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: #fff; display: block; }
+.mp-stat-lbl { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+.mp-free-badge { display: inline-block; background: var(--vert); color: #fff; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 7px 18px; margin-bottom: 24px; font-weight: 500; }
+
 </style>
 </head>
 <body>
@@ -762,9 +777,9 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   </div>
   <ul class="g-nav-links">
     <li><a onclick="scrollTo2('marques')">Les marques</a></li>
-    <li><a onclick="scrollTo2('tarifs')">Tarifs</a></li>
-    <li><a onclick="goTo('login')" style="opacity:.7;">Mon espace</a></li>
-    <li><a class="g-nav-cta" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Je suis une marque</a></li>
+    <li><a onclick="scrollTo2('comment')">Comment ça marche</a></li>
+    <li><a onclick="goTo('login')" style="opacity:.7;">Mon compte</a></li>
+    <li><a class="g-nav-cta" onclick="goTo('marque-pro')">Je suis une marque</a></li>
   </ul>
 </nav>
 
@@ -839,17 +854,14 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       </div>
     </div>
 
-    <!-- Pricing -->
-    <div class="section" id="tarifs">
-      <div class="s-label">Tarifs pour les marques</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:end;">
-        <h2 class="s-title">1er mois <em style="font-style:italic;color:var(--or);">gratuit</em>,<br>puis visibilité maximale.</h2>
-        <p class="s-sub">Sans commission sur vos ventes — vous gardez l'intégralité de vos revenus.</p>
-      </div>
-      <div class="pricing-grid">
-        <div class="price-card"><div class="p-name">Starter</div><div class="p-price"><sup>€</sup>49</div><div class="p-period">par mois · 1er mois gratuit</div><ul class="p-features"><li>✦ 1er mois 100% gratuit</li><li>25 produits maximum</li><li>Page marque personnalisée</li><li>Lien vers votre boutique</li><li>Photos HD illimitées</li></ul><button class="btn-o" style="width:100%;text-align:center;" onclick="window.open('https://buy.stripe.com/dRm6oBf6afWrcn02fJ6kg00','_blank')">Commencer →</button></div>
-        <div class="price-card featured"><div class="p-badge">Le plus choisi</div><div class="p-name">Pro</div><div class="p-price"><sup>€</sup>149</div><div class="p-period">par mois · 1er mois gratuit</div><ul class="p-features" style="color:#fff;"><li>✦ 1er mois 100% gratuit</li><li>Produits illimités</li><li>Collections illimitées</li><li>Badge "Marque vérifiée"</li><li>Lien boutique mis en avant</li><li>Analytics & statistiques</li></ul><button class="btn-p" style="width:100%;text-align:center;background:var(--or);color:var(--noir);" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Commencer →</button></div>
-        <div class="price-card"><div class="p-name">Prestige</div><div class="p-price"><sup>€</sup>399</div><div class="p-period">par mois · 1er mois gratuit</div><ul class="p-features"><li>✦ 1er mois 100% gratuit</li><li>Produits illimités</li><li>Mis en avant sur la homepage</li><li>Badge Prestige ✦ exclusif</li><li>Newsletter mensuelle incluse</li><li>Account manager dédié</li></ul><button class="btn-p" style="width:100%;text-align:center;" onclick="window.open('https://buy.stripe.com/7sY14h9LQeSn86Kf2v6kg02','_blank')">Commencer →</button></div>
+    <!-- Pour les marques - simple teaser -->
+    <div style="background:var(--noir);padding:80px 60px;text-align:center;" id="marques-pro">
+      <div style="font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--or);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;"><span style="display:block;width:28px;height:1px;background:var(--or);"></span>Pour les marques<span style="display:block;width:28px;height:1px;background:var(--or);"></span></div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:400;color:#fff;margin-bottom:16px;">Vous avez une marque de mode ?</h2>
+      <p style="font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto 36px;line-height:1.8;">Affichez vos collections devant des milliers de clients passionnés de mode. Premier mois 100% gratuit.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+        <button class="btn-p" style="background:var(--or);color:var(--noir);" onclick="goTo('marque-pro')">Découvrir les offres →</button>
+        <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="goTo('login');showLogin('ins')">Commencer gratuitement</button>
       </div>
     </div>
 
@@ -1317,7 +1329,7 @@ function goTo(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
-  document.getElementById('gNav').style.display = (showNav && page !== 'choose-plan') ? 'flex' : 'none';
+  document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -2579,6 +2591,122 @@ updateSummary();
       <span style="color:var(--gris);cursor:pointer;" onclick="doLogout()">Se déconnecter</span>
     </p>
   </div>
+</div>
+
+
+<!-- ══ PAGE JE SUIS UNE MARQUE ══ -->
+<div class="page" id="page-marque-pro">
+
+  <!-- Back nav -->
+  <div style="background:var(--noir);padding:16px 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.2em;color:#fff;cursor:pointer;" onclick="goTo('home')">SÉL<span style="color:var(--or);">✦</span>CT</span><div style="display:flex;gap:16px;"><button class="d-btn" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15);" onclick="goTo('home')">← Retour</button><button class="d-btn primary" onclick="goTo('login');showLogin('ins')">Commencer gratuitement</button></div></div>
+  <!-- Hero -->
+  <div class="mp-hero">
+    <div class="mp-hero-eyebrow">Pour les marques de mode</div>
+    <h1>Votre vitrine,<br><em>vos clients.</em></h1>
+    <p>Affichez vos collections devant des milliers de passionnés de mode. Simple, professionnel, sans commission.</p>
+    <span class="mp-free-badge">✦ 1er mois 100% gratuit</span>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
+      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="goTo('login');showLogin('ins')">Commencer gratuitement →</button>
+      <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;padding:16px 36px;" onclick="document.getElementById('mp-plans').scrollIntoView({behavior:'smooth'})">Voir les plans</button>
+    </div>
+    <div class="mp-hero-stats">
+      <div><span class="mp-stat-num">200+</span><span class="mp-stat-lbl">Marques actives</span></div>
+      <div><span class="mp-stat-num">50k</span><span class="mp-stat-lbl">Produits visibles</span></div>
+      <div><span class="mp-stat-num">12k</span><span class="mp-stat-lbl">Visiteurs / mois</span></div>
+      <div><span class="mp-stat-num">0%</span><span class="mp-stat-lbl">Commission</span></div>
+    </div>
+  </div>
+
+  <!-- Avantages -->
+  <div style="padding:80px 60px;background:var(--blanc);">
+    <div style="text-align:center;margin-bottom:52px;">
+      <div style="font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--or);margin-bottom:12px;">Pourquoi SÉLECT</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,3rem);font-weight:400;">Tout ce dont votre marque a besoin</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+      <div style="background:var(--creme);padding:36px 28px;">
+        <div style="font-size:2rem;margin-bottom:16px;">🛍️</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:10px;">Vitrine professionnelle</h3>
+        <p style="font-size:0.85rem;color:#666;line-height:1.7;">Une page dédiée à votre marque avec vos collections, vos photos et le lien vers votre boutique.</p>
+      </div>
+      <div style="background:var(--creme);padding:36px 28px;">
+        <div style="font-size:2rem;margin-bottom:16px;">📊</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:10px;">Statistiques détaillées</h3>
+        <p style="font-size:0.85rem;color:#666;line-height:1.7;">Combien de personnes ont vu vos produits, cliqué sur votre boutique, mis en favoris.</p>
+      </div>
+      <div style="background:var(--creme);padding:36px 28px;">
+        <div style="font-size:2rem;margin-bottom:16px;">🚫</div>
+        <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-bottom:10px;">Zéro commission</h3>
+        <p style="font-size:0.85rem;color:#666;line-height:1.7;">Vous gardez 100% de vos ventes. SÉLECT est une vitrine — les commandes se font sur votre site.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plans tarifaires -->
+  <div style="padding:80px 60px;background:var(--creme);" id="mp-plans">
+    <div style="text-align:center;margin-bottom:52px;">
+      <div style="font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--or);margin-bottom:12px;">Tarifs transparents</div>
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3vw,3rem);font-weight:400;">Choisissez votre plan</h2>
+      <p style="font-size:0.88rem;color:var(--gris);margin-top:8px;">Tous les plans incluent 1 mois gratuit · Sans engagement · Résiliable à tout moment</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:960px;margin:0 auto;">
+
+      <!-- Starter -->
+      <div style="background:#fff;padding:44px 32px;transition:transform .3s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--or);margin-bottom:20px;">Starter</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;line-height:1;">49<span style="font-size:1.1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:var(--gris);margin-bottom:28px;">/ mois · 1er mois gratuit</div>
+        <ul style="list-style:none;margin-bottom:32px;">
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>25 produits maximum</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Page marque personnalisée</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Lien vers votre boutique</li>
+          <li style="padding:9px 0;font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Photos HD illimitées</li>
+        </ul>
+        <button class="btn-o" style="width:100%;text-align:center;padding:14px;" onclick="window.open('https://buy.stripe.com/dRm6oBf6afWrcn02fJ6kg00','_blank')">Commencer →</button>
+      </div>
+
+      <!-- Pro -->
+      <div style="background:var(--noir);color:#fff;padding:44px 32px;position:relative;transition:transform .3s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="position:absolute;top:0;right:0;background:var(--or);color:var(--noir);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;padding:5px 14px;font-weight:600;">Le plus choisi</div>
+        <div style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--or);margin-bottom:20px;">Pro</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;line-height:1;color:#fff;">149<span style="font-size:1.1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:rgba(255,255,255,0.4);margin-bottom:28px;">/ mois · 1er mois gratuit</div>
+        <ul style="list-style:none;margin-bottom:32px;">
+          <li style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;color:rgba(255,255,255,0.8);"><span style="color:var(--or);font-weight:700;">✓</span>Produits illimités</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;color:rgba(255,255,255,0.8);"><span style="color:var(--or);font-weight:700;">✓</span>Badge Marque vérifiée ✦</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;color:rgba(255,255,255,0.8);"><span style="color:var(--or);font-weight:700;">✓</span>Mise en avant recherche</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.08);font-size:0.84rem;display:flex;gap:8px;color:rgba(255,255,255,0.8);"><span style="color:var(--or);font-weight:700;">✓</span>Analytics & statistiques</li>
+          <li style="padding:9px 0;font-size:0.84rem;display:flex;gap:8px;color:rgba(255,255,255,0.8);"><span style="color:var(--or);font-weight:700;">✓</span>Support prioritaire</li>
+        </ul>
+        <button class="btn-p" style="width:100%;text-align:center;padding:14px;background:var(--or);color:var(--noir);" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Commencer →</button>
+      </div>
+
+      <!-- Prestige -->
+      <div style="background:#fff;padding:44px 32px;transition:transform .3s;" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='translateY(0)'">
+        <div style="font-size:0.68rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--or);margin-bottom:20px;">Prestige</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:700;line-height:1;">399<span style="font-size:1.1rem;">$</span></div>
+        <div style="font-size:0.76rem;color:var(--gris);margin-bottom:28px;">/ mois · 1er mois gratuit</div>
+        <ul style="list-style:none;margin-bottom:32px;">
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Produits illimités</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Mis en avant homepage ✦</li>
+          <li style="padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.06);font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Newsletter mensuelle</li>
+          <li style="padding:9px 0;font-size:0.84rem;display:flex;gap:8px;"><span style="color:var(--or);font-weight:700;">✓</span>Account manager dédié</li>
+        </ul>
+        <button class="btn-o" style="width:100%;text-align:center;padding:14px;" onclick="window.open('https://buy.stripe.com/7sY14h9LQeSn86Kf2v6kg02','_blank')">Commencer →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Témoignage -->
+  <div style="background:var(--noir);padding:60px;text-align:center;">
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-style:italic;color:rgba(255,255,255,0.7);max-width:600px;margin:0 auto 16px;line-height:1.5;">"En rejoignant SÉLECT, notre visibilité a explosé en deux semaines."</p>
+    <span style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--or-clair);">— Clara M., fondatrice de Velours Studio</span>
+    <div style="margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
+      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="goTo('login');showLogin('ins')">Inscrire ma marque gratuitement →</button>
+      <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;padding:16px 36px;" onclick="goTo('home')">← Retour à l'accueil</button>
+    </div>
+  </div>
+
 </div>
 
 </body>
