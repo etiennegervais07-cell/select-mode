@@ -1711,6 +1711,45 @@ function setLegalTab(tab, btn) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+
+// ══ USER TYPE SELECTOR ══
+function setUserType(type) {
+  document.getElementById('ls-type-select').style.display = 'none';
+  if(type === 'visiteur') {
+    document.getElementById('ls-visiteur').style.display = 'block';
+  } else {
+    document.getElementById('ls-ins').style.display = 'block';
+  }
+}
+function showDirectLogin() {
+  document.getElementById('ls-type-select').style.display = 'none';
+  document.getElementById('ls-con').style.display = 'block';
+}
+function showTypeSelect() {
+  document.querySelectorAll('.lsec').forEach(s => s.style.display = 'none');
+  document.getElementById('ls-type-select').style.display = 'block';
+}
+
+// ══ REGISTER VISITEUR ══
+async function doRegisterVisiteur() {
+  const first = document.getElementById('vFirst').value;
+  const email = document.getElementById('vEmail').value;
+  const pw = document.getElementById('vPw').value;
+  const terms = document.getElementById('vTerms').checked;
+  if(!first || !email || !pw) { toast("⚠️ Remplissez tous les champs"); return; }
+  if(!terms) { toast("⚠️ Acceptez les CGU"); return; }
+  if(pw.length < 8) { toast("⚠️ Mot de passe trop court (8 min)"); return; }
+  if(!window.sb) { toast("⏳ Chargement, réessayez..."); return; }
+  toast("⏳ Création du compte...");
+  const { data, error } = await window.sb.auth.signUp({
+    email, password: pw,
+    options: { data: { first_name: first, user_type: 'visiteur' } }
+  });
+  if(error) { toast("❌ " + error.message); return; }
+  toast("✅ Compte créé ! Vérifiez votre email.");
+  setTimeout(() => goTo('home'), 2000);
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
