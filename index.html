@@ -898,8 +898,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <div class="brand-hero-layout">
     <div class="brand-info">
       <div class="verified-badge">Marque Vérifiée</div>
-      <h1 class="brand-name">Maison<br>Éclat</h1>
-      <p class="brand-name-sub">Luxe Parisien depuis 1994</p>
+      <h1 class="brand-name" id="brandPageName">—</h1>
+      <p class="brand-name-sub" id="brandPageTagline">—</p>
       <p class="brand-desc" id="brandPageDesc2">Chargement...</p>
       <div class="brand-meta">
         <div><span class="meta-num" id="brandMetaProds">0</span><span class="meta-label">Produits</span></div>
@@ -1491,12 +1491,11 @@ function dPage(key, el) {
   const target = document.getElementById('dp-' + key);
   if(target) target.classList.add('active');
   
-  // Update sidebar active state - find by onclick attribute containing the key
+  // Update sidebar active state
   document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
   if(el) {
     el.classList.add('active');
   } else {
-    // Find the sidebar item by key
     document.querySelectorAll('.sb-item').forEach(i => {
       if(i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + key + "'")) {
         i.classList.add('active');
@@ -1508,6 +1507,37 @@ function dPage(key, el) {
   const titles = { dash:'Tableau de bord', products:'Produits', analytics:'Analytiques', collections:'Collections', settings:'Paramètres' };
   const titleEl = document.getElementById('dashSection');
   if(titleEl) titleEl.textContent = titles[key] || key;
+
+  // When opening settings, refresh data from Supabase
+  if(key === 'settings' && window.sb) {
+    window.sb.auth.getSession().then(({data:{session}}) => {
+      if(!session) return;
+      window.sb.from('marques').select('*').eq('user_id', session.user.id).single().then(({data:marque}) => {
+        if(!marque) return;
+        // Fill settings form
+        const fields = {
+          'settings-nom': marque.nom,
+          'settings-web': marque.site_web,
+          'settings-insta': marque.instagram,
+          'settings-desc': marque.description,
+          'settings-desc2': marque.description
+        };
+        Object.entries(fields).forEach(([id, val]) => {
+          const el = document.getElementById(id);
+          if(el) el.value = val || '';
+        });
+        // Fill plan info
+        const planLabels = {starter:'Plan Starter', pro:'Plan Pro', prestige:'Plan Prestige'};
+        const planPrices = {starter:'49 $ CAD / mois', pro:'149 $ CAD / mois', prestige:'399 $ CAD / mois'};
+        const pName = document.getElementById('settings-plan-name');
+        const pPrice = document.getElementById('settings-plan-price');
+        const pStatus = document.getElementById('settings-plan-status');
+        if(pName) pName.textContent = planLabels[marque.plan] || marque.plan;
+        if(pPrice) pPrice.textContent = planPrices[marque.plan] || '';
+        if(pStatus) pStatus.textContent = marque.abonnement_actif ? 'Actif ✅' : 'Inactif ❌';
+      });
+    });
+  }
 }
 function filterTable(v) {
   document.querySelectorAll('#pBody tr').forEach(r => { r.style.display = r.textContent.toLowerCase().includes(v.toLowerCase()) ? '' : 'none'; });
@@ -2321,18 +2351,49 @@ async function viewMyBrandPage() {
   const { data:{session} } = await window.sb.auth.getSession();
   if(!session) return;
   const { data: marque } = await window.sb
-    .from('marques')
-    .select('*')
-    .eq('user_id', session.user.id)
-    .single();
-  if(marque) {
-    updateBrandPage(marque);
-    // Load products count
-    const { data: prods } = await window.sb
-      .from('produits').select('id').eq('marque_id', marque.id);
-    const bpp = document.getElementById('brandMetaProds');
-    if(bpp) bpp.textContent = prods ? prods.length : 0;
+    .from('marques').select('*').eq('user_id', session.user.id).single();
+  if(!marque) return;
+
+  // Update ALL brand page elements immediately
+  const nameEl = document.getElementById('brandPageName');
+  if(nameEl) {
+    const parts = marque.nom.split(' ');
+    nameEl.innerHTML = parts.length > 1 ? parts[0] + '<br>' + parts.slice(1).join(' ') : marque.nom;
   }
+
+  const tagEl = document.getElementById('brandPageTagline');
+  if(tagEl) tagEl.textContent = marque.categorie ? marque.categorie.charAt(0).toUpperCase() + marque.categorie.slice(1) : 'Mode';
+
+  const descEl = document.getElementById('brandPageDesc2');
+  if(descEl) descEl.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
+
+  const storyEl = document.getElementById('brandPageStory');
+  if(storyEl) storyEl.textContent = marque.description || 'Découvrez notre collection.';
+
+  const boutiqueEl = document.getElementById('brandPageBoutiqueNameEl');
+  if(boutiqueEl) boutiqueEl.textContent = 'la boutique de ' + marque.nom;
+
+  const footerEl = document.getElementById('brandPageFooterName');
+  if(footerEl) footerEl.textContent = marque.nom + ' · Marque vérifiée ✦';
+
+  // Show/hide social buttons
+  const instaBtn = document.getElementById('brandInstagramBtn');
+  if(instaBtn) instaBtn.style.display = marque.instagram ? 'inline-block' : 'none';
+
+  const siteBtn = document.getElementById('brandSiteBtn');
+  if(siteBtn) siteBtn.style.display = marque.site_web ? 'inline-block' : 'none';
+
+  // Store for click handlers
+  currentBrandData = marque;
+
+  // Load products count
+  const { data: prods } = await window.sb
+    .from('produits').select('id').eq('marque_id', marque.id);
+  const n = prods ? prods.length : 0;
+  const bpp = document.getElementById('brandMetaProds');
+  if(bpp) bpp.textContent = n;
+  const bppm = document.getElementById('brandPageProds');
+  if(bppm) bppm.textContent = n;
 }
 
 // ══ SEARCH ══
@@ -2632,7 +2693,7 @@ updateSummary();
       <ul>
         <li><strong>Nom :</strong> Étienne Gervais</li>
         <li><strong>Statut :</strong> Travailleur autonome (auto-entrepreneur)</li>
-        <li><strong>Adresse :</strong> Victoriaville, Québec, Canada</li>
+        <li><strong>Province :</strong> Québec, Canada</li>
         <li><strong>Email :</strong> <a href="mailto:etiennegervais07@gmail.com" style="color:var(--or);">etiennegervais07@gmail.com</a></li>
         <li><strong>Numéro d'entreprise :</strong> En cours d'enregistrement</li>
       </ul>
@@ -2671,7 +2732,7 @@ updateSummary();
         <h4>Une question légale ?</h4>
         <p>Contactez-nous par email :</p>
         <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
-        <p>Victoriaville, Québec, Canada</p>
+        <p>Québec, Canada</p>
       </div>
     </div>
 
@@ -2777,7 +2838,7 @@ updateSummary();
         <h4>Responsable de la protection des données</h4>
         <p>Étienne Gervais</p>
         <p><a href="mailto:etiennegervais07@gmail.com">etiennegervais07@gmail.com</a></p>
-        <p>Victoriaville, Québec, Canada</p>
+        <p>Québec, Canada</p>
       </div>
     </div>
 
