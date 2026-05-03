@@ -843,7 +843,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <button class="btn-o" style="color:#fff;border-color:rgba(255,255,255,0.3);" onclick="goTo('brand')">Explorer →</button>
       </div>
       <div class="brands-grid">
-        <div class="brand-tile" onclick="goTo('brand')"><span class="b-new">Nouveau</span><div class="b-initials">ME</div><h4>Maison Éclat</h4><div class="b-cat">Luxe · Prêt-à-porter</div><div class="b-items">124 produits disponibles</div></div>
+        <div class="brand-tile" onclick="goTo('brand')" id="myBrandTile" style="display:none;"><div class="b-initials" id="myBrandInitials">—</div><h4 id="myBrandTileName">Ma marque</h4><div class="b-cat" id="myBrandTileCat">Mode</div></div>
         <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">UC</div><h4>Urbain Co.</h4><div class="b-cat">Streetwear · Casual</div><div class="b-items">86 produits disponibles</div></div>
         <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">TL</div><h4>Terra Lin</h4><div class="b-cat">Éco-responsable</div><div class="b-items">67 produits disponibles</div></div>
         <div class="brand-tile" onclick="goTo('brand')"><span class="b-new">Exclusif</span><div class="b-initials">NB</div><h4>Nuit Blanche</h4><div class="b-cat">Soirée · Couture</div><div class="b-items">203 produits disponibles</div></div>
@@ -900,11 +900,11 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="verified-badge">Marque Vérifiée</div>
       <h1 class="brand-name">Maison<br>Éclat</h1>
       <p class="brand-name-sub">Luxe Parisien depuis 1994</p>
-      <p class="brand-desc">Maison Éclat incarne l'élégance française dans sa forme la plus pure. Chaque pièce est conçue à Paris par des artisans d'exception.</p>
+      <p class="brand-desc" id="brandPageDesc2">Chargement...</p>
       <div class="brand-meta">
         <div><span class="meta-num" id="brandMetaProds">0</span><span class="meta-label">Produits</span></div>
         <div><span class="meta-num" id="brandMetaCols">0</span><span class="meta-label">Collections</span></div>
-        <div><span class="meta-num" id="brandMetaVille">—</span><span class="meta-label">Ville</span></div>
+        <div><span class="meta-num" id="brandMetaAns">—</span><span class="meta-label">Année</span></div>
       </div>
       <div class="brand-socials">
         <button class="social-btn" id="brandInstagramBtn" style="display:none;" onclick="openBrandInstagram()">Instagram</button>
@@ -950,7 +950,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="story-text">
         <div class="story-eyebrow">L'histoire de la maison</div>
         <h3 class="story-title">Née à Paris,<br><em>façonnée pour l'éternité.</em></h3>
-        <p class="story-body">Fondée en 1994 par Isabelle Marchand, Maison Éclat est née d'une conviction simple : la mode doit être un art de vivre. Depuis plus de 30 ans, chaque collection est conçue dans notre atelier du Marais.</p>
+        <p class="story-body" id="brandPageStory">La marque vous présentera son histoire bientôt.</p>
         <div class="story-quote">"Chaque pièce doit pouvoir traverser les décennies sans se fatiguer."</div>
       </div>
       <div class="story-visual">ME</div>
@@ -958,7 +958,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 
     <div class="visit-bar" style="background:var(--noir);color:#fff;">
       <div>
-        <h3 style="color:#fff;">Commandez directement sur<br><em style="color:var(--or);">la boutique de Maison Éclat</em></h3>
+        <h3 style="color:#fff;" id="brandPageBoutiqueTitle">Commandez directement sur<br><em style="color:var(--or);" id="brandPageBoutiqueNameEl">la boutique</em></h3>
         <p style="color:rgba(255,255,255,0.5);margin-top:8px;">SÉLECT vous présente les collections — pour passer commande, visitez directement le site officiel de la marque.</p>
         <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;">
           <div style="font-size:0.78rem;color:rgba(255,255,255,0.4);display:flex;align-items:center;gap:6px;">✓ Paiement sécurisé sur leur site</div>
@@ -973,7 +973,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
     </div>
   </div>
 
-  <div class="brand-footer"><span>© 2026 <a onclick="goTo('home')">SÉLECT</a></span><span>Maison Éclat · Marque vérifiée ✦</span></div>
+  <div class="brand-footer"><span>© 2026 <a onclick="goTo('home')">SÉLECT</a></span><span id="brandPageFooterName">SÉLECT · Marque vérifiée ✦</span></div>
 </div>
 
 <!-- ════════════════════════════
@@ -1260,7 +1260,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
               <div class="f-group"><label class="f-label">Nom de la marque</label><input class="f-input" id="settings-nom" placeholder="Nom de votre marque"></div>
               <div class="f-row2"><div class="f-group"><label class="f-label">Site web</label><input class="f-input" id="settings-web" placeholder="https://..."></div><div class="f-group"><label class="f-label">Instagram</label><input class="f-input" id="settings-insta" placeholder="@votremarque"></div></div>
               <div class="f-group"><label class="f-label">🔗 Lien vers votre boutique en ligne *</label><input class="f-input" placeholder="https://votre-boutique.com" id="boutiqueLink" value="https://maisoneClat.com/boutique"><p style="font-size:0.72rem;color:var(--gris);margin-top:6px;">Ce lien apparaît sur votre page publique — vos clients cliquent dessus pour commander directement sur votre site.</p></div>
-              <div class="f-group"><label class="f-label">Description</label><textarea class="f-input" rows="3" style="resize:vertical;">Maison Éclat incarne l'élégance française dans sa forme la plus pure.</textarea></div>
+              <div class="f-group"><label class="f-label">Description</label><textarea class="f-input" rows="3" style="resize:vertical;" id="settings-desc2" placeholder="Décrivez votre marque..."></textarea></div>
               <button class="save-btn" onclick="saveSettings()">Sauvegarder les modifications</button>
             </div>
             <div class="s-panel" id="st-notifs" style="display:none;">
@@ -1716,7 +1716,9 @@ async function loadDashboardData(user) {
     if(sNom) sNom.value = marque.nom || '';
     if(sWeb) sWeb.value = marque.site_web || '';
     if(sInsta) sInsta.value = marque.instagram || '';
-    if(sDesc) sDesc.value = (marque.description && marque.description !== 'Maison Éclat incarne l\'élégance française dans sa forme la plus pure.') ? marque.description : '';
+    if(sDesc) sDesc.value = marque.description || '';
+    const sDesc2 = document.getElementById('settings-desc2');
+    if(sDesc2) sDesc2.value = marque.description || '';
 
     // Fill subscription info
     const planLabels = {starter:'Plan Starter', pro:'Plan Pro', prestige:'Plan Prestige'};
@@ -2276,9 +2278,25 @@ function updateBrandPage(marque) {
     };
   }
 
-  // Ville
-  const villeEl = document.getElementById('brandMetaVille');
-  if(villeEl && marque.ville) villeEl.textContent = marque.ville;
+  // Annee
+  const ansEl = document.getElementById('brandMetaAns');
+  if(ansEl) ansEl.textContent = new Date().getFullYear();
+
+  // Update additional brand page elements
+  const desc2 = document.getElementById('brandPageDesc2');
+  if(desc2) desc2.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
+
+  const story = document.getElementById('brandPageStory');
+  if(story) story.textContent = marque.description || 'La marque vous présentera son histoire bientôt.';
+
+  const boutiqueNameEl = document.getElementById('brandPageBoutiqueNameEl');
+  if(boutiqueNameEl) boutiqueNameEl.textContent = 'la boutique de ' + marque.nom;
+
+  const footerName = document.getElementById('brandPageFooterName');
+  if(footerName) footerName.textContent = marque.nom + ' · Marque vérifiée ✦';
+
+  const desc3 = document.getElementById('brandPageDesc');
+  if(desc3) desc3.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
 }
 
 function openBrandInstagram() {
@@ -2293,6 +2311,28 @@ function openBrandBoutique() {
   const url = currentBrandData.boutique_url || currentBrandData.site_web;
   if(url) window.open(url, '_blank');
   else toast("⚠️ Aucun lien boutique configuré — ajoutez-en un dans vos paramètres");
+}
+
+
+// ══ VIEW MY BRAND PAGE ══
+async function viewMyBrandPage() {
+  showPage('brand');
+  if(!window.sb) return;
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) return;
+  const { data: marque } = await window.sb
+    .from('marques')
+    .select('*')
+    .eq('user_id', session.user.id)
+    .single();
+  if(marque) {
+    updateBrandPage(marque);
+    // Load products count
+    const { data: prods } = await window.sb
+      .from('produits').select('id').eq('marque_id', marque.id);
+    const bpp = document.getElementById('brandMetaProds');
+    if(bpp) bpp.textContent = prods ? prods.length : 0;
+  }
 }
 
 // ══ SEARCH ══
@@ -2423,7 +2463,7 @@ updateSummary();
   <div style="padding-top:80px;">
     <div style="background:var(--noir);padding:52px 60px 32px;text-align:center;">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4vw,3.4rem);font-weight:400;color:#fff;margin-bottom:8px;">Trouvez votre <em style="font-style:italic;color:var(--or);">marque idéale</em></h2>
-      <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:24px;">200+ marques · 50 000 produits · Toutes les catégories</p>
+      <p style="font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:24px;">200+ marques · 50 000 produits les catégories</p>
       <div style="max-width:600px;margin:0 auto;position:relative;">
         <input id="srchInput" type="text" placeholder="Rechercher une marque, un style..." oninput="runSearch()" style="width:100%;border:none;padding:16px 54px 16px 20px;font-family:'Outfit',sans-serif;font-size:0.95rem;background:#fff;color:var(--noir);outline:none;">
         <button onclick="runSearch()" style="position:absolute;right:0;top:0;bottom:0;background:var(--or);border:none;padding:0 18px;font-size:1.1rem;cursor:pointer;">🔍</button>
@@ -2465,14 +2505,14 @@ updateSummary();
           <span style="font-size:0.7rem;color:var(--gris);">Filtre : <strong id="srchLabel" style="color:var(--or);">Toutes</strong></span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" id="brandGrid">
-          <div class="br-card" onclick="goTo('brand')" data-cat="luxe" data-plan="prestige" data-name="maison eclat"><span class="br-card-badge">Prestige ✦</span><div class="br-card-init">ME</div><div class="br-card-name">Maison Éclat</div><div class="br-card-cat">Luxe · Prêt-à-porter</div><div class="br-card-items">124 produits · Paris</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="streetwear" data-plan="pro" data-name="urbain co"><div class="br-card-init">UC</div><div class="br-card-name">Urbain Co.</div><div class="br-card-cat">Streetwear · Casual</div><div class="br-card-items">86 produits · Lyon</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="durable" data-plan="pro" data-name="terra lin"><div class="br-card-init">TL</div><div class="br-card-name">Terra Lin</div><div class="br-card-cat">Éco-responsable</div><div class="br-card-items">67 produits · Bordeaux</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="soiree" data-plan="prestige" data-name="nuit blanche"><span class="br-card-badge">Prestige ✦</span><div class="br-card-init">NB</div><div class="br-card-name">Nuit Blanche</div><div class="br-card-cat">Soirée · Couture</div><div class="br-card-items">203 produits · Paris</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="luxe" data-plan="pro" data-name="atelier 12"><div class="br-card-init">A12</div><div class="br-card-name">Atelier 12</div><div class="br-card-cat">Artisanal · Femme</div><div class="br-card-items">51 produits · Marseille</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="homme" data-plan="pro" data-name="velours studio"><div class="br-card-init">VS</div><div class="br-card-name">Velours Studio</div><div class="br-card-cat">Homme · Luxe casual</div><div class="br-card-items">98 produits · Paris</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="durable" data-plan="starter" data-name="le jardin"><div class="br-card-init">LJ</div><div class="br-card-name">Le Jardin</div><div class="br-card-cat">Bohème · Lifestyle</div><div class="br-card-items">72 produits · Nantes</div></div>
-          <div class="br-card" onclick="goTo('brand')" data-cat="accessoires" data-plan="pro" data-name="noir et or"><div class="br-card-init">NO</div><div class="br-card-name">Noir &amp; Or</div><div class="br-card-cat">Accessoires · Maroquinerie</div><div class="br-card-items">144 produits · Paris</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="luxe" data-plan="prestige" data-name="maison eclat"><span class="br-card-badge">Prestige ✦</span><div class="br-card-init">ME</div><div class="br-card-name">Maison Éclat</div><div class="br-card-cat">Luxe · Prêt-à-porter</div><div class="br-card-items">124 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="streetwear" data-plan="pro" data-name="urbain co"><div class="br-card-init">UC</div><div class="br-card-name">Urbain Co.</div><div class="br-card-cat">Streetwear · Casual</div><div class="br-card-items">86 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="durable" data-plan="pro" data-name="terra lin"><div class="br-card-init">TL</div><div class="br-card-name">Terra Lin</div><div class="br-card-cat">Éco-responsable</div><div class="br-card-items">67 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="soiree" data-plan="prestige" data-name="nuit blanche"><span class="br-card-badge">Prestige ✦</span><div class="br-card-init">NB</div><div class="br-card-name">Nuit Blanche</div><div class="br-card-cat">Soirée · Couture</div><div class="br-card-items">203 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="luxe" data-plan="pro" data-name="atelier 12"><div class="br-card-init">A12</div><div class="br-card-name">Atelier 12</div><div class="br-card-cat">Artisanal · Femme</div><div class="br-card-items">51 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="homme" data-plan="pro" data-name="velours studio"><div class="br-card-init">VS</div><div class="br-card-name">Velours Studio</div><div class="br-card-cat">Homme · Luxe casual</div><div class="br-card-items">98 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="durable" data-plan="starter" data-name="le jardin"><div class="br-card-init">LJ</div><div class="br-card-name">Le Jardin</div><div class="br-card-cat">Bohème · Lifestyle</div><div class="br-card-items">72 produits</div></div>
+          <div class="br-card" onclick="goTo('brand')" data-cat="accessoires" data-plan="pro" data-name="noir et or"><div class="br-card-init">NO</div><div class="br-card-name">Noir &amp; Or</div><div class="br-card-cat">Accessoires · Maroquinerie</div><div class="br-card-items">144 produits</div></div>
         </div>
         <div class="no-res" id="srchNoRes">
           <p style="font-size:3rem;opacity:0.3;margin-bottom:14px;">🔍</p>
