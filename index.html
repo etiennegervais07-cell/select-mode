@@ -1116,7 +1116,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <div class="announce"><p>🎉 Votre page a été vue <strong>+42%</strong> cette semaine grâce à la mise en avant SÉLECT.</p><button class="announce-btn" onclick="dPage('analytics',null)">Voir les stats →</button></div>
       <div style="background:var(--or-pale);border:1px solid rgba(184,150,74,0.3);padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div style="font-size:0.82rem;">
-          <strong style="color:var(--noir);">Plan Pro actif</strong> 
+          <strong style="color:var(--noir);" id="planBannerText">Plan actif</strong> 
           <span style="color:var(--gris);margin-left:8px;">· Produits illimités · Lien boutique actif · Badge vérifié ✦</span>
         </div>
         <div style="display:flex;gap:8px;">
@@ -1274,7 +1274,12 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
             </div>
             <div class="s-panel" id="st-abo" style="display:none;">
               <div class="s-section-ttl">Abonnement actuel</div>
-              <div style="background:var(--noir);color:#fff;padding:22px;margin-bottom:20px;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:7px;">Plan actif</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;">Plan Pro</div><div style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:4px;">149 € / mois · Prélèvement le 1er du mois</div><div style="margin-top:14px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Prochain renouvellement : <span style="color:var(--or-clair);">1er juin 2026</span></div></div>
+              <div style="background:var(--noir);color:#fff;padding:22px;margin-bottom:20px;">
+                <div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:7px;">Plan actif</div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;" id="settings-plan-name">Chargement...</div>
+                <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:4px;" id="settings-plan-price">—</div>
+                <div style="margin-top:14px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Statut : <span style="color:var(--or-clair);" id="settings-plan-status">—</span></div>
+              </div>
               <div class="f-group"><label class="f-label">Carte enregistrée</label><input class="f-input" value="•••• •••• •••• 4242 — Visa — 09/27" readonly style="background:var(--creme);"></div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="t-btn" onclick="toast('✦ Upgrade Prestige')">Passer au Prestige →</button><button class="t-btn" onclick="toast('📄 Factures téléchargées')">Télécharger les factures</button><button class="t-btn danger" onclick="toast('⚠️ Résiliation à confirmer')">Résilier</button></div>
             </div>
@@ -1655,7 +1660,7 @@ function updateHomeBrands(marques) {
       <div class="b-initials">${m.nom.substring(0,2).toUpperCase()}</div>
       <h4>${m.nom}</h4>
       <div class="b-cat">${m.categorie || 'Mode'}</div>
-      <div class="b-items">${m.ville || 'France'}</div>
+
     </div>
   `).join('');
 }
@@ -1672,7 +1677,7 @@ function updateSearchBrands(marques) {
       <div class="br-card-init">${m.nom.substring(0,2).toUpperCase()}</div>
       <div class="br-card-name">${m.nom}</div>
       <div class="br-card-cat">${m.categorie||'Mode'}</div>
-      <div class="br-card-items">${m.ville||'France'}</div>
+      <div class="br-card-items">${m.categorie||'Mode'}</div>
     </div>
   `).join('');
   document.getElementById('srchCount').textContent = marques.length;
@@ -1686,7 +1691,6 @@ async function saveMarqueAfterRegister(userId, brand, first, last, email) {
     nom: brand,
     plan: 'starter',
     abonnement_actif: false,
-    ville: '',
     categorie: '',
     description: ''
   });
@@ -1768,7 +1772,7 @@ async function loadDashboardData(user) {
     const brandPageDesc = document.getElementById('brandPageDesc');
     const brandPageProds = document.getElementById('brandPageProds');
     if(brandPageName) brandPageName.innerHTML = marque.nom.replace(' ','<br>');
-    if(brandPageTagline) brandPageTagline.textContent = marque.categorie ? marque.categorie.charAt(0).toUpperCase() + marque.categorie.slice(1) + ' · ' + (marque.ville || 'Canada') : (marque.ville || 'Canada');
+    if(brandPageTagline) brandPageTagline.textContent = marque.categorie ? marque.categorie.charAt(0).toUpperCase() + marque.categorie.slice(1) : 'Mode';
     if(brandPageDesc) brandPageDesc.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
 
     // Update plan banner
