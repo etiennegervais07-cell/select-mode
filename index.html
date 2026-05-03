@@ -900,7 +900,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="verified-badge">Marque Vérifiée</div>
       <h1 class="brand-name" id="brandPageName">—</h1>
       <p class="brand-name-sub" id="brandPageTagline">—</p>
-      <p class="brand-desc" id="brandPageDesc2">Chargement...</p>
+      <p class="brand-desc" id="brandPageDesc2" style="font-size:0.95rem;line-height:1.8;color:#444;max-width:420px;margin-bottom:20px;">Chargement...</p>
       <div class="brand-meta">
         <div><span class="meta-num" id="brandMetaProds">0</span><span class="meta-label">Produits</span></div>
         <div><span class="meta-num" id="brandMetaCols">0</span><span class="meta-label">Collections</span></div>
@@ -950,7 +950,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="story-text">
         <div class="story-eyebrow">L'histoire de la maison</div>
         <h3 class="story-title">Née à Paris,<br><em>façonnée pour l'éternité.</em></h3>
-        <p class="story-body" id="brandPageStory">La marque vous présentera son histoire bientôt.</p>
+<p class="story-body" id="brandPageStory" style="line-height:1.8;color:#555;">La marque vous présentera son histoire bientôt.</p>
         <div class="story-quote">"Chaque pièce doit pouvoir traverser les décennies sans se fatiguer."</div>
       </div>
       <div class="story-visual">ME</div>
@@ -1625,6 +1625,7 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
     });
     // Charger les marques dès que Supabase est prêt
     loadMarques();
+    loadNavBrands();
   };
   document.head.appendChild(s);
 })();
@@ -1677,10 +1678,18 @@ function updateSearchBrands(marques) {
       <div class="br-card-init">${m.nom.substring(0,2).toUpperCase()}</div>
       <div class="br-card-name">${m.nom}</div>
       <div class="br-card-cat">${m.categorie||'Mode'}</div>
-      <div class="br-card-items">${m.categorie||'Mode'}</div>
     </div>
   `).join('');
-  document.getElementById('srchCount').textContent = marques.length;
+  // Update count
+  const cnt = document.getElementById('srchCount');
+  if(cnt) cnt.textContent = marques.length;
+  // Update nav search data too
+  navBrandsData = marques.map(m => ({
+    name: m.nom,
+    cat: m.categorie || 'Mode',
+    init: m.nom.substring(0,2).toUpperCase(),
+    plan: m.plan
+  }));
 }
 
 // ══ SAUVEGARDER LA MARQUE APRÈS INSCRIPTION ══
@@ -2142,31 +2151,47 @@ function removeFav(btn) {
 
 
 // ══ NAV SEARCH ══
-const navBrands = [
-  {name:'Maison Éclat', cat:'Luxe · Prêt-à-porter', init:'ME'},
-  {name:'Urbain Co.', cat:'Streetwear · Casual', init:'UC'},
-  {name:'Terra Lin', cat:'Éco-responsable', init:'TL'},
-  {name:'Nuit Blanche', cat:'Soirée · Couture', init:'NB'},
-  {name:'Atelier 12', cat:'Artisanal · Femme', init:'A12'},
-  {name:'Velours Studio', cat:'Homme · Luxe casual', init:'VS'},
-  {name:'Le Jardin', cat:'Bohème · Lifestyle', init:'LJ'},
-  {name:'Noir & Or', cat:'Accessoires', init:'NO'}
-];
+// Marques chargées depuis Supabase
+let navBrandsData = [];
+
+// Charger les marques depuis Supabase pour la recherche
+async function loadNavBrands() {
+  if(!window.sb) { setTimeout(loadNavBrands, 1000); return; }
+  try {
+    const { data } = await window.sb
+      .from('marques')
+      .select('nom, categorie, plan')
+      .eq('abonnement_actif', true);
+    if(data && data.length > 0) {
+      navBrandsData = data.map(m => ({
+        name: m.nom,
+        cat: m.categorie || 'Mode',
+        init: m.nom.substring(0,2).toUpperCase(),
+        plan: m.plan
+      }));
+    }
+  } catch(e) { console.log('Nav search: using default data'); }
+}
 
 function navSearch(val) {
   const dropdown = document.getElementById('navDropdown');
   if(!val || val.length < 1) { dropdown.style.display = 'none'; return; }
-  const results = navBrands.filter(b =>
+  
+  const results = navBrandsData.filter(b =>
     b.name.toLowerCase().includes(val.toLowerCase()) ||
     b.cat.toLowerCase().includes(val.toLowerCase())
   );
+  
   if(results.length === 0) {
     dropdown.innerHTML = '<div class="nav-no-result">Aucune marque trouvée</div>';
   } else {
     dropdown.innerHTML = results.map(b => `
       <div class="nav-result-item" onclick="goTo('brand');document.getElementById('navDropdown').style.display='none';document.getElementById('navSearchInput').value='';">
         <div class="nav-result-init">${b.init}</div>
-        <div><div class="nav-result-name">${b.name}</div><div class="nav-result-cat">${b.cat}</div></div>
+        <div>
+          <div class="nav-result-name">${b.name}</div>
+          <div class="nav-result-cat">${b.cat}</div>
+        </div>
       </div>
     `).join('');
   }
