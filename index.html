@@ -1699,7 +1699,7 @@ async function loadDashboardData(user) {
     if(sNom) sNom.value = marque.nom || '';
     if(sWeb) sWeb.value = marque.site_web || '';
     if(sInsta) sInsta.value = marque.instagram || '';
-    if(sDesc) sDesc.value = marque.description || '';
+    if(sDesc) sDesc.value = (marque.description && marque.description !== 'Maison Éclat incarne l\'élégance française dans sa forme la plus pure.') ? marque.description : '';
 
     // Fill subscription info
     const planLabels = {starter:'Plan Starter', pro:'Plan Pro', prestige:'Plan Prestige'};
@@ -1710,6 +1710,15 @@ async function loadDashboardData(user) {
     if(sPName) sPName.textContent = planLabels[marque.plan] || marque.plan;
     if(sPPrice) sPPrice.textContent = planPrices[marque.plan] || '';
     if(sPStatus) sPStatus.textContent = marque.abonnement_actif ? 'Actif' : 'Inactif';
+
+    // Update brand public page with real data
+    const brandPageName = document.getElementById('brandPageName');
+    const brandPageTagline = document.getElementById('brandPageTagline');
+    const brandPageDesc = document.getElementById('brandPageDesc');
+    const brandPageProds = document.getElementById('brandPageProds');
+    if(brandPageName) brandPageName.innerHTML = marque.nom.replace(' ','<br>');
+    if(brandPageTagline) brandPageTagline.textContent = marque.categorie ? marque.categorie.charAt(0).toUpperCase() + marque.categorie.slice(1) + ' · ' + (marque.ville || 'Canada') : (marque.ville || 'Canada');
+    if(brandPageDesc) brandPageDesc.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
 
     // Update plan banner
     const planBannerText = document.getElementById('planBannerText');
@@ -1734,6 +1743,10 @@ async function loadDashboardData(user) {
       // Mettre à jour le compteur produits dans sidebar
       const pCount = document.querySelector('.sb-badge');
       if(pCount) pCount.textContent = produits.length;
+
+      // Update brand page stats
+      const bpp = document.getElementById('brandPageProds');
+      if(bpp) bpp.textContent = produits.length;
 
       // Mettre à jour KPI produits actifs
       const kpiProd = document.getElementById('kpi-prod');
