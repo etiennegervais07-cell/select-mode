@@ -1138,9 +1138,9 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
               <line x1="0" y1="30" x2="500" y2="30" stroke="#eee" stroke-width="1"/>
               <line x1="0" y1="70" x2="500" y2="70" stroke="#eee" stroke-width="1"/>
               <line x1="0" y1="110" x2="500" y2="110" stroke="#eee" stroke-width="1"/>
-              <path d="M20,95 L75,78 L130,65 L185,80 L240,50 L295,38 L350,28 L405,33 L460,18" fill="none" stroke="#b8964a" stroke-width="2.5" stroke-linejoin="round"/>
-              <path d="M20,95 L75,78 L130,65 L185,80 L240,50 L295,38 L350,28 L405,33 L460,18 L460,130 L20,130 Z" fill="url(#gv)"/>
-              <path d="M20,115 L75,108 L130,105 L185,110 L240,96 L295,90 L350,84 L405,87 L460,74" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="4,2"/>
+              <path d="M20,130 L460,130" fill="none" stroke="#b8964a" stroke-width="2.5" stroke-linejoin="round"/>
+              <path d="M20,130 L460,130 L460,130 L20,130 Z" fill="url(#gv)"/>
+              <path d="M20,130 L460,130" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="4,2"/>
               <circle cx="20" cy="132" r="3" fill="#b8964a"/><text x="26" y="136" font-size="8" fill="#888">Vues</text>
               <circle cx="65" cy="132" r="3" fill="#27ae60"/><text x="71" y="136" font-size="8" fill="#888">Clics</text>
             </svg>
@@ -1621,6 +1621,9 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
         if(marque) {
           currentUserSubscribed = marque.abonnement_actif === true;
           currentUserPlan = marque.plan;
+        } else {
+          currentUserSubscribed = false;
+          currentUserPlan = null;
         }
       }
     });
@@ -2160,7 +2163,7 @@ let navBrandsData = [];
 
 // Charger les marques depuis Supabase pour la recherche
 async function loadNavBrands() {
-  if(!window.sb) { setTimeout(loadNavBrands, 1000); return; }
+  if(!window.sb) { setTimeout(loadNavBrands, 800); return; }
   try {
     const { data } = await window.sb
       .from('marques')
@@ -2174,7 +2177,9 @@ async function loadNavBrands() {
         plan: m.plan
       }));
     }
-  } catch(e) { console.log('Nav search: using default data'); }
+  } catch(e) {
+    console.log('Nav search fallback');
+  }
 }
 
 function navSearch(val) {
@@ -2223,16 +2228,20 @@ async function checkAndRedirect() {
   if(!session) { goTo('login'); return; }
   const { data: marque } = await window.sb
     .from('marques')
-    .select('id, abonnement_actif')
+    .select('id, abonnement_actif, plan, nom')
     .eq('user_id', session.user.id)
     .single();
   if(marque && marque.abonnement_actif) {
-    goTo('dashboard');
+    currentUserSubscribed = true;
+    currentUserPlan = marque.plan;
+    showPage('dashboard');
     loadDashboardData(session.user);
-  } else if(marque) {
-    goTo('choose-plan');
+  } else if(marque && !marque.abonnement_actif) {
+    showPage('choose-plan');
   } else {
-    goTo('visitor');
+    // No brand = visitor
+    showPage('visitor');
+    loadVisitorData(session.user);
   }
 }
 
