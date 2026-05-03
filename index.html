@@ -2134,6 +2134,7 @@ function setVisitorTab(tab, btn) {
   if(btn) btn.classList.add('active');
   document.querySelectorAll('.visitor-section').forEach(s => s.classList.remove('active'));
   document.getElementById('vt-' + tab).classList.add('active');
+  if(tab === 'collections') loadVisitorBrands();
 }
 
 function removeFav(btn) {
@@ -2435,6 +2436,40 @@ async function viewMyBrandPage() {
   if(bppm) bppm.textContent = n;
 }
 
+
+// ══ VISITOR DASHBOARD DATA ══
+async function loadVisitorBrands() {
+  if(!window.sb) return;
+  const { data } = await window.sb
+    .from('marques').select('nom, categorie, plan').eq('abonnement_actif', true).limit(6);
+  const grid = document.getElementById('visitorBrandsGrid');
+  if(!grid || !data || data.length === 0) {
+    if(grid) grid.innerHTML = '<div style="padding:40px;text-align:center;color:var(--gris);grid-column:1/-1;"><p style=\"font-size:0.88rem;\">Aucune marque pour linstant</p></div>';
+    return;
+  }
+  grid.innerHTML = data.map(m => `
+    <div class="br-card" onclick="goTo('brand')">
+      ${m.plan==='prestige' ? '<span class="br-card-badge">Prestige ✦</span>' : ''}
+      <div class="br-card-init">${m.nom.substring(0,2).toUpperCase()}</div>
+      <div class="br-card-name">${m.nom}</div>
+      <div class="br-card-cat">${m.categorie||'Mode'}</div>
+    </div>
+  `).join('');
+}
+async function loadVisitorData(user) {
+  if(!window.sb || !user) return;
+  // Load visitor name
+  const firstName = user.user_metadata?.first_name || user.email.split('@')[0];
+  const visName = document.getElementById('visitorName');
+  if(visName) visName.textContent = firstName;
+  
+  // Load visitor email in account tab
+  const vEmail = document.getElementById('vUpdateEmail');
+  if(vEmail) vEmail.value = user.email || '';
+  const vFirst = document.getElementById('vUpdateFirst');
+  if(vFirst) vFirst.value = firstName || '';
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -2521,8 +2556,9 @@ async function doLogin(){
       // Marque sans abonnement → page pour choisir un plan
       goTo('choose-plan');
     } else {
-      // Pas de marque → dashboard visiteur
+      // Pas de marque → dashboard visiteur simple
       goTo('visitor');
+      loadVisitorData(data.user);
     }
   }, 1600);
 }
@@ -2932,8 +2968,8 @@ updateSummary();
 
   <div class="visitor-content">
     <div class="visitor-welcome">
-      <h2>Mon espace <em>SÉLECT</em></h2>
-      <p>Retrouvez vos marques favorites et découvrez les dernières collections.</p>
+      <h2>Bonjour, <em id="visitorName">...</em> 👋</h2>
+      <p>Explorez les collections et sauvegardez vos marques favorites.</p>
     </div>
 
     <div class="visitor-tabs">
@@ -2982,26 +3018,10 @@ updateSummary();
 
     <!-- Nouvelles collections -->
     <div class="visitor-section" id="vt-collections">
-      <p style="font-size:0.88rem;color:var(--gris);margin-bottom:24px;">Les dernières collections ajoutées sur SÉLECT.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
-        <div class="br-card" onclick="goTo('brand')">
-          <span class="br-card-badge">Nouveau ✦</span>
-          <div class="br-card-init">ME</div>
-          <div class="br-card-name">Maison Éclat</div>
-          <div class="br-card-cat">Collection SS 2026</div>
-          <div class="br-card-items">124 nouveaux produits</div>
-        </div>
-        <div class="br-card" onclick="goTo('brand')">
-          <div class="br-card-init">NB</div>
-          <div class="br-card-name">Nuit Blanche</div>
-          <div class="br-card-cat">Collection Soirée 2026</div>
-          <div class="br-card-items">86 nouveaux produits</div>
-        </div>
-        <div class="br-card" onclick="goTo('brand')">
-          <div class="br-card-init">TL</div>
-          <div class="br-card-name">Terra Lin</div>
-          <div class="br-card-cat">Collection Éco SS 2026</div>
-          <div class="br-card-items">45 nouveaux produits</div>
+      <p style="font-size:0.88rem;color:var(--gris);margin-bottom:24px;">Les dernières marques ajoutées sur SÉLECT.</p>
+      <div id="visitorBrandsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
+        <div style="padding:40px;text-align:center;color:var(--gris);grid-column:1/-1;">
+          <p style="font-size:0.88rem;">Chargement des marques...</p>
         </div>
       </div>
       <div style="text-align:center;margin-top:28px;">
