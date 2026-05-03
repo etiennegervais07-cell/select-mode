@@ -1326,9 +1326,10 @@ const planData = {
 
 // ══ ROUTER ══
 function goTo(page) {
-  // Block dashboard access without active subscription
-  if(page === 'dashboard' && !currentUserSubscribed) {
-    page = 'choose-plan';
+  // Always verify subscription from Supabase when going to dashboard
+  if(page === 'dashboard') {
+    verifyAndGoToDashboard();
+    return;
   }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const target = document.getElementById('page-' + page);
@@ -1336,6 +1337,51 @@ function goTo(page) {
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
   document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if(target) target.classList.add('active');
+  const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
+  document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function verifyAndGoToDashboard() {
+  // Reset subscription status
+  currentUserSubscribed = false;
+  currentUserPlan = null;
+
+  if(!window.sb) { showPage('login'); return; }
+
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) { showPage('login'); return; }
+
+  // Always check from database - never trust cached value
+  const { data: marque, error } = await window.sb
+    .from('marques')
+    .select('id, abonnement_actif, plan, nom')
+    .eq('user_id', session.user.id)
+    .single();
+
+  if(error || !marque) {
+    // No brand found - go to visitor dashboard
+    showPage('visitor');
+    return;
+  }
+
+  if(!marque.abonnement_actif) {
+    // Brand exists but no active subscription
+    showPage('choose-plan');
+    return;
+  }
+
+  // Valid subscription - grant access
+  currentUserSubscribed = true;
+  currentUserPlan = marque.plan;
+  showPage('dashboard');
+  loadDashboardData(session.user);
 }
 
 function scrollTo2(id) {
@@ -1461,12 +1507,26 @@ function sTab(tab, el) {
 }
 
 // ══ MODAL ══
-function openModal() {
-  if(!currentUserSubscribed) {
+async function openModal() {
+  // Always verify from database
+  if(!window.sb) { toast("🔒 Connectez-vous dabord"); return; }
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) { toast("🔒 Connectez-vous dabord"); showPage('login'); return; }
+
+  const { data: marque } = await window.sb
+    .from('marques')
+    .select('abonnement_actif, plan')
+    .eq('user_id', session.user.id)
+    .single();
+
+  if(!marque || !marque.abonnement_actif) {
     toast("🔒 Abonnement requis pour ajouter des produits");
-    setTimeout(() => goTo('choose-plan'), 1000);
+    setTimeout(() => showPage('choose-plan'), 1000);
     return;
   }
+
+  currentUserSubscribed = true;
+  currentUserPlan = marque.plan;
   document.getElementById('modalOv').classList.add('open');
   document.body.style.overflow='hidden';
 }
@@ -1832,9 +1892,11 @@ async function deleteProduit(id) {
 
 // ══ DÉCONNEXION ══
 async function doLogout() {
+  currentUserSubscribed = false;
+  currentUserPlan = null;
   if(window.sb) await window.sb.auth.signOut();
   toast("👋 Déconnecté");
-  goTo('home');
+  showPage('home');
   const el = document.querySelector('[onclick*="dashboard"]');
   if(el){ el.textContent = 'Mon espace'; el.setAttribute('onclick',"goTo('login')"); }
 }
