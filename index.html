@@ -902,14 +902,14 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <p class="brand-name-sub">Luxe Parisien depuis 1994</p>
       <p class="brand-desc">Maison Éclat incarne l'élégance française dans sa forme la plus pure. Chaque pièce est conçue à Paris par des artisans d'exception.</p>
       <div class="brand-meta">
-        <div><span class="meta-num">124</span><span class="meta-label">Produits</span></div>
-        <div><span class="meta-num">4</span><span class="meta-label">Collections</span></div>
-        <div><span class="meta-num">30</span><span class="meta-label">Ans d'histoire</span></div>
+        <div><span class="meta-num" id="brandMetaProds">0</span><span class="meta-label">Produits</span></div>
+        <div><span class="meta-num" id="brandMetaCols">0</span><span class="meta-label">Collections</span></div>
+        <div><span class="meta-num" id="brandMetaVille">—</span><span class="meta-label">Ville</span></div>
       </div>
       <div class="brand-socials">
-        <button class="social-btn">Instagram</button>
-        <button class="social-btn">Site officiel</button>
-        <button class="social-btn">Contact</button>
+        <button class="social-btn" id="brandInstagramBtn" style="display:none;" onclick="openBrandInstagram()">Instagram</button>
+        <button class="social-btn" id="brandSiteBtn" style="display:none;" onclick="openBrandSite()">Site officiel</button>
+        <button class="social-btn" id="brandBoutiqueBtn" onclick="openBrandBoutique()">Visiter la boutique →</button>
       </div>
     </div>
     <div class="brand-visual">
@@ -1261,7 +1261,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
               <div class="f-row2"><div class="f-group"><label class="f-label">Site web</label><input class="f-input" id="settings-web" placeholder="https://..."></div><div class="f-group"><label class="f-label">Instagram</label><input class="f-input" id="settings-insta" placeholder="@votremarque"></div></div>
               <div class="f-group"><label class="f-label">🔗 Lien vers votre boutique en ligne *</label><input class="f-input" placeholder="https://votre-boutique.com" id="boutiqueLink" value="https://maisoneClat.com/boutique"><p style="font-size:0.72rem;color:var(--gris);margin-top:6px;">Ce lien apparaît sur votre page publique — vos clients cliquent dessus pour commander directement sur votre site.</p></div>
               <div class="f-group"><label class="f-label">Description</label><textarea class="f-input" rows="3" style="resize:vertical;">Maison Éclat incarne l'élégance française dans sa forme la plus pure.</textarea></div>
-              <button class="save-btn" onclick="toast('✓ Profil mis à jour')">Sauvegarder les modifications</button>
+              <button class="save-btn" onclick="saveSettings()">Sauvegarder les modifications</button>
             </div>
             <div class="s-panel" id="st-notifs" style="display:none;">
               <div class="s-section-ttl">Notifications</div>
@@ -1712,6 +1712,8 @@ async function loadDashboardData(user) {
     if(sPStatus) sPStatus.textContent = marque.abonnement_actif ? 'Actif' : 'Inactif';
 
     // Update brand public page with real data
+    currentBrandData = marque;
+    updateBrandPage(marque);
     const brandPageName = document.getElementById('brandPageName');
     const brandPageTagline = document.getElementById('brandPageTagline');
     const brandPageDesc = document.getElementById('brandPageDesc');
@@ -1747,6 +1749,8 @@ async function loadDashboardData(user) {
       // Update brand page stats
       const bpp = document.getElementById('brandPageProds');
       if(bpp) bpp.textContent = produits.length;
+      const bppm = document.getElementById('brandMetaProds');
+      if(bppm) bppm.textContent = produits.length;
 
       // Mettre à jour KPI produits actifs
       const kpiProd = document.getElementById('kpi-prod');
@@ -2166,6 +2170,112 @@ async function checkPaymentAndActivate() {
   } else {
     toast("⏳ Paiement non encore détecté - réessayez dans quelques minutes");
   }
+}
+
+
+// ══ SAVE SETTINGS ══
+let currentBrandData = {};
+
+async function saveSettings() {
+  if(!window.sb) { toast("⏳ Chargement..."); return; }
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) { toast("⚠️ Connectez-vous dabord"); return; }
+
+  const nom = document.getElementById('settings-nom')?.value;
+  const site_web = document.getElementById('settings-web')?.value;
+  const instagram = document.getElementById('settings-insta')?.value;
+  const boutique_url = document.getElementById('boutiqueLink')?.value;
+  const description = document.getElementById('settings-desc')?.value;
+
+  if(!nom) { toast("⚠️ Entrez le nom de votre marque"); return; }
+
+  toast("⏳ Sauvegarde en cours...");
+
+  const { error } = await window.sb
+    .from('marques')
+    .update({ nom, site_web, instagram, description })
+    .eq('user_id', session.user.id);
+
+  if(error) { toast("❌ Erreur: " + error.message); return; }
+
+  // Update sidebar name
+  const sbName = document.querySelector('.sb-brand-name');
+  if(sbName) sbName.textContent = nom;
+
+  // Update brand page in real time
+  updateBrandPage({ nom, site_web, instagram, description, boutique_url });
+
+  // Save to local state
+  currentBrandData = { nom, site_web, instagram, description, boutique_url };
+
+  toast("✅ Profil mis à jour !");
+}
+
+function updateBrandPage(marque) {
+  // Name
+  const nameEl = document.getElementById('brandPageName');
+  if(nameEl) nameEl.innerHTML = marque.nom ? marque.nom.replace(' ','<br>') : 'Ma marque';
+
+  // Description
+  const descEl = document.getElementById('brandPageDesc');
+  if(descEl) descEl.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
+
+  // Tagline
+  const tagEl = document.getElementById('brandPageTagline');
+  if(tagEl && marque.categorie) tagEl.textContent = marque.categorie;
+
+  // Instagram button
+  const instaBtn = document.getElementById('brandInstagramBtn');
+  if(instaBtn) {
+    if(marque.instagram) {
+      instaBtn.style.display = 'inline-block';
+      instaBtn.onclick = () => {
+        const handle = marque.instagram.replace('@','');
+        window.open('https://instagram.com/' + handle, '_blank');
+      };
+    } else {
+      instaBtn.style.display = 'none';
+    }
+  }
+
+  // Site officiel button
+  const siteBtn = document.getElementById('brandSiteBtn');
+  if(siteBtn) {
+    if(marque.site_web) {
+      siteBtn.style.display = 'inline-block';
+      siteBtn.onclick = () => window.open(marque.site_web, '_blank');
+    } else {
+      siteBtn.style.display = 'none';
+    }
+  }
+
+  // Boutique button
+  const boutiqueBtn = document.getElementById('brandBoutiqueBtn');
+  if(boutiqueBtn) {
+    boutiqueBtn.onclick = () => {
+      const url = marque.boutique_url || marque.site_web;
+      if(url) window.open(url, '_blank');
+      else toast("⚠️ Aucun lien boutique configuré");
+    };
+  }
+
+  // Ville
+  const villeEl = document.getElementById('brandMetaVille');
+  if(villeEl && marque.ville) villeEl.textContent = marque.ville;
+}
+
+function openBrandInstagram() {
+  if(currentBrandData.instagram) {
+    window.open('https://instagram.com/' + currentBrandData.instagram.replace('@',''), '_blank');
+  }
+}
+function openBrandSite() {
+  if(currentBrandData.site_web) window.open(currentBrandData.site_web, '_blank');
+}
+function openBrandBoutique() {
+  const url = currentBrandData.boutique_url || currentBrandData.site_web;
+  if(url) window.open(url, '_blank');
+  else toast("⚠️ Aucun lien boutique configuré — ajoutez-en un dans vos paramètres");
 }
 
 // ══ SEARCH ══
