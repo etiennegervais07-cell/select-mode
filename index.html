@@ -1083,11 +1083,11 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 <div class="page" id="page-dashboard">
   <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
-    <div class="sb-brand"><div class="sb-brand-name">Maison Éclat</div><div class="sb-brand-plan"><span class="pulse"></span>Plan Pro · Actif</div></div>
+    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">Chargement...</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Chargement...</div></div>
     <nav class="sb-nav">
       <div class="sb-sec-lbl">Principal</div>
       <div class="sb-item active" onclick="dPage('dash',this)"><span class="sb-icon">📊</span><span>Tableau de bord</span></div>
-      <div class="sb-item" onclick="dPage('products',this)"><span class="sb-icon">👗</span><span>Produits</span><span class="sb-badge">124</span></div>
+      <div class="sb-item" onclick="dPage('products',this)"><span class="sb-icon">👗</span><span>Produits</span><span class="sb-badge" id="sbProdBadge">0</span></div>
       <div class="sb-item" onclick="dPage('analytics',this)"><span class="sb-icon">📈</span><span>Analytiques</span></div>
       <div class="sb-item" onclick="dPage('collections',this)"><span class="sb-icon">🗂️</span><span>Collections</span></div>
       <div class="sb-sec-lbl">Marque</div>
@@ -1096,7 +1096,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="sb-item"><span class="sb-icon">💬</span><span>Support</span><span class="sb-badge red">1</span></div>
       <div class="sb-item" onclick="doLogout()"><span class="sb-icon">🚪</span><span>Déconnexion</span></div>
     </nav>
-    <div class="sb-footer" id="sbFooter">Chargement...<br><a onclick="dPage('settings',document.querySelector('[onclick*=settings]'))">Gérer mon plan</a></div>
+    <div class="sb-footer" id="sbFooter">Chargement...</div>
   </aside>
 
   <div class="dash-main">
@@ -1113,14 +1113,14 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 
       <!-- Dashboard home -->
       <div class="d-page active" id="dp-dash">
-        <div class="announce"><p>🎉 Votre page a été vue <strong>+42%</strong> cette semaine grâce à la mise en avant SÉLECT.</p><button class="announce-btn" onclick="dPage('analytics',document.querySelector('[onclick*=analytics]'))">Voir les stats →</button></div>
+        <div class="announce"><p>🎉 Votre page a été vue <strong>+42%</strong> cette semaine grâce à la mise en avant SÉLECT.</p><button class="announce-btn" onclick="dPage('analytics',null)">Voir les stats →</button></div>
       <div style="background:var(--or-pale);border:1px solid rgba(184,150,74,0.3);padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div style="font-size:0.82rem;">
           <strong style="color:var(--noir);">Plan Pro actif</strong> 
           <span style="color:var(--gris);margin-left:8px;">· Produits illimités · Lien boutique actif · Badge vérifié ✦</span>
         </div>
         <div style="display:flex;gap:8px;">
-          <button class="d-btn" onclick="dPage('settings',document.querySelector('[onclick*=settings]'))">⚙️ Gérer mon plan</button>
+          <button class="d-btn" onclick="dPage('settings',null)">⚙️ Gérer mon plan</button>
           <button class="d-btn primary" onclick="dPage('products',document.querySelector('[onclick*=products]'))">+ Ajouter des produits</button>
         </div>
       </div>
@@ -1484,13 +1484,30 @@ function doPayment() {
 
 // ══ DASHBOARD ══
 function dPage(key, el) {
+  // Hide all dashboard pages
   document.querySelectorAll('.d-page').forEach(p => p.classList.remove('active'));
-  document.getElementById('dp-' + key).classList.add('active');
+  
+  // Show target page
+  const target = document.getElementById('dp-' + key);
+  if(target) target.classList.add('active');
+  
+  // Update sidebar active state - find by onclick attribute containing the key
   document.querySelectorAll('.sb-item').forEach(i => i.classList.remove('active'));
-  if (el) el.classList.add('active');
+  if(el) {
+    el.classList.add('active');
+  } else {
+    // Find the sidebar item by key
+    document.querySelectorAll('.sb-item').forEach(i => {
+      if(i.getAttribute('onclick') && i.getAttribute('onclick').includes("'" + key + "'")) {
+        i.classList.add('active');
+      }
+    });
+  }
+  
+  // Update breadcrumb title
   const titles = { dash:'Tableau de bord', products:'Produits', analytics:'Analytiques', collections:'Collections', settings:'Paramètres' };
-  document.getElementById('dashSection').textContent = titles[key] || key;
-  event && event.preventDefault && event.preventDefault();
+  const titleEl = document.getElementById('dashSection');
+  if(titleEl) titleEl.textContent = titles[key] || key;
 }
 function filterTable(v) {
   document.querySelectorAll('#pBody tr').forEach(r => { r.style.display = r.textContent.toLowerCase().includes(v.toLowerCase()) ? '' : 'none'; });
@@ -1669,7 +1686,7 @@ async function loadDashboardData(user) {
     }
 
     // Mettre à jour le nom dans le sidebar
-    const sbName = document.querySelector('.sb-brand-name');
+    const sbName = document.getElementById('sbBrandName');
     if(sbName) sbName.textContent = marque.nom;
 
     // Mettre à jour le prénom dans le greeting
@@ -1688,7 +1705,7 @@ async function loadDashboardData(user) {
     const planInfoEl = document.querySelector('[style*="Plan Pro actif"]');
 
     // Mettre à jour le plan
-    const sbPlan = document.querySelector('.sb-brand-plan');
+    const sbPlan = document.getElementById('sbBrandPlan');
     if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
 
     // Fill settings with real data
@@ -1743,7 +1760,7 @@ async function loadDashboardData(user) {
 
     if(produits) {
       // Mettre à jour le compteur produits dans sidebar
-      const pCount = document.querySelector('.sb-badge');
+      const pCount = document.getElementById('sbProdBadge');
       if(pCount) pCount.textContent = produits.length;
 
       // Update brand page stats
@@ -2198,8 +2215,8 @@ async function saveSettings() {
 
   if(error) { toast("❌ Erreur: " + error.message); return; }
 
-  // Update sidebar name
-  const sbName = document.querySelector('.sb-brand-name');
+  // Update sidebar name in real time
+  const sbName = document.getElementById('sbBrandName');
   if(sbName) sbName.textContent = nom;
 
   // Update brand page in real time
