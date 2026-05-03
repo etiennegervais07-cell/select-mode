@@ -1068,7 +1068,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="sum-lines">
         <div class="sum-line"><span class="lbl">Abonnement</span><span class="val" id="sumBase">149 €</span></div>
         <div class="sum-line disc" id="discLine" style="display:none;"><span class="lbl">Réduction annuelle (−20%)</span><span class="val" id="discVal">−30 €</span></div>
-        <div class="sum-line"><span class="lbl">TVA (20%)</span><span class="val" id="sumTax">29,80 €</span></div>
+        <div class="sum-line"><span class="lbl">TVA (0%)</span><span class="val" id="sumTax">29,80 €</span></div>
         <div class="sum-line total"><span class="lbl">Total / mois</span><span class="val" id="sumTotal">178,80 €</span></div>
       </div>
       <div class="sum-feats"><div class="sum-feat-title" id="sumFeatTitle">Inclus dans le Plan Pro</div><div id="sumFeats"><div class="feat-item">Produits et collections illimités</div><div class="feat-item">Badge "Marque vérifiée" ✦</div><div class="feat-item">Mise en avant dans les résultats</div><div class="feat-item">Analytics complet</div><div class="feat-item">Support prioritaire 7j/7</div></div></div>
@@ -1167,17 +1167,17 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         </div>
         <div class="bottom-row">
           <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Produits les plus vus</div><span class="see-all" onclick="dPage('products',document.querySelector('[onclick*=products]'))">Voir tout →</span></div>
-            <div class="prod-row"><div class="p-thumb" style="background:linear-gradient(145deg,#e8e0d4,#c8bfb0);">✦</div><div class="p-info"><div class="p-name">Robe Lumière en soie</div><div class="p-cat-sm">Robes · SS 2026</div><div class="p-bar"><div class="p-bar-fill" style="width:92%"></div></div></div><div class="p-views"><strong>1 204</strong>vues</div></div>
-            <div class="prod-row"><div class="p-thumb" style="background:linear-gradient(145deg,#1a1814,#2e2820);"></div><div class="p-info"><div class="p-name">Trench Minuit en gabardine</div><div class="p-cat-sm">Manteaux · Édition limitée</div><div class="p-bar"><div class="p-bar-fill" style="width:74%"></div></div></div><div class="p-views"><strong>976</strong>vues</div></div>
-            <div class="prod-row"><div class="p-thumb" style="background:linear-gradient(145deg,#2a1830,#1a1a2e);"></div><div class="p-info"><div class="p-name">Robe Velours Nuit</div><div class="p-cat-sm">Robes · AW 2025</div><div class="p-bar"><div class="p-bar-fill" style="width:61%"></div></div></div><div class="p-views"><strong>801</strong>vues</div></div>
-            <div class="prod-row"><div class="p-thumb" style="background:linear-gradient(145deg,#e0d8cc,#ccc4b8);">✦</div><div class="p-info"><div class="p-name">Sac Aurore en cuir grainé</div><div class="p-cat-sm">Accessoires</div><div class="p-bar"><div class="p-bar-fill" style="width:48%"></div></div></div><div class="p-views"><strong>632</strong>vues</div></div>
+            <div id="topProductsList" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucun produit pour linstant</p><p style="font-size:0.76rem;">Ajoutez vos premiers produits pour voir les statistiques</p></div>
+            
+            
+            
           </div>
           <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Activité récente</div><span class="see-all">Tout voir →</span></div>
-            <div class="act-item"><div class="act-icon v">👁</div><div><div class="act-desc"><strong>143 visiteurs</strong> ont vu votre page aujourd'hui</div><div class="act-time">Il y a 2 heures</div></div></div>
-            <div class="act-item"><div class="act-icon c">🖱</div><div><div class="act-desc"><strong>28 clics</strong> vers votre boutique depuis la Robe Lumière</div><div class="act-time">Il y a 4 heures</div></div></div>
-            <div class="act-item"><div class="act-icon f">♥</div><div><div class="act-desc">Le Trench Minuit a été mis en <strong>favoris 12 fois</strong></div><div class="act-time">Hier à 18h14</div></div></div>
-            <div class="act-item"><div class="act-icon n">✦</div><div><div class="act-desc">Votre page a été <strong>mise en avant</strong> sur la homepage SÉLECT</div><div class="act-time">Hier à 09h00</div></div></div>
-            <div class="act-item"><div class="act-icon v">👁</div><div><div class="act-desc"><strong>+340 vues</strong> suite à la newsletter SÉLECT d'avril</div><div class="act-time">22 avril 2026</div></div></div>
+            <div id="activityFeed" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucune activité pour linstant</p><p style="font-size:0.76rem;">Votre activité apparaitra ici dès que des visiteurs consulteront votre page</p></div>
+            
+            
+            
+            
           </div>
         </div>
       </div>
@@ -1204,30 +1204,30 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="d-page" id="dp-analytics">
         <div class="d-page-header"><div><h1 class="d-title">Ana<em>lytiques</em></h1><p class="d-sub">30 derniers jours</p></div><button class="d-btn">↓ Exporter PDF</button></div>
         <div class="kpi-grid" style="margin-bottom:24px;">
-          <div class="kpi" data-icon="👤"><div class="kpi-lbl">Visiteurs uniques</div><div class="kpi-val">4 217</div><div class="kpi-chg up">↑ +23%</div></div>
-          <div class="kpi" data-icon="🎯"><div class="kpi-lbl">Taux de clic boutique</div><div class="kpi-val">14,4%</div><div class="kpi-chg up">↑ +2.1 pts</div></div>
-          <div class="kpi" data-icon="⏱"><div class="kpi-lbl">Durée moy. de visite</div><div class="kpi-val">3:42</div><div class="kpi-chg neu">→ Stable</div></div>
-          <div class="kpi" data-icon="📍"><div class="kpi-lbl">Pages vues / visite</div><div class="kpi-val">4,2</div><div class="kpi-chg up">↑ +0.8</div></div>
+          <div class="kpi" data-icon="👤"><div class="kpi-lbl">Visiteurs uniques</div><div class="kpi-val" id="an-visiteurs">0</div><div class="kpi-chg neu">→ Nouveau compte</div></div>
+          <div class="kpi" data-icon="🎯"><div class="kpi-lbl">Taux de clic boutique</div><div class="kpi-val" id="an-taux">0%</div><div class="kpi-chg neu">→ Nouveau compte</div></div>
+          <div class="kpi" data-icon="⏱"><div class="kpi-lbl">Durée moy. de visite</div><div class="kpi-val" id="an-duree">—</div><div class="kpi-chg neu">→ Pas de données</div></div>
+          <div class="kpi" data-icon="📍"><div class="kpi-lbl">Pages vues / visite</div><div class="kpi-val" id="an-pages">—</div><div class="kpi-chg neu">→ Pas de données</div></div>
         </div>
         <div class="charts-row">
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues par jour de la semaine</div></div>
             <div style="padding:8px 0;">
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Lundi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:72%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">601</span></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Mardi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:65%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">542</span></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Mercredi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:80%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">668</span></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Jeudi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:88%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">734</span></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Vendredi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:100%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">835</span></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Samedi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:93%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">784</span></div>
-              <div style="display:flex;align-items:center;gap:10px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Dimanche</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:56%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">467</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Lundi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Mardi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Mercredi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Jeudi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Vendredi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Samedi</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
+              <div style="display:flex;align-items:center;gap:10px;font-size:0.74rem;"><span style="width:76px;color:var(--gris);font-size:0.68rem;">Dimanche</span><div style="flex:1;height:10px;background:var(--gris-clair);border-radius:2px;overflow:hidden;"><div style="width:0%;height:100%;background:var(--or);"></div></div><span style="width:36px;text-align:right;color:var(--noir);font-weight:500;">0</span></div>
             </div>
           </div>
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Sources de trafic</div></div>
             <div style="display:flex;flex-direction:column;gap:2px;">
-              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🔍</span><span style="flex:1;">Recherche SÉLECT</span><strong>3 204</strong><span style="color:var(--gris);font-size:0.68rem;">(38%)</span></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">📸</span><span style="flex:1;">Instagram</span><strong>2 108</strong><span style="color:var(--gris);font-size:0.68rem;">(25%)</span></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🏠</span><span style="flex:1;">Homepage SÉLECT</span><strong>1 680</strong><span style="color:var(--gris);font-size:0.68rem;">(20%)</span></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">📧</span><span style="flex:1;">Newsletter</span><strong>840</strong><span style="color:var(--gris);font-size:0.68rem;">(10%)</span></div>
-              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🌐</span><span style="flex:1;">Accès direct</span><strong>510</strong><span style="color:var(--gris);font-size:0.68rem;">(6%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🔍</span><span style="flex:1;">Recherche SÉLECT</span><strong>0</strong><span style="color:var(--gris);font-size:0.68rem;">(0%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">📸</span><span style="flex:1;">Instagram</span><strong>0</strong><span style="color:var(--gris);font-size:0.68rem;">(0%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🏠</span><span style="flex:1;">Homepage SÉLECT</span><strong>0</strong><span style="color:var(--gris);font-size:0.68rem;">(20%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(0,0,0,0.05);font-size:0.78rem;"><span style="font-size:1rem;width:20px;">📧</span><span style="flex:1;">Newsletter</span><strong>0</strong><span style="color:var(--gris);font-size:0.68rem;">(0%)</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:8px 0;font-size:0.78rem;"><span style="font-size:1rem;width:20px;">🌐</span><span style="flex:1;">Accès direct</span><strong>0</strong><span style="color:var(--gris);font-size:0.68rem;">(0%)</span></div>
             </div>
           </div>
         </div>
@@ -1235,12 +1235,12 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 
       <!-- Collections -->
       <div class="d-page" id="dp-collections">
-        <div class="d-page-header"><div><h1 class="d-title">Mes <em>collections</em></h1><p class="d-sub">4 collections actives</p></div><button class="d-btn primary" onclick="toast('✦ Nouvelle collection créée')">+ Nouvelle collection</button></div>
+        <div class="d-page-header"><div><h1 class="d-title">Mes <em>collections</em></h1><p class="d-sub">0 collections actives</p></div><button class="d-btn primary" onclick="toast('✦ Nouvelle collection créée')">+ Nouvelle collection</button></div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
-          <div style="background:#fff;padding:26px;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:5px;">Actuelle</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:5px;">Printemps–Été 2026</div><div style="font-size:0.78rem;color:var(--gris);margin-bottom:14px;">48 produits · Publiée le 1er mars 2026</div><div style="display:flex;gap:22px;padding:14px 0;border-top:1px solid var(--gris-clair);"><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">3 402</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Vues</div></div><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">487</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Clics</div></div></div><button class="t-btn" style="margin-top:12px;" onclick="toast('✏️ Collection ouverte')">Gérer →</button></div>
-          <div style="background:#fff;padding:26px;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:5px;">Précédente</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:5px;">Automne–Hiver 2025</div><div style="font-size:0.78rem;color:var(--gris);margin-bottom:14px;">76 produits · Publiée le 15 sept. 2025</div><div style="display:flex;gap:22px;padding:14px 0;border-top:1px solid var(--gris-clair);"><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">7 820</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Vues</div></div><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">1 103</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Clics</div></div></div><button class="t-btn" style="margin-top:12px;" onclick="toast('✏️ Collection ouverte')">Gérer →</button></div>
+          <div style="background:#fff;padding:26px;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:5px;">Actuelle</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:5px;">Printemps–Été 2026</div><div style="font-size:0.78rem;color:var(--gris);margin-bottom:14px;">0 produits</div><div style="display:flex;gap:22px;padding:14px 0;border-top:1px solid var(--gris-clair);"><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">0</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Vues</div></div><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">0</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Clics</div></div></div><button class="t-btn" style="margin-top:12px;" onclick="toast('✏️ Collection ouverte')">Gérer →</button></div>
+          <div style="background:#fff;padding:26px;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:5px;">Précédente</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:5px;">Automne–Hiver 2025</div><div style="font-size:0.78rem;color:var(--gris);margin-bottom:14px;">0 produits</div><div style="display:flex;gap:22px;padding:14px 0;border-top:1px solid var(--gris-clair);"><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">0</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Vues</div></div><div><div style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;">0</div><div style="font-size:0.62rem;color:var(--gris);text-transform:uppercase;letter-spacing:0.1em;">Clics</div></div></div><button class="t-btn" style="margin-top:12px;" onclick="toast('✏️ Collection ouverte')">Gérer →</button></div>
           <div style="background:var(--creme);padding:26px;border:2px dashed rgba(0,0,0,0.1);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:160px;cursor:pointer;" onclick="toast('✦ Nouvelle collection créée')"><div style="font-size:2rem;opacity:0.35;margin-bottom:8px;">+</div><div style="font-size:0.8rem;color:var(--gris);text-align:center;">Créer une nouvelle collection<br><span style="font-size:0.7rem;opacity:0.6;">Automne–Hiver 2026</span></div></div>
-          <div style="background:#fff;padding:26px;opacity:0.55;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:5px;">Archivée</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:14px;">Capsule Hiver 2024</div><div style="font-size:0.78rem;color:var(--gris);">12 produits · Archivée</div><button class="t-btn" style="margin-top:20px;" onclick="toast('📦 Collection réactivée')">Réactiver</button></div>
+          <div style="background:#fff;padding:26px;opacity:0.55;"><div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gris);margin-bottom:5px;">Archivée</div><div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;margin-bottom:14px;">Capsule Hiver 2024</div><div style="font-size:0.78rem;color:var(--gris);">0 produits</div><button class="t-btn" style="margin-top:20px;" onclick="toast('📦 Collection réactivée')">Réactiver</button></div>
         </div>
       </div>
 
@@ -1257,8 +1257,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
             <div class="s-panel" id="st-profil">
               <div class="s-section-ttl">Profil de la marque</div>
               <div class="s-section-sub">Ces informations apparaissent sur votre page publique SÉLECT.</div>
-              <div class="f-group"><label class="f-label">Nom de la marque</label><input class="f-input" value="Maison Éclat"></div>
-              <div class="f-row2"><div class="f-group"><label class="f-label">Site web</label><input class="f-input" value="https://maisoneClat.com"></div><div class="f-group"><label class="f-label">Instagram</label><input class="f-input" value="@maisoneClat"></div></div>
+              <div class="f-group"><label class="f-label">Nom de la marque</label><input class="f-input" id="settings-nom" placeholder="Nom de votre marque"></div>
+              <div class="f-row2"><div class="f-group"><label class="f-label">Site web</label><input class="f-input" id="settings-web" placeholder="https://..."></div><div class="f-group"><label class="f-label">Instagram</label><input class="f-input" id="settings-insta" placeholder="@votremarque"></div></div>
               <div class="f-group"><label class="f-label">🔗 Lien vers votre boutique en ligne *</label><input class="f-input" placeholder="https://votre-boutique.com" id="boutiqueLink" value="https://maisoneClat.com/boutique"><p style="font-size:0.72rem;color:var(--gris);margin-top:6px;">Ce lien apparaît sur votre page publique — vos clients cliquent dessus pour commander directement sur votre site.</p></div>
               <div class="f-group"><label class="f-label">Description</label><textarea class="f-input" rows="3" style="resize:vertical;">Maison Éclat incarne l'élégance française dans sa forme la plus pure.</textarea></div>
               <button class="save-btn" onclick="toast('✓ Profil mis à jour')">Sauvegarder les modifications</button>
@@ -1690,6 +1690,26 @@ async function loadDashboardData(user) {
     // Mettre à jour le plan
     const sbPlan = document.querySelector('.sb-brand-plan');
     if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
+
+    // Fill settings with real data
+    const sNom = document.getElementById('settings-nom');
+    const sWeb = document.getElementById('settings-web');
+    const sInsta = document.getElementById('settings-insta');
+    const sDesc = document.getElementById('settings-desc');
+    if(sNom) sNom.value = marque.nom || '';
+    if(sWeb) sWeb.value = marque.site_web || '';
+    if(sInsta) sInsta.value = marque.instagram || '';
+    if(sDesc) sDesc.value = marque.description || '';
+
+    // Fill subscription info
+    const planLabels = {starter:'Plan Starter', pro:'Plan Pro', prestige:'Plan Prestige'};
+    const planPrices = {starter:'49 $ / mois', pro:'149 $ / mois', prestige:'399 $ / mois'};
+    const sPName = document.getElementById('settings-plan-name');
+    const sPPrice = document.getElementById('settings-plan-price');
+    const sPStatus = document.getElementById('settings-plan-status');
+    if(sPName) sPName.textContent = planLabels[marque.plan] || marque.plan;
+    if(sPPrice) sPPrice.textContent = planPrices[marque.plan] || '';
+    if(sPStatus) sPStatus.textContent = marque.abonnement_actif ? 'Actif' : 'Inactif';
 
     // Update plan banner
     const planBannerText = document.getElementById('planBannerText');
