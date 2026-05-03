@@ -1124,7 +1124,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <button class="d-btn primary" onclick="dPage('products',document.querySelector('[onclick*=products]'))">+ Ajouter des produits</button>
         </div>
       </div>
-        <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em>Isabelle</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);">Mis à jour aujourd'hui à 14h32</span></div>
+        <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);">Mis à jour aujourd'hui à 14h32</span></div>
         <div class="kpi-grid">
           <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val">8 342</div><div class="kpi-chg up">↑ +18% vs mois dernier</div></div>
           <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val">1 204</div><div class="kpi-chg up">↑ +32% vs mois dernier</div></div>
@@ -1612,9 +1612,37 @@ async function loadDashboardData(user) {
     const sbName = document.querySelector('.sb-brand-name');
     if(sbName) sbName.textContent = marque.nom;
 
+    // Mettre à jour le prénom dans le greeting
+    const dashName = document.getElementById('dashUserName');
+    if(dashName) {
+      // Use first word of brand name or user metadata
+      const firstName = user.user_metadata?.first_name || marque.nom.split(' ')[0] || 'là';
+      dashName.textContent = firstName;
+    }
+
+    // Mettre à jour le plan banner
+    const planBanner = document.querySelector('.announce p strong');
+    if(planBanner) planBanner.textContent = '+42%';
+
+    // Update plan info banner
+    const planInfoEl = document.querySelector('[style*="Plan Pro actif"]');
+
     // Mettre à jour le plan
     const sbPlan = document.querySelector('.sb-brand-plan');
     if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
+
+    // Update plan banner
+    const planBannerText = document.getElementById('planBannerText');
+    const planBannerDesc = document.getElementById('planBannerDesc');
+    if(planBannerText) planBannerText.textContent = 'Plan ' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' actif';
+    if(planBannerDesc) {
+      const descs = {
+        starter: '· 25 produits max · Lien boutique',
+        pro: '· Produits illimités · Lien boutique actif · Badge vérifié ✦',
+        prestige: '· Produits illimités · Homepage · Newsletter · Account manager'
+      };
+      planBannerDesc.textContent = descs[marque.plan] || '';
+    }
 
     // Charger les produits
     const { data: produits } = await window.sb
