@@ -1096,7 +1096,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="sb-item"><span class="sb-icon">💬</span><span>Support</span><span class="sb-badge red">1</span></div>
       <div class="sb-item" onclick="doLogout()"><span class="sb-icon">🚪</span><span>Déconnexion</span></div>
     </nav>
-    <div class="sb-footer">Abonnement Pro<br>Prochain débit : <a>01/06/2026</a></div>
+    <div class="sb-footer" id="sbFooter">Chargement...<br><a onclick="dPage('settings',document.querySelector('[onclick*=settings]'))">Gérer mon plan</a></div>
   </aside>
 
   <div class="dash-main">
@@ -1126,10 +1126,10 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       </div>
         <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);">Mis à jour aujourd'hui à 14h32</span></div>
         <div class="kpi-grid">
-          <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val">8 342</div><div class="kpi-chg up">↑ +18% vs mois dernier</div></div>
-          <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val">1 204</div><div class="kpi-chg up">↑ +32% vs mois dernier</div></div>
-          <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val">387</div><div class="kpi-chg up">↑ +9% vs mois dernier</div></div>
-          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val">124</div><div class="kpi-chg neu">→ Stable · 4 en attente</div></div>
+          <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">—</div><div class="kpi-chg neu" id="kpi-vues-chg">Chargement...</div></div>
+          <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">—</div><div class="kpi-chg neu" id="kpi-clics-chg">Chargement...</div></div>
+          <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">—</div><div class="kpi-chg neu" id="kpi-favoris-chg">Chargement...</div></div>
+          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">—</div><div class="kpi-chg neu" id="kpi-prod-chg">Chargement...</div></div>
         </div>
         <div class="charts-row">
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues & Clics — 30 jours</div><span class="chart-period">Avril 2026</span></div>
@@ -1711,16 +1711,63 @@ async function loadDashboardData(user) {
       .eq('marque_id', marque.id);
 
     if(produits) {
-      // Mettre à jour le compteur produits
+      // Mettre à jour le compteur produits dans sidebar
       const pCount = document.querySelector('.sb-badge');
       if(pCount) pCount.textContent = produits.length;
 
       // Mettre à jour KPI produits actifs
-      const kpiProd = document.querySelectorAll('.kpi-val')[3];
+      const kpiProd = document.getElementById('kpi-prod');
       if(kpiProd) kpiProd.textContent = produits.filter(p=>p.statut==='online').length;
 
       // Mettre à jour le tableau produits
       updateProductsTable(produits);
+    }
+
+    // Charger les vraies stats depuis stats_vues
+    try {
+      const { data: stats } = await window.sb
+        .from('stats_vues')
+        .select('vues, clics_boutique')
+        .eq('marque_id', marque.id);
+
+      const totalVues = stats ? stats.reduce((sum, s) => sum + (s.vues || 0), 0) : 0;
+      const totalClics = stats ? stats.reduce((sum, s) => sum + (s.clics_boutique || 0), 0) : 0;
+
+      // Update KPIs with real data
+      const kpiVues = document.getElementById('kpi-vues');
+      const kpiClics = document.getElementById('kpi-clics');
+      const kpiFavoris = document.getElementById('kpi-favoris');
+
+      if(kpiVues) kpiVues.textContent = totalVues.toLocaleString('fr-FR');
+      if(kpiClics) kpiClics.textContent = totalClics.toLocaleString('fr-FR');
+      if(kpiFavoris) kpiFavoris.textContent = '0';
+
+      // Update change labels
+      const kpiVuesChg = document.getElementById('kpi-vues-chg');
+      const kpiClicsChg = document.getElementById('kpi-clics-chg');
+      const kpiFavorisChg = document.getElementById('kpi-favoris-chg');
+
+      if(kpiVuesChg) kpiVuesChg.textContent = totalVues === 0 ? '→ Aucune vue pour linstant' : '↑ Ce mois-ci';
+      if(kpiClicsChg) kpiClicsChg.textContent = totalClics === 0 ? '→ Aucun clic pour linstant' : '↑ Ce mois-ci';
+      if(kpiFavorisChg) kpiFavorisChg.textContent = '→ Aucun favori pour linstant';
+
+    } catch(e) {
+      // If stats table doesn't exist yet, show zeros
+      ['kpi-vues','kpi-clics','kpi-favoris'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.textContent = '0';
+      });
+      ['kpi-vues-chg','kpi-clics-chg','kpi-favoris-chg'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.textContent = '→ Nouveau compte';
+      });
+    }
+
+    // Update sidebar footer with real plan
+    const sbFooter = document.getElementById('sbFooter');
+    if(sbFooter) {
+      const planName = marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1);
+      sbFooter.innerHTML = 'Abonnement ' + planName;
     }
 
   } catch(e) { console.log('Dashboard: données statiques'); }
