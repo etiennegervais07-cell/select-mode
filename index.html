@@ -1129,7 +1129,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">—</div><div class="kpi-chg neu" id="kpi-vues-chg">Chargement...</div></div>
           <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">—</div><div class="kpi-chg neu" id="kpi-clics-chg">Chargement...</div></div>
           <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">—</div><div class="kpi-chg neu" id="kpi-favoris-chg">Chargement...</div></div>
-          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">—</div><div class="kpi-chg neu" id="kpi-prod-chg">Chargement...</div></div>
+          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">—</div><div class="kpi-chg neu" id="kpi-prod-chg">→ Aucun produit</div></div>
         </div>
         <div class="charts-row">
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues & Clics — 30 jours</div><span class="chart-period">Avril 2026</span></div>
@@ -1153,7 +1153,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
                 <circle cx="75" cy="75" r="52" fill="none" stroke="#2a1f0e" stroke-width="20" stroke-dasharray="85 197" stroke-dashoffset="-130"/>
                 <circle cx="75" cy="75" r="52" fill="none" stroke="#27ae60" stroke-width="20" stroke-dasharray="52 197" stroke-dashoffset="-215"/>
                 <circle cx="75" cy="75" r="52" fill="none" stroke="#d4b87a" stroke-width="20" stroke-dasharray="60 197" stroke-dashoffset="-267"/>
-                <text x="75" y="71" text-anchor="middle" font-size="20" font-family="Cormorant Garamond" font-weight="600" fill="#0a0a0a" id="donutValInner">0</text>
+                <text x="75" y="68" text-anchor="middle" font-size="14" font-family="Cormorant Garamond" font-weight="600" fill="#0a0a0a" id="donutValInner">—</text>
                 <text x="75" y="84" text-anchor="middle" font-size="8" fill="#888">vues</text>
               </svg>
               <div class="donut-legend">
@@ -1612,19 +1612,6 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
     window.sb.auth.getSession().then(async ({data:{session}}) => {
       if(session){ 
         updateNavUser(session.user.email);
-        // Check subscription status on load
-        const { data: marque } = await window.sb
-          .from('marques')
-          .select('abonnement_actif, plan')
-          .eq('user_id', session.user.id)
-          .single();
-        if(marque) {
-          currentUserSubscribed = marque.abonnement_actif === true;
-          currentUserPlan = marque.plan;
-        } else {
-          currentUserSubscribed = false;
-          currentUserPlan = null;
-        }
       }
     });
     // Charger les marques dès que Supabase est prêt
@@ -1712,6 +1699,19 @@ async function saveMarqueAfterRegister(userId, brand, first, last, email) {
 // ══ CHARGER LES DONNÉES DU DASHBOARD ══
 async function loadDashboardData(user) {
   if(!window.sb || !user) return;
+
+  // Show zeros immediately while loading
+  ['kpi-vues','kpi-clics','kpi-favoris','kpi-prod'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = '0';
+  });
+  ['kpi-vues-chg','kpi-clics-chg','kpi-favoris-chg'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = '→ Nouveau compte';
+  });
+  const kpiProdChg = document.getElementById('kpi-prod-chg');
+  if(kpiProdChg) kpiProdChg.textContent = '→ Aucun produit';
+
   try {
     // Charger la marque de l'utilisateur
     const { data: marque } = await window.sb
@@ -1728,7 +1728,7 @@ async function loadDashboardData(user) {
     
     // If not subscribed, redirect to choose-plan
     if(!currentUserSubscribed) {
-      goTo('choose-plan');
+      showPage('choose-plan');
       return;
     }
 
@@ -1739,10 +1739,13 @@ async function loadDashboardData(user) {
     // Mettre à jour le prénom dans le greeting
     const dashName = document.getElementById('dashUserName');
     if(dashName) {
-      // Use first word of brand name or user metadata
       const firstName = user.user_metadata?.first_name || marque.nom.split(' ')[0] || 'là';
       dashName.textContent = firstName;
     }
+    
+    // Update greeting subtitle
+    const dashSub = document.querySelector('.d-sub');
+    if(dashSub) dashSub.textContent = 'Vos 30 derniers jours sur SÉLECT';
 
     // Mettre à jour le plan banner
     const planBanner = document.querySelector('.announce p strong');
