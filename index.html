@@ -1259,7 +1259,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
               <div class="s-section-sub">Ces informations apparaissent sur votre page publique SÉLECT.</div>
               <div class="f-group"><label class="f-label">Nom de la marque</label><input class="f-input" id="settings-nom" placeholder="Nom de votre marque"></div>
               <div class="f-row2"><div class="f-group"><label class="f-label">Site web</label><input class="f-input" id="settings-web" placeholder="https://..."></div><div class="f-group"><label class="f-label">Instagram</label><input class="f-input" id="settings-insta" placeholder="@votremarque"></div></div>
-              <div class="f-group"><label class="f-label">🔗 Lien vers votre boutique en ligne *</label><input class="f-input" placeholder="https://votre-boutique.com" id="boutiqueLink" value="https://maisoneClat.com/boutique"><p style="font-size:0.72rem;color:var(--gris);margin-top:6px;">Ce lien apparaît sur votre page publique — vos clients cliquent dessus pour commander directement sur votre site.</p></div>
+              <div class="f-group"><label class="f-label">🔗 Lien vers votre boutique en ligne *</label><input class="f-input" placeholder="https://votre-boutique.com" id="boutiqueLink"><p style="font-size:0.72rem;color:var(--gris);margin-top:6px;">Ce lien apparaît sur votre page publique — vos clients cliquent dessus pour commander directement sur votre site.</p></div>
               <div class="f-group"><label class="f-label">Description</label><textarea class="f-input" rows="3" style="resize:vertical;" id="settings-desc2" placeholder="Décrivez votre marque..."></textarea></div>
               <button class="save-btn" onclick="saveSettings()">Sauvegarder les modifications</button>
             </div>
@@ -1525,7 +1525,8 @@ function dPage(key, el) {
           'settings-web': marque.site_web,
           'settings-insta': marque.instagram,
           'settings-desc': marque.description,
-          'settings-desc2': marque.description
+          'settings-desc2': marque.description,
+          'boutiqueLink': marque.site_web
         };
         Object.entries(fields).forEach(([id, val]) => {
           const el = document.getElementById(id);
@@ -1762,6 +1763,8 @@ async function loadDashboardData(user) {
     if(sDesc) sDesc.value = marque.description || '';
     const sDesc2 = document.getElementById('settings-desc2');
     if(sDesc2) sDesc2.value = marque.description || '';
+    const sBoutique = document.getElementById('boutiqueLink');
+    if(sBoutique && marque.site_web) sBoutique.value = marque.site_web || '';
 
     // Fill subscription info
     const planLabels = {starter:'Plan Starter', pro:'Plan Pro', prestige:'Plan Prestige'};
@@ -2259,11 +2262,13 @@ async function saveSettings() {
   const { data:{session} } = await window.sb.auth.getSession();
   if(!session) { toast("⚠️ Connectez-vous dabord"); return; }
 
-  const nom = document.getElementById('settings-nom')?.value;
-  const site_web = document.getElementById('settings-web')?.value;
-  const instagram = document.getElementById('settings-insta')?.value;
-  const boutique_url = document.getElementById('boutiqueLink')?.value;
-  const description = document.getElementById('settings-desc')?.value;
+  // Read from correct IDs
+  const nom = document.getElementById('settings-nom')?.value?.trim();
+  const site_web = document.getElementById('settings-web')?.value?.trim();
+  const instagram = document.getElementById('settings-insta')?.value?.trim();
+  const boutique_url = document.getElementById('boutiqueLink')?.value?.trim();
+  // Description is in settings-desc2 in the HTML
+  const description = (document.getElementById('settings-desc2') || document.getElementById('settings-desc'))?.value?.trim();
 
   if(!nom) { toast("⚠️ Entrez le nom de votre marque"); return; }
 
@@ -2274,17 +2279,16 @@ async function saveSettings() {
     .update({ nom, site_web, instagram, description })
     .eq('user_id', session.user.id);
 
-  if(error) { toast("❌ Erreur: " + error.message); return; }
+  if(error) { toast("❌ " + error.message); return; }
 
-  // Update sidebar name in real time
+  // Update sidebar name
   const sbName = document.getElementById('sbBrandName');
   if(sbName) sbName.textContent = nom;
 
-  // Update brand page in real time
-  updateBrandPage({ nom, site_web, instagram, description, boutique_url });
-
-  // Save to local state
-  currentBrandData = { nom, site_web, instagram, description, boutique_url };
+  // Update brand public page in real time
+  const brandData = { nom, site_web, instagram, description, boutique_url };
+  updateBrandPage(brandData);
+  currentBrandData = brandData;
 
   toast("✅ Profil mis à jour !");
 }
@@ -2292,11 +2296,17 @@ async function saveSettings() {
 function updateBrandPage(marque) {
   // Name
   const nameEl = document.getElementById('brandPageName');
-  if(nameEl) nameEl.innerHTML = marque.nom ? marque.nom.replace(' ','<br>') : 'Ma marque';
+  if(nameEl) {
+    const parts = marque.nom ? marque.nom.split(' ') : ['Ma','Marque'];
+    nameEl.innerHTML = parts.length > 1 ? parts[0] + '<br>' + parts.slice(1).join(' ') : marque.nom;
+  }
 
-  // Description
-  const descEl = document.getElementById('brandPageDesc');
-  if(descEl) descEl.textContent = marque.description || 'Découvrez notre collection sur SÉLECT.';
+  // Description - update ALL description elements
+  const desc = marque.description || 'Découvrez notre collection sur SÉLECT.';
+  ['brandPageDesc','brandPageDesc2','brandPageStory'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.textContent = desc;
+  });
 
   // Tagline
   const tagEl = document.getElementById('brandPageTagline');
