@@ -906,9 +906,9 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         <div><span class="meta-num" id="brandMetaCols">0</span><span class="meta-label">Collections</span></div>
         <div><span class="meta-num" id="brandMetaAns">—</span><span class="meta-label">Année</span></div>
       </div>
-      <div class="brand-socials">
-        <button class="social-btn" id="brandInstagramBtn" style="display:none;" onclick="openBrandInstagram()">Instagram</button>
-        <button class="social-btn" id="brandSiteBtn" style="display:none;" onclick="openBrandSite()">Site officiel</button>
+      <div class="brand-socials" id="brandSocialsDiv">
+        <button class="social-btn" id="brandInstagramBtn" onclick="openBrandInstagram()">Instagram</button>
+        <button class="social-btn" id="brandSiteBtn" onclick="openBrandSite()">Site officiel</button>
         <button class="social-btn" id="brandBoutiqueBtn" onclick="openBrandBoutique()">Visiter la boutique →</button>
       </div>
     </div>
@@ -967,8 +967,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
         </div>
       </div>
       <div class="visit-actions">
-        <button class="btn-gold" style="font-size:0.9rem;padding:18px 36px;" onclick="toast('🔗 Redirection vers maisoneClat.com...')">🛍️ Visiter la boutique →</button>
-        <button class="btn-line" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="toast('📧 Formulaire de contact ouvert')">Contacter la marque</button>
+        <button class="btn-gold" style="font-size:0.9rem;padding:18px 36px;" onclick="openBrandBoutique()">🛍️ Visiter la boutique →</button>
+        <button class="btn-line" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="openBrandInstagram()">Instagram</button>
       </div>
     </div>
   </div>
@@ -1342,6 +1342,11 @@ function goTo(page) {
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
   document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  
+  // When viewing brand page, load brand data
+  if(page === 'brand') {
+    loadBrandPageForVisitor();
+  }
 }
 
 function showPage(page) {
@@ -2331,6 +2336,11 @@ async function saveSettings() {
 }
 
 function updateBrandPage(marque) {
+  if(!marque) return;
+  
+  // Store data globally so buttons can use it
+  currentBrandData = marque;
+
   // Name
   const nameEl = document.getElementById('brandPageName');
   if(nameEl) {
@@ -2349,40 +2359,15 @@ function updateBrandPage(marque) {
   const tagEl = document.getElementById('brandPageTagline');
   if(tagEl && marque.categorie) tagEl.textContent = marque.categorie;
 
-  // Instagram button
+  // Social buttons - show/hide based on data
   const instaBtn = document.getElementById('brandInstagramBtn');
-  if(instaBtn) {
-    if(marque.instagram) {
-      instaBtn.style.display = 'inline-block';
-      instaBtn.onclick = () => {
-        const handle = marque.instagram.replace('@','');
-        window.open('https://instagram.com/' + handle, '_blank');
-      };
-    } else {
-      instaBtn.style.display = 'none';
-    }
-  }
-
-  // Site officiel button
+  if(instaBtn) instaBtn.style.display = marque.instagram ? 'inline-block' : 'none';
+  
   const siteBtn = document.getElementById('brandSiteBtn');
-  if(siteBtn) {
-    if(marque.site_web) {
-      siteBtn.style.display = 'inline-block';
-      siteBtn.onclick = () => window.open(marque.site_web, '_blank');
-    } else {
-      siteBtn.style.display = 'none';
-    }
-  }
-
-  // Boutique button
+  if(siteBtn) siteBtn.style.display = marque.site_web ? 'inline-block' : 'none';
+  
   const boutiqueBtn = document.getElementById('brandBoutiqueBtn');
-  if(boutiqueBtn) {
-    boutiqueBtn.onclick = () => {
-      const url = marque.boutique_url || marque.site_web;
-      if(url) window.open(url, '_blank');
-      else toast("⚠️ Aucun lien boutique configuré");
-    };
-  }
+  if(boutiqueBtn) boutiqueBtn.style.display = marque.site_web ? 'inline-block' : 'none';
 
   // Annee
   const ansEl = document.getElementById('brandMetaAns');
@@ -2406,17 +2391,22 @@ function updateBrandPage(marque) {
 }
 
 function openBrandInstagram() {
-  if(currentBrandData.instagram) {
-    window.open('https://instagram.com/' + currentBrandData.instagram.replace('@',''), '_blank');
+  const insta = currentBrandData && currentBrandData.instagram;
+  if(insta) {
+    window.open('https://instagram.com/' + insta.replace('@',''), '_blank');
+  } else {
+    toast("⚠️ Aucun compte Instagram configuré");
   }
 }
 function openBrandSite() {
-  if(currentBrandData.site_web) window.open(currentBrandData.site_web, '_blank');
+  const site = currentBrandData && currentBrandData.site_web;
+  if(site) window.open(site, '_blank');
+  else toast("⚠️ Aucun site web configuré");
 }
 function openBrandBoutique() {
-  const url = currentBrandData.boutique_url || currentBrandData.site_web;
+  const url = currentBrandData && (currentBrandData.site_web);
   if(url) window.open(url, '_blank');
-  else toast("⚠️ Aucun lien boutique configuré — ajoutez-en un dans vos paramètres");
+  else toast("⚠️ Aucun lien boutique configuré");
 }
 
 
@@ -2540,6 +2530,44 @@ async function testSendEmail(type, toEmail, data) {
   }
 }
 
+
+// ══ LOAD BRAND PAGE FOR VISITORS ══
+async function loadBrandPageForVisitor() {
+  if(!window.sb) return;
+  
+  // If we already have brand data loaded (from dashboard), use it
+  if(currentBrandData && currentBrandData.nom) {
+    updateBrandPage(currentBrandData);
+    return;
+  }
+  
+  // Otherwise load the first active brand from Supabase
+  try {
+    const { data: marques } = await window.sb
+      .from('marques')
+      .select('*')
+      .eq('abonnement_actif', true)
+      .limit(1);
+    
+    if(marques && marques.length > 0) {
+      const marque = marques[0];
+      currentBrandData = marque;
+      updateBrandPage(marque);
+      
+      // Load products count
+      const { data: prods } = await window.sb
+        .from('produits').select('id').eq('marque_id', marque.id);
+      const n = prods ? prods.length : 0;
+      const bpp = document.getElementById('brandMetaProds');
+      if(bpp) bpp.textContent = n;
+      const bppm = document.getElementById('brandPageProds');
+      if(bppm) bppm.textContent = n;
+    }
+  } catch(e) {
+    console.log('Brand page load error:', e);
+  }
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -2660,6 +2688,17 @@ async function forgotPw(){
 }
 
 // Init
+// Handle OAuth errors in URL
+const urlParams = new URLSearchParams(window.location.search);
+const oauthError = urlParams.get('error');
+if(oauthError) {
+  // Clear the error from URL
+  window.history.replaceState({}, document.title, '/');
+  if(oauthError === 'invalid_request') {
+    // OAuth state expired - just show home page, user needs to try again
+    console.log('OAuth state expired - redirecting to login');
+  }
+}
 goTo('home');
 updateSummary();
 </script>
