@@ -900,7 +900,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="verified-badge">Marque Vérifiée</div>
       <h1 class="brand-name" id="brandPageName">—</h1>
       <p class="brand-name-sub" id="brandPageTagline">—</p>
-      <p class="brand-desc" id="brandPageDesc2" style="font-size:0.95rem;line-height:1.8;color:#444;max-width:420px;margin-bottom:20px;">Chargement...</p>
+      <p class="brand-desc" id="brandPageDesc2" style="font-size:0.95rem;line-height:1.8;color:#444;max-width:420px;margin-bottom:20px;">Découvrez notre collection sur SÉLECT.</p>
       <div class="brand-meta">
         <div><span class="meta-num" id="brandMetaProds">0</span><span class="meta-label">Produits</span></div>
         <div><span class="meta-num" id="brandMetaCols">0</span><span class="meta-label">Collections</span></div>
@@ -1083,7 +1083,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 <div class="page" id="page-dashboard">
   <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
-    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">Chargement...</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Chargement...</div></div>
+    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">Ma marque</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Starter · Actif</div></div>
     <nav class="sb-nav">
       <div class="sb-sec-lbl">Principal</div>
       <div class="sb-item active" onclick="dPage('dash',this)"><span class="sb-icon">📊</span><span>Tableau de bord</span></div>
@@ -1096,7 +1096,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <div class="sb-item"><span class="sb-icon">💬</span><span>Support</span><span class="sb-badge red">1</span></div>
       <div class="sb-item" onclick="doLogout()"><span class="sb-icon">🚪</span><span>Déconnexion</span></div>
     </nav>
-    <div class="sb-footer" id="sbFooter">Chargement...</div>
+    <div class="sb-footer" id="sbFooter">Abonnement Starter</div>
   </aside>
 
   <div class="dash-main">
@@ -1126,10 +1126,10 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       </div>
         <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);">Mis à jour aujourd'hui à 14h32</span></div>
         <div class="kpi-grid">
-          <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">—</div><div class="kpi-chg neu" id="kpi-vues-chg">Chargement...</div></div>
-          <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">—</div><div class="kpi-chg neu" id="kpi-clics-chg">Chargement...</div></div>
-          <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">—</div><div class="kpi-chg neu" id="kpi-favoris-chg">Chargement...</div></div>
-          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">—</div><div class="kpi-chg neu" id="kpi-prod-chg">→ Aucun produit</div></div>
+          <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">0</div><div class="kpi-chg neu" id="kpi-vues-chg">→ Nouveau compte</div></div>
+          <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">0</div><div class="kpi-chg neu" id="kpi-clics-chg">→ Nouveau compte</div></div>
+          <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">0</div><div class="kpi-chg neu" id="kpi-favoris-chg">→ Nouveau compte</div></div>
+          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">0</div><div class="kpi-chg neu" id="kpi-prod-chg">→ Aucun produit</div></div>
         </div>
         <div class="charts-row">
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues & Clics — 30 jours</div><span class="chart-period">Avril 2026</span></div>
@@ -1276,9 +1276,9 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
               <div class="s-section-ttl">Abonnement actuel</div>
               <div style="background:var(--noir);color:#fff;padding:22px;margin-bottom:20px;">
                 <div style="font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--or);margin-bottom:7px;">Plan actif</div>
-                <div style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;" id="settings-plan-name">Chargement...</div>
-                <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:4px;" id="settings-plan-price">—</div>
-                <div style="margin-top:14px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Statut : <span style="color:var(--or-clair);" id="settings-plan-status">—</span></div>
+                <div style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;" id="settings-plan-name">Plan Starter</div>
+                <div style="font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:4px;" id="settings-plan-price">49 $ CAD / mois</div>
+                <div style="margin-top:14px;font-size:0.75rem;color:rgba(255,255,255,0.35);">Statut : <span style="color:var(--or-clair);" id="settings-plan-status">Actif</span></div>
               </div>
               <div class="f-group"><label class="f-label">Carte enregistrée</label><input class="f-input" value="•••• •••• •••• 4242 — Visa — 09/27" readonly style="background:var(--creme);"></div>
               <div style="display:flex;gap:8px;flex-wrap:wrap;"><button class="t-btn" onclick="toast('✦ Upgrade Prestige')">Passer au Prestige →</button><button class="t-btn" onclick="toast('📄 Factures téléchargées')">Télécharger les factures</button><button class="t-btn danger" onclick="toast('⚠️ Résiliation à confirmer')">Résilier</button></div>
@@ -1609,6 +1609,30 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
   s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
   s.onload = () => {
     window.sb = supabase.createClient(SB_URL, SB_KEY);
+    // Handle OAuth redirect
+    window.sb.auth.onAuthStateChange(async (event, session) => {
+      if(event === 'SIGNED_IN' && session) {
+        updateNavUser(session.user.email);
+        // Check if brand or visitor
+        const { data: marque } = await window.sb
+          .from('marques')
+          .select('id, abonnement_actif, plan')
+          .eq('user_id', session.user.id)
+          .single();
+        if(marque && marque.abonnement_actif) {
+          currentUserSubscribed = true;
+          currentUserPlan = marque.plan;
+          showPage('dashboard');
+          loadDashboardData(session.user);
+        } else if(marque) {
+          showPage('choose-plan');
+        } else {
+          showPage('visitor');
+          loadVisitorData(session.user);
+        }
+      }
+    });
+
     window.sb.auth.getSession().then(async ({data:{session}}) => {
       if(session){ 
         updateNavUser(session.user.email);
@@ -2482,6 +2506,40 @@ async function loadVisitorData(user) {
   if(vFirst) vFirst.value = firstName || '';
 }
 
+
+// ══ GOOGLE OAUTH ══
+async function signInWithGoogle() {
+  if(!window.sb) { toast("⏳ Chargement..."); return; }
+  toast("⏳ Redirection vers Google...");
+  const { error } = await window.sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin
+    }
+  });
+  if(error) toast("❌ " + error.message);
+}
+
+
+// ══ TEST EMAIL ══
+async function testSendEmail(type, toEmail, data) {
+  try {
+    const resp = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ type, to: toEmail, data })
+    });
+    const result = await resp.json();
+    if(result.success) {
+      console.log('Email sent:', result.id);
+    } else {
+      console.error('Email error:', result);
+    }
+  } catch(e) {
+    console.error('Email failed:', e);
+  }
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -2697,7 +2755,7 @@ updateSummary();
     <div class="lsec active" id="ls-con">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Bon retour, <em style="font-style:italic;color:var(--or);">bienvenue</em></h2>
       <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Connectez-vous à votre espace SÉLECT.</p>
-      <button class="sbtn2" onclick="toast('🌐 Connexion Google...')"><span>🌐</span> Continuer avec Google</button>
+      <button class="sbtn2" onclick="signInWithGoogle()"><span>🌐</span> Continuer avec Google</button>
       <div class="ldiv"><span>ou avec votre email</span></div>
       <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="votre@email.com" id="lEmail"></div>
       <div class="f-group"><label class="f-label">Mot de passe *</label><div class="pw-w"><input class="f-input" type="password" placeholder="••••••••" id="lPw"><button class="pw-e" onclick="togglePw('lPw',this)" type="button">👁</button></div></div>
@@ -2711,7 +2769,7 @@ updateSummary();
     <div class="lsec" id="ls-vis">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Créer un <em style="font-style:italic;color:var(--or);">compte</em></h2>
       <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Explorez les collections et sauvegardez vos marques favorites.</p>
-      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> Continuer avec Google</button>
+      <button class="sbtn2" onclick="signInWithGoogle()"><span>🌐</span> Continuer avec Google</button>
       <div class="ldiv"><span>ou avec votre email</span></div>
       <div class="f-group"><label class="f-label">Prénom *</label><input class="f-input" placeholder="Votre prénom" id="vFirst"></div>
       <div class="f-group"><label class="f-label">Email *</label><input class="f-input" type="email" placeholder="votre@email.com" id="vEmail"></div>
@@ -2728,7 +2786,7 @@ updateSummary();
     <div class="lsec" id="ls-ins">
       <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:400;margin-bottom:6px;">Inscrire <em style="font-style:italic;color:var(--or);">ma marque</em></h2>
       <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">✦ 1er mois 100% gratuit · Aucune carte requise</p>
-      <button class="sbtn2" onclick="toast('🌐 Inscription Google...')"><span>🌐</span> Continuer avec Google</button>
+      <button class="sbtn2" onclick="signInWithGoogle()"><span>🌐</span> Continuer avec Google</button>
       <div class="ldiv"><span>ou avec votre email</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
         <div class="f-group"><label class="f-label">Prénom *</label><input class="f-input" placeholder="Isabelle" id="rFirst"></div>
@@ -3033,7 +3091,7 @@ updateSummary();
       <p style="font-size:0.88rem;color:var(--gris);margin-bottom:24px;">Les dernières marques ajoutées sur SÉLECT.</p>
       <div id="visitorBrandsGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;">
         <div style="padding:40px;text-align:center;color:var(--gris);grid-column:1/-1;">
-          <p style="font-size:0.88rem;">Chargement des marques...</p>
+          <p style="font-size:0.88rem;color:var(--gris);">Aucune marque pour linstant</p>
         </div>
       </div>
       <div style="text-align:center;margin-top:28px;">
