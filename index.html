@@ -762,6 +762,147 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .mp-stat-lbl { font-size: 0.65rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
 .mp-free-badge { display: inline-block; background: var(--vert); color: #fff; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; padding: 7px 18px; margin-bottom: 24px; font-weight: 500; }
 
+
+/* ══ LOGIN SLIDE PANEL ══ */
+.auth-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+  z-index: 900; opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+}
+.auth-overlay.open { opacity: 1; pointer-events: all; }
+
+.auth-panel {
+  position: fixed; top: 0; right: -480px; width: 440px; height: 100vh;
+  background: #fff; z-index: 901; overflow-y: auto;
+  transition: right .35s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  box-shadow: -4px 0 40px rgba(0,0,0,0.15);
+}
+.auth-panel.open { right: 0; }
+
+.auth-panel-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 24px 32px; border-bottom: 1px solid rgba(0,0,0,0.08);
+  position: sticky; top: 0; background: #fff; z-index: 10;
+}
+.auth-panel-logo {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.4rem;
+  font-weight: 700; letter-spacing: 0.2em; color: var(--noir);
+}
+.auth-panel-logo span { color: var(--or); }
+.auth-panel-close {
+  width: 36px; height: 36px; border: none; background: none;
+  cursor: pointer; font-size: 1.2rem; color: var(--gris);
+  display: flex; align-items: center; justify-content: center;
+  transition: color .2s;
+}
+.auth-panel-close:hover { color: var(--noir); }
+
+.auth-panel-body { padding: 32px; flex: 1; }
+
+.auth-panel-tabs {
+  display: flex; gap: 0; margin-bottom: 28px;
+  border-bottom: 2px solid var(--gris-clair);
+}
+.auth-panel-tab {
+  flex: 1; padding: 12px 8px; font-size: 0.78rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border: none; background: none; cursor: pointer;
+  color: var(--gris); border-bottom: 2px solid transparent;
+  margin-bottom: -2px; font-family: 'Outfit', sans-serif;
+  transition: all .2s;
+}
+.auth-panel-tab.active { color: var(--noir); border-bottom-color: var(--or); }
+
+.auth-panel-section { display: none; }
+.auth-panel-section.active { display: block; }
+
+.auth-social-btns { display: flex; gap: 10px; margin-bottom: 20px; }
+.auth-social-btn {
+  flex: 1; border: 1.5px solid rgba(0,0,0,0.15); padding: 11px 8px;
+  font-family: 'Outfit', sans-serif; font-size: 0.78rem;
+  background: none; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; gap: 8px;
+  transition: all .2s; color: var(--noir); border-radius: 2px;
+}
+.auth-social-btn:hover { border-color: var(--noir); background: var(--creme); }
+.auth-social-btn img { width: 18px; height: 18px; }
+
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 18px 0; font-size: 0.72rem; color: var(--gris);
+  letter-spacing: 0.08em;
+}
+.auth-divider::before, .auth-divider::after {
+  content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.1);
+}
+
+.auth-field { margin-bottom: 14px; }
+.auth-field label {
+  display: block; font-size: 0.68rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gris); margin-bottom: 6px;
+}
+.auth-field input {
+  width: 100%; border: 1.5px solid rgba(0,0,0,0.15); padding: 12px 14px;
+  font-family: 'Outfit', sans-serif; font-size: 0.9rem; outline: none;
+  transition: border-color .2s; background: #fff; color: var(--noir);
+  box-sizing: border-box;
+}
+.auth-field input:focus { border-color: var(--or); }
+
+.auth-field-pw { position: relative; }
+.auth-field-pw input { padding-right: 44px; }
+.auth-field-pw-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; color: var(--gris);
+  font-size: 0.9rem;
+}
+
+.auth-forgot {
+  font-size: 0.72rem; color: var(--or); cursor: pointer;
+  text-align: right; display: block; margin-top: -8px;
+  margin-bottom: 16px;
+}
+.auth-forgot:hover { text-decoration: underline; }
+
+.auth-submit {
+  width: 100%; background: var(--noir); color: #fff;
+  border: none; padding: 14px; font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; transition: background .2s; margin-top: 4px;
+}
+.auth-submit:hover { background: var(--or); color: var(--noir); }
+
+.auth-switch {
+  font-size: 0.78rem; color: var(--gris); text-align: center;
+  margin-top: 20px;
+}
+.auth-switch a { color: var(--or); cursor: pointer; }
+.auth-switch a:hover { text-decoration: underline; }
+
+.auth-success {
+  text-align: center; padding: 20px 0; display: none;
+}
+.auth-success-icon {
+  width: 56px; height: 56px; background: var(--vert); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; margin: 0 auto 12px; color: #fff;
+  animation: popIn .5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+.auth-checkbox-wrap {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 16px; font-size: 0.78rem; color: var(--gris);
+}
+.auth-checkbox-wrap input[type=checkbox] {
+  margin-top: 2px; cursor: pointer; accent-color: var(--or);
+  width: auto; flex-shrink: 0;
+}
+
+@media(max-width: 480px) {
+  .auth-panel { width: 100%; right: -100%; }
+}
+
 </style>
 </head>
 <body>
@@ -778,7 +919,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <ul class="g-nav-links">
     <li><a onclick="scrollTo2('marques')">Les marques</a></li>
     <li><a onclick="scrollTo2('comment')">Comment ça marche</a></li>
-    <li><a onclick="goTo('login')" style="opacity:.7;">Mon compte</a></li>
+    <li><a onclick="openAuthPanel('con')" style="opacity:.7;">Mon compte</a></li>
     <li><a class="g-nav-cta" onclick="goTo('marque-pro')">Je suis une marque</a></li>
   </ul>
 </nav>
@@ -861,7 +1002,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <p style="font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto 36px;line-height:1.8;">Affichez vos collections devant des milliers de clients passionnés de mode. Premier mois 100% gratuit.</p>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
         <button class="btn-p" style="background:var(--or);color:var(--noir);" onclick="goTo('marque-pro')">Découvrir les offres →</button>
-        <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="goTo('login');showLogin('ins')">Commencer gratuitement</button>
+        <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="openAuthPanel('ins')">Commencer gratuitement</button>
       </div>
     </div>
 
@@ -1652,7 +1793,7 @@ const SB_KEY = 'sb_publishable_WJEktlMlpQu7wq6GhJNrSQ_V40tptJY';
 
 function updateNavUser(email){
   const el = document.querySelector('[onclick*="login"]');
-  if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"checkAndRedirect()"); }
+  if(el){ el.textContent = '👤 Mon compte'; el.setAttribute('onclick',"checkAndRedirect()"); el.style.opacity='1'; }
 }
 
 // ══ CHARGER LES MARQUES DEPUIS SUPABASE ══
@@ -2568,6 +2709,105 @@ async function loadBrandPageForVisitor() {
   }
 }
 
+
+// ══ AUTH SLIDE PANEL ══
+function openAuthPanel(tab) {
+  tab = tab || 'con';
+  setAuthTab(tab);
+  document.getElementById('authOverlay').classList.add('open');
+  document.getElementById('authPanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuthPanel() {
+  document.getElementById('authOverlay').classList.remove('open');
+  document.getElementById('authPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setAuthTab(tab) {
+  ['con','vis','ins'].forEach(t => {
+    document.getElementById('apt-' + t).classList.toggle('active', t === tab);
+    document.getElementById('aps-' + t).classList.toggle('active', t === tab);
+  });
+}
+
+function toggleApPw(id, btn) {
+  const input = document.getElementById(id);
+  if(input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else { input.type = 'password'; btn.textContent = '👁'; }
+}
+
+async function authDoLogin() {
+  const email = document.getElementById('ap-email').value;
+  const pw = document.getElementById('ap-pw').value;
+  if(!email || !pw) { toast("⚠️ Remplissez tous les champs"); return; }
+  if(!window.sb) { toast("⏳ Chargement..."); return; }
+  toast("⏳ Connexion...");
+  const { data, error } = await window.sb.auth.signInWithPassword({ email, password: pw });
+  if(error) { toast("❌ Email ou mot de passe incorrect"); return; }
+  document.getElementById('ap-login-success').style.display = 'block';
+  updateNavUser(data.user.email);
+  setTimeout(async () => {
+    closeAuthPanel();
+    document.getElementById('ap-login-success').style.display = 'none';
+    const { data: marque } = await window.sb.from('marques').select('id,abonnement_actif,plan').eq('user_id', data.user.id).single();
+    if(marque && marque.abonnement_actif) {
+      currentUserSubscribed = true; currentUserPlan = marque.plan;
+      showPage('dashboard'); loadDashboardData(data.user);
+    } else if(marque) {
+      showPage('choose-plan');
+    } else {
+      showPage('visitor'); loadVisitorData(data.user);
+    }
+  }, 1200);
+}
+
+async function authDoRegisterVisiteur() {
+  const first = document.getElementById('ap-vis-first').value;
+  const email = document.getElementById('ap-vis-email').value;
+  const pw = document.getElementById('ap-vis-pw').value;
+  const terms = document.getElementById('ap-vis-terms').checked;
+  if(!first || !email || !pw) { toast("⚠️ Remplissez tous les champs"); return; }
+  if(!terms) { toast("⚠️ Acceptez les CGU"); return; }
+  if(pw.length < 8) { toast("⚠️ Mot de passe trop court"); return; }
+  if(!window.sb) { toast("⏳ Chargement..."); return; }
+  toast("⏳ Création du compte...");
+  const { data, error } = await window.sb.auth.signUp({ email, password: pw, options: { data: { first_name: first, user_type: 'visiteur' } } });
+  if(error) { toast("❌ " + error.message); return; }
+  fetch('/api/send-email', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'welcome_visitor', to: email, data:{ firstName: first } }) });
+  toast("✅ Compte créé !");
+  setTimeout(() => { closeAuthPanel(); showPage('visitor'); loadVisitorData(data.user); }, 1200);
+}
+
+async function authDoRegister() {
+  const first = document.getElementById('ap-ins-first').value;
+  const last = document.getElementById('ap-ins-last').value;
+  const brand = document.getElementById('ap-ins-brand').value;
+  const email = document.getElementById('ap-ins-email').value;
+  const pw = document.getElementById('ap-ins-pw').value;
+  const terms = document.getElementById('ap-ins-terms').checked;
+  if(!first || !brand || !email || !pw) { toast("⚠️ Remplissez tous les champs"); return; }
+  if(!terms) { toast("⚠️ Acceptez les CGU"); return; }
+  if(pw.length < 8) { toast("⚠️ Mot de passe trop court"); return; }
+  if(!window.sb) { toast("⏳ Chargement..."); return; }
+  toast("⏳ Création du compte...");
+  const { data, error } = await window.sb.auth.signUp({ email, password: pw, options: { data: { first_name: first, last_name: last, brand_name: brand } } });
+  if(error) { toast("❌ " + error.message); return; }
+  if(data.user) await saveMarqueAfterRegister(data.user.id, brand, first, last, email);
+  fetch('/api/send-email', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ type:'welcome_brand', to: email, data:{ brandName: brand, firstName: first } }) });
+  toast("✅ Compte créé !");
+  setTimeout(() => { closeAuthPanel(); showPage('choose-plan'); }, 1200);
+}
+
+async function authForgotPw() {
+  const email = document.getElementById('ap-email').value;
+  if(!email) { toast("⚠️ Entrez votre email dabord"); return; }
+  if(!window.sb) return;
+  await window.sb.auth.resetPasswordForEmail(email);
+  toast("📧 Email de réinitialisation envoyé !");
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -3121,7 +3361,7 @@ updateSummary();
           <h4>Vous avez une marque de mode ?</h4>
           <p>Rejoignez SÉLECT et affichez vos collections devant des milliers de visiteurs. 1er mois gratuit.</p>
         </div>
-        <button class="btn-gold" onclick="goTo('login')">Inscrire ma marque →</button>
+        <button class="btn-gold" onclick="openAuthPanel('con')">Inscrire ma marque →</button>
       </div>
     </div>
 
@@ -3149,7 +3389,7 @@ updateSummary();
         <button class="save-btn" onclick="toast('✓ Informations mises à jour')">Sauvegarder</button>
         <div class="divider"></div>
         <p style="font-size:0.82rem;color:var(--gris);margin-bottom:14px;">Vous avez une marque de mode ?</p>
-        <button class="btn-o" style="width:100%;text-align:center;" onclick="goTo('login')">Inscrire ma marque gratuitement →</button>
+        <button class="btn-o" style="width:100%;text-align:center;" onclick="openAuthPanel('con')">Inscrire ma marque gratuitement →</button>
       </div>
     </div>
 
@@ -3217,7 +3457,7 @@ updateSummary();
 <div class="page" id="page-marque-pro">
 
   <!-- Back nav -->
-  <div style="background:var(--noir);padding:16px 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.2em;color:#fff;cursor:pointer;" onclick="goTo('home')">SÉL<span style="color:var(--or);">✦</span>CT</span><div style="display:flex;gap:16px;"><button class="d-btn" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15);" onclick="goTo('home')">← Retour</button><button class="d-btn primary" onclick="goTo('login');showLogin('ins')">Commencer gratuitement</button></div></div>
+  <div style="background:var(--noir);padding:16px 60px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,0.06);"><span style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;letter-spacing:0.2em;color:#fff;cursor:pointer;" onclick="goTo('home')">SÉL<span style="color:var(--or);">✦</span>CT</span><div style="display:flex;gap:16px;"><button class="d-btn" style="color:rgba(255,255,255,0.5);border-color:rgba(255,255,255,0.15);" onclick="goTo('home')">← Retour</button><button class="d-btn primary" onclick="openAuthPanel('ins')">Commencer gratuitement</button></div></div>
   <!-- Hero -->
   <div class="mp-hero">
     <div class="mp-hero-eyebrow">Pour les marques de mode</div>
@@ -3225,7 +3465,7 @@ updateSummary();
     <p>Affichez vos collections devant des milliers de passionnés de mode. Simple, professionnel, sans commission.</p>
     <span class="mp-free-badge">✦ 1er mois 100% gratuit</span>
     <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:8px;">
-      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="goTo('login');showLogin('ins')">Commencer gratuitement →</button>
+      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="openAuthPanel('ins')">Commencer gratuitement →</button>
       <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;padding:16px 36px;" onclick="document.getElementById('mp-plans').scrollIntoView({behavior:'smooth'})">Voir les plans</button>
     </div>
     <div class="mp-hero-stats">
@@ -3321,11 +3561,143 @@ updateSummary();
     <p style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-style:italic;color:rgba(255,255,255,0.7);max-width:600px;margin:0 auto 16px;line-height:1.5;">"En rejoignant SÉLECT, notre visibilité a explosé en deux semaines."</p>
     <span style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--or-clair);">— Clara M., fondatrice de Velours Studio</span>
     <div style="margin-top:36px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="goTo('login');showLogin('ins')">Inscrire ma marque gratuitement →</button>
+      <button class="btn-p" style="background:var(--or);color:var(--noir);padding:16px 36px;" onclick="openAuthPanel('ins')">Inscrire ma marque gratuitement →</button>
       <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;padding:16px 36px;" onclick="goTo('home')">← Retour à l'accueil</button>
     </div>
   </div>
 
+</div>
+
+
+<!-- ══ AUTH SLIDE PANEL ══ -->
+<div class="auth-overlay" id="authOverlay" onclick="closeAuthPanel()"></div>
+<div class="auth-panel" id="authPanel">
+  <div class="auth-panel-header">
+    <div class="auth-panel-logo">SÉL<span>✦</span>CT</div>
+    <button class="auth-panel-close" onclick="closeAuthPanel()">✕</button>
+  </div>
+  <div class="auth-panel-body">
+
+    <!-- Tabs -->
+    <div class="auth-panel-tabs">
+      <button class="auth-panel-tab active" id="apt-con" onclick="setAuthTab('con')">Connexion</button>
+      <button class="auth-panel-tab" id="apt-vis" onclick="setAuthTab('vis')">Créer un compte</button>
+      <button class="auth-panel-tab" id="apt-ins" onclick="setAuthTab('ins')">Ma marque</button>
+    </div>
+
+    <!-- CONNEXION -->
+    <div class="auth-panel-section active" id="aps-con">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;margin-bottom:6px;">Bon retour <em style="font-style:italic;color:var(--or);">!</em></h2>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Connectez-vous à votre espace SÉLECT.</p>
+
+      <div class="auth-social-btns">
+        <button class="auth-social-btn" onclick="signInWithGoogle()">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Google
+        </button>
+      </div>
+
+      <div class="auth-divider">ou</div>
+
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="ap-email" placeholder="votre@email.com">
+      </div>
+      <div class="auth-field">
+        <label>Mot de passe</label>
+        <div class="auth-field-pw">
+          <input type="password" id="ap-pw" placeholder="••••••••">
+          <button class="auth-field-pw-toggle" onclick="toggleApPw('ap-pw',this)" type="button">👁</button>
+        </div>
+      </div>
+      <span class="auth-forgot" onclick="authForgotPw()">Mot de passe oublié ?</span>
+      <button class="auth-submit" onclick="authDoLogin()">Se connecter</button>
+      <div class="auth-success" id="ap-login-success">
+        <div class="auth-success-icon">✓</div>
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;">Connexion réussie !</p>
+      </div>
+      <p class="auth-switch">Pas de compte ? <a onclick="setAuthTab('vis')">Créer un compte</a> · <a onclick="setAuthTab('ins')">Inscrire ma marque</a></p>
+    </div>
+
+    <!-- VISITEUR -->
+    <div class="auth-panel-section" id="aps-vis">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;margin-bottom:6px;">Créer un <em style="font-style:italic;color:var(--or);">compte</em></h2>
+      <p style="font-size:0.82rem;color:var(--gris);margin-bottom:22px;line-height:1.6;">Explorez et sauvegardez vos marques favorites.</p>
+
+      <div class="auth-social-btns">
+        <button class="auth-social-btn" onclick="signInWithGoogle()">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Google
+        </button>
+      </div>
+
+      <div class="auth-divider">ou</div>
+
+      <div class="auth-field">
+        <label>Prénom</label>
+        <input type="text" id="ap-vis-first" placeholder="Votre prénom">
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="ap-vis-email" placeholder="votre@email.com">
+      </div>
+      <div class="auth-field">
+        <label>Mot de passe</label>
+        <div class="auth-field-pw">
+          <input type="password" id="ap-vis-pw" placeholder="8 caractères minimum">
+          <button class="auth-field-pw-toggle" onclick="toggleApPw('ap-vis-pw',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="auth-checkbox-wrap">
+        <input type="checkbox" id="ap-vis-terms">
+        <label for="ap-vis-terms">J'accepte les <span style="color:var(--or);cursor:pointer;" onclick="goTo('legal')">CGU</span></label>
+      </div>
+      <button class="auth-submit" onclick="authDoRegisterVisiteur()">Créer mon compte gratuit</button>
+      <p class="auth-switch">Déjà un compte ? <a onclick="setAuthTab('con')">Se connecter</a></p>
+    </div>
+
+    <!-- MARQUE -->
+    <div class="auth-panel-section" id="aps-ins">
+      <h2 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;margin-bottom:4px;">Inscrire <em style="font-style:italic;color:var(--or);">ma marque</em></h2>
+      <p style="font-size:0.78rem;color:var(--or);margin-bottom:18px;">✦ 1er mois 100% gratuit</p>
+
+      <div class="auth-social-btns">
+        <button class="auth-social-btn" onclick="signInWithGoogle()">
+          <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+          Google
+        </button>
+      </div>
+
+      <div class="auth-divider">ou</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="auth-field"><label>Prénom</label><input type="text" id="ap-ins-first" placeholder="Isabelle"></div>
+        <div class="auth-field"><label>Nom</label><input type="text" id="ap-ins-last" placeholder="Marchand"></div>
+      </div>
+      <div class="auth-field">
+        <label>Nom de la marque</label>
+        <input type="text" id="ap-ins-brand" placeholder="Ex: Maison Éclat">
+      </div>
+      <div class="auth-field">
+        <label>Email</label>
+        <input type="email" id="ap-ins-email" placeholder="contact@mamarque.com">
+      </div>
+      <div class="auth-field">
+        <label>Mot de passe</label>
+        <div class="auth-field-pw">
+          <input type="password" id="ap-ins-pw" placeholder="8 caractères minimum">
+          <button class="auth-field-pw-toggle" onclick="toggleApPw('ap-ins-pw',this)" type="button">👁</button>
+        </div>
+      </div>
+      <div class="auth-checkbox-wrap">
+        <input type="checkbox" id="ap-ins-terms">
+        <label for="ap-ins-terms">J'accepte les <span style="color:var(--or);cursor:pointer;" onclick="goTo('legal')">CGU</span></label>
+      </div>
+      <button class="auth-submit" onclick="authDoRegister()">Commencer gratuitement</button>
+      <p class="auth-switch">Déjà un compte ? <a onclick="setAuthTab('con')">Se connecter</a></p>
+    </div>
+
+  </div>
 </div>
 
 </body>
