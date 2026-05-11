@@ -903,6 +903,141 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   .auth-panel { width: 100%; right: -100%; }
 }
 
+
+/* ══════════════════════════════
+   MOBILE DESIGN — max 768px
+══════════════════════════════ */
+@media(max-width: 768px) {
+
+  /* ── Navigation ── */
+  .g-nav { padding: 14px 18px; }
+  .g-logo { font-size: 1.2rem; }
+  .nav-search-wrap { display: none; }
+  .g-nav-links { display: none; }
+
+  /* Mobile nav - hamburger style bottom bar */
+  .mobile-nav-bar {
+    display: flex !important;
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--noir); z-index: 500;
+    padding: 10px 0 16px; border-top: 1px solid rgba(255,255,255,0.08);
+    justify-content: space-around; align-items: center;
+  }
+  .mobile-nav-btn {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; color: rgba(255,255,255,0.5); font-size: 0.56rem;
+    letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+    border: none; background: none; padding: 4px 12px;
+    transition: color .2s; font-family: 'Outfit', sans-serif;
+  }
+  .mobile-nav-btn span { font-size: 1.2rem; }
+  .mobile-nav-btn:hover, .mobile-nav-btn.active { color: var(--or); }
+
+  /* ── Hero ── */
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-left { padding: 80px 22px 40px; }
+  .hero-left h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+  .hero-right { height: 55vw; min-height: 260px; }
+  .hero-btns { flex-direction: column; gap: 10px; }
+  .hero-btns button { width: 100%; text-align: center; }
+
+  /* ── Sections ── */
+  .section, .showcase-section { padding: 52px 18px; }
+  .s-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+
+  /* ── Brands grid ── */
+  .brands-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  .brand-tile { padding: 18px; }
+
+  /* ── Search page ── */
+  #page-search > div > div:last-child { grid-template-columns: 1fr; }
+  #page-search > div > div:last-child > div:first-child { display: none; }
+  .favorites-grid { grid-template-columns: 1fr 1fr; }
+  #brandGrid { grid-template-columns: 1fr 1fr; }
+
+  /* ── Brand page ── */
+  .brand-hero-layout { grid-template-columns: 1fr; }
+  .brand-info { padding: 36px 18px; }
+  .b-name { font-size: clamp(2.5rem, 12vw, 5rem); }
+  .brand-visual { height: 60vw; min-height: 250px; }
+  .bv-top, .bv-bottom { gap: 2px; }
+  .brand-nav { padding: 0 18px; overflow-x: auto; white-space: nowrap; }
+  .brand-nav::-webkit-scrollbar { display: none; }
+  .catalogue { padding: 28px 18px; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 2px; }
+  .filter-bar { padding: 0 18px; overflow-x: auto; white-space: nowrap; }
+  .visit-bar { margin: 0 18px 32px; flex-direction: column; gap: 20px; padding: 24px; }
+  .visit-actions { flex-direction: column; width: 100%; }
+  .visit-actions button { width: 100%; text-align: center; }
+
+  /* ── Dashboard ── */
+  .sidebar { width: 0; overflow: hidden; }
+  .sidebar.mobile-open { width: 260px; }
+  .dash-main { margin-left: 0 !important; }
+  .dash-header { padding: 14px 18px; }
+  .dash-content { padding: 16px 18px; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kpi { padding: 16px; }
+  .kpi-val { font-size: 1.6rem; }
+  .charts-row { grid-template-columns: 1fr; }
+  .bottom-row { grid-template-columns: 1fr; }
+
+  /* Mobile dashboard toggle button */
+  .mobile-sb-toggle {
+    display: flex !important;
+    position: fixed; top: 14px; left: 14px; z-index: 600;
+    width: 36px; height: 36px; background: var(--noir);
+    border: none; cursor: pointer; color: #fff;
+    align-items: center; justify-content: center;
+    font-size: 1rem; border-radius: 4px;
+  }
+
+  /* ── Auth panel ── */
+  .auth-panel { width: 100%; right: -100%; }
+
+  /* ── Footer ── */
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 28px; }
+  footer { padding-bottom: 80px; } /* Space for mobile nav bar */
+
+  /* ── Marque Pro page ── */
+  .mp-hero { padding: 52px 18px; }
+  .mp-hero-stats { gap: 24px; }
+  #mp-plans > div { grid-template-columns: 1fr; max-width: 100%; }
+  #mp-plans { padding: 52px 18px; }
+
+  /* ── Choose plan ── */
+  #page-choose-plan { padding: 40px 18px; }
+  .choose-plan-box > div[style*="grid-template-columns:repeat(3"] { grid-template-columns: 1fr; }
+
+  /* ── Legal ── */
+  .legal-hero { padding: 40px 18px; }
+  .legal-nav-tabs { padding: 0 18px; overflow-x: auto; }
+  .legal-content { padding: 32px 18px; }
+
+  /* ── Visitor dashboard ── */
+  .visitor-content { padding: 24px 18px; padding-bottom: 80px; }
+  .visitor-nav { padding: 0 18px; }
+  .visitor-promo { flex-direction: column; text-align: center; }
+
+  /* ── Settings ── */
+  .settings-wrap { grid-template-columns: 1fr; }
+  .f-row2 { grid-template-columns: 1fr; }
+
+  /* ── Tables ── */
+  .products-table { font-size: 0.75rem; }
+  .t-thumb { width: 36px; height: 36px; }
+  
+  /* ── CTA band ── */
+  .cta-band { padding: 48px 18px; grid-template-columns: 1fr; text-align: center; }
+
+  /* ── Padding fix for content above mobile nav ── */
+  #page-home, #page-search, #page-brand { padding-bottom: 70px; }
+}
+
+/* Mobile nav bar hidden on desktop */
+.mobile-nav-bar { display: none; }
+.mobile-sb-toggle { display: none; }
+
 </style>
 </head>
 <body>
@@ -1222,7 +1357,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
      PAGE 4 — DASHBOARD
 ════════════════════════════ -->
 <div class="page" id="page-dashboard">
-  <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
+  <button class="mobile-sb-toggle" id="mobileSbToggle" onclick="toggleMobileSidebar()">☰</button>
+<aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
     <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">Ma marque</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Starter · Actif</div></div>
     <nav class="sb-nav">
@@ -1497,6 +1633,7 @@ function showPage(page) {
   const showNav = ['home','brand','search','login','legal','visitor'].includes(page);
   document.getElementById('gNav').style.display = (showNav && !['choose-plan','marque-pro'].includes(page)) ? 'flex' : 'none';
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  updateMobileNav(page);
 }
 
 async function verifyAndGoToDashboard() {
@@ -2808,6 +2945,23 @@ async function authForgotPw() {
   toast("📧 Email de réinitialisation envoyé !");
 }
 
+
+// ══ MOBILE SIDEBAR ══
+function toggleMobileSidebar() {
+  const sidebar = document.getElementById('dashSidebar');
+  sidebar.classList.toggle('mobile-open');
+}
+
+// Hide mobile nav on dashboard
+function updateMobileNav(page) {
+  const mobileNav = document.getElementById('mobileNavBar');
+  const mobileSbToggle = document.getElementById('mobileSbToggle');
+  if(!mobileNav) return;
+  const hiddenPages = ['dashboard','choose-plan','marque-pro'];
+  mobileNav.style.display = hiddenPages.includes(page) ? 'none' : '';
+  if(mobileSbToggle) mobileSbToggle.style.display = page === 'dashboard' ? 'flex' : 'none';
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -3622,6 +3776,23 @@ updateSummary();
     </div>
 
   </div>
+</div>
+
+
+<!-- ══ MOBILE BOTTOM NAV ══ -->
+<div class="mobile-nav-bar" id="mobileNavBar">
+  <button class="mobile-nav-btn" onclick="goTo('home')">
+    <span>🏠</span>Accueil
+  </button>
+  <button class="mobile-nav-btn" onclick="goTo('search')">
+    <span>🔍</span>Rechercher
+  </button>
+  <button class="mobile-nav-btn" onclick="openAuthPanel('con')">
+    <span>👤</span>Compte
+  </button>
+  <button class="mobile-nav-btn" onclick="goTo('marque-pro')">
+    <span>🏷️</span>Ma marque
+  </button>
 </div>
 
 </body>
