@@ -2362,17 +2362,13 @@ async function saveMarqueAfterRegister(userId, brand, first, last, email) {
 async function loadDashboardData(user) {
   if(!window.sb || !user) return;
 
-  // Show zeros immediately while loading
-  ['kpi-vues','kpi-clics','kpi-favoris','kpi-prod'].forEach(id => {
+  // Hide stats until loaded
+  ['dashKpiGrid','dashChartsRow','dashBottomRow'].forEach(id => {
     const el = document.getElementById(id);
-    if(el) el.textContent = '0';
+    if(el) el.style.display = 'none';
   });
-  ['kpi-vues-chg','kpi-clics-chg','kpi-favoris-chg'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.textContent = '→ Nouveau compte';
-  });
-  const kpiProdChg = document.getElementById('kpi-prod-chg');
-  if(kpiProdChg) kpiProdChg.textContent = '→ Aucun produit';
+  const loadingMsg = document.getElementById('dashLoadingMsg');
+  if(loadingMsg) loadingMsg.style.display = 'block';
 
   try {
     // Charger la marque de l'utilisateur
@@ -2401,9 +2397,15 @@ async function loadDashboardData(user) {
     // Mettre à jour le prénom dans le greeting
     const dashName = document.getElementById('dashUserName');
     if(dashName) {
-      const firstName = user.user_metadata?.first_name || marque.nom.split(' ')[0] || 'là';
+      const firstName = user.user_metadata?.first_name 
+        || marque.nom.split(' ')[0] 
+        || user.email.split('@')[0] 
+        || 'là';
       dashName.textContent = firstName;
     }
+    // Update sidebar name
+    const sbNameEl = document.getElementById('sbBrandName');
+    if(sbNameEl) sbNameEl.textContent = marque.nom;
     
     // Update greeting subtitle
     const dashSub = document.querySelector('.d-sub');
@@ -2419,6 +2421,14 @@ async function loadDashboardData(user) {
     // Mettre à jour le plan
     const sbPlan = document.getElementById('sbBrandPlan');
     if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
+
+    // Show stats now that data is loaded
+    ['dashKpiGrid','dashChartsRow','dashBottomRow'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.style.display = '';
+    });
+    const loadingMsg = document.getElementById('dashLoadingMsg');
+    if(loadingMsg) loadingMsg.style.display = 'none';
 
     // Fill settings with real data
     const sNom = document.getElementById('settings-nom');
