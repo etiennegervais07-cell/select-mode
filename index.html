@@ -1507,7 +1507,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
     <div class="footer-top">
       <div><span class="f-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</span><p class="f-desc">La plateforme de référence pour découvrir les collections de mode.</p></div>
       <div class="f-col"><h5>Explorer</h5><ul><li><a onclick="goTo('search')">Toutes les marques</a></li><li><a onclick="goTo('search')">Nouvelles collections</a></li><li><a onclick="goTo('search')">Tendances</a></li></ul></div>
-      <div class="f-col"><h5>Marques</h5><ul><li><a onclick="goTo('marque-pro')">Référencer ma marque</a></li><li><a onclick="goTo('marque-pro')">Tarifs</a></li><li><a onclick="goTo('dashboard')">Mon espace marque</a></li></ul></div>
+      <div class="f-col"><h5>Marques</h5><ul><li><a onclick="goTo('marque-pro')">Référencer ma marque</a></li><li><a onclick="goTo('marque-pro')">Tarifs</a></li><li><a onclick="checkAndRedirect()">Mon espace marque</a></li></ul></div>
       <div class="f-col"><h5>Légal</h5><ul><li><a onclick="goTo('legal')">Mentions légales</a></li><li><a onclick="goTo('legal')">CGU</a></li><li><a onclick="goTo('legal')">Confidentialité</a></li><li><a onclick="goTo('legal')">Cookies</a></li></ul></div>
     </div>
     <div class="footer-bottom"><p>© 2026 SÉLECT — Tous droits réservés.</p><p>Made with ✦ au Canada 🇨🇦</p></div>
@@ -1685,7 +1685,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <h2 class="success-title">Bienvenue sur SÉLECT !</h2>
           <p class="success-sub">Votre abonnement <strong id="successPlan">Pro</strong> est activé. Vous recevrez un email de confirmation avec vos identifiants.</p>
           <div class="success-actions">
-            <button class="s-btn" onclick="goTo('dashboard')">Accéder à mon espace →</button>
+            <button class="s-btn" onclick="checkAndRedirect()">Accéder à mon espace →</button>
             <button class="s-btn-out" onclick="goTo('brand')">Voir un exemple de page</button>
             <button class="s-btn-out" onclick="goTo('home')">Retour à l'accueil</button>
           </div>
@@ -1715,7 +1715,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <button class="mobile-sb-toggle" id="mobileSbToggle" onclick="toggleMobileSidebar()">☰</button>
 <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
-    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">Ma marque</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Starter · Actif</div></div>
+    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">...</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Chargement...</div></div>
     <nav class="sb-nav">
       <div class="sb-sec-lbl">Principal</div>
       <div class="sb-item active" onclick="dPage('dash',this)"><span class="sb-icon">📊</span><span>Tableau de bord</span></div>
@@ -1745,7 +1745,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 
       <!-- Dashboard home -->
       <div class="d-page active" id="dp-dash">
-        <div class="announce"><p>🎉 Votre page a été vue <strong>+42%</strong> cette semaine grâce à la mise en avant SÉLECT.</p><button class="announce-btn" onclick="dPage('analytics',null)">Voir les stats →</button></div>
+        <div class="announce" id="dashAnnounce" style="display:none;"><p>🎉 Votre page est en ligne ! Ajoutez vos premiers produits pour attirer des visiteurs.</p><button class="announce-btn" onclick="dPage('products',null)">Ajouter des produits →</button></div>
       <div style="background:var(--or-pale);border:1px solid rgba(184,150,74,0.3);padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div style="font-size:0.82rem;">
           <strong style="color:var(--noir);" id="planBannerText">Plan actif</strong> 
@@ -1779,15 +1779,11 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           </div>
           <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Par catégorie</div></div>
             <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
-              <svg class="donut-svg" viewBox="0 0 150 150">
-                <circle cx="75" cy="75" r="52" fill="none" stroke="#f0ece4" stroke-width="20"/>
-                <circle cx="75" cy="75" r="52" fill="none" stroke="#b8964a" stroke-width="20" stroke-dasharray="130 197" stroke-dashoffset="0"/>
-                <circle cx="75" cy="75" r="52" fill="none" stroke="#2a1f0e" stroke-width="20" stroke-dasharray="85 197" stroke-dashoffset="-130"/>
-                <circle cx="75" cy="75" r="52" fill="none" stroke="#27ae60" stroke-width="20" stroke-dasharray="52 197" stroke-dashoffset="-215"/>
-                <circle cx="75" cy="75" r="52" fill="none" stroke="#d4b87a" stroke-width="20" stroke-dasharray="60 197" stroke-dashoffset="-267"/>
-                <text x="75" y="68" text-anchor="middle" font-size="14" font-family="Cormorant Garamond" font-weight="600" fill="#0a0a0a" id="donutValInner">—</text>
-                <text x="75" y="84" text-anchor="middle" font-size="8" fill="#888">vues</text>
-              </svg>
+              <svg class="donut-svg" viewBox="0 0 160 160">
+              <circle cx="80" cy="80" r="60" fill="none" stroke="var(--gris-clair)" stroke-width="20"/>
+              <text x="50%" y="48%" text-anchor="middle" fill="var(--gris)" style="font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;">vues</text>
+              <text x="50%" y="60%" text-anchor="middle" fill="var(--noir)" style="font-family:Cormorant Garamond,serif;font-size:1.1rem;font-weight:700;" id="donutValInner">0</text>
+            </svg>
               <div class="donut-legend">
                 <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#b8964a"></div>Robes</div><span>40%</span></div>
                 <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#2a1f0e"></div>Manteaux</div><span>26%</span></div>
@@ -2429,6 +2425,8 @@ async function loadDashboardData(user) {
     });
     const loadingMsg = document.getElementById('dashLoadingMsg');
     if(loadingMsg) loadingMsg.style.display = 'none';
+    const announce = document.getElementById('dashAnnounce');
+    if(announce) announce.style.display = 'flex';
 
     // Fill settings with real data
     const sNom = document.getElementById('settings-nom');
@@ -3327,6 +3325,20 @@ function updateMobileNav(page) {
   if(mobileSbToggle) mobileSbToggle.style.display = page === 'dashboard' ? 'flex' : 'none';
 }
 
+
+// ══ MON COMPTE BUTTON ══
+async function handleMonCompte() {
+  if(!window.sb) { openAuthPanel('con'); return; }
+  const { data:{session} } = await window.sb.auth.getSession();
+  if(!session) {
+    // Not logged in - open auth panel
+    openAuthPanel('con');
+  } else {
+    // Logged in - redirect based on account type
+    checkAndRedirect();
+  }
+}
+
 // ══ SEARCH ══
 let sCat='all', sPlan='all';
 function runSearch(){
@@ -3399,7 +3411,7 @@ async function doLogin(){
   // Vérifier si l'utilisateur a une marque
   setTimeout(async () => {
     document.getElementById('lSuc').style.display='none';
-    if(!window.sb) { goTo('dashboard'); return; }
+    if(!window.sb) { openAuthPanel('con'); return; }
     const { data: marque } = await window.sb
       .from('marques')
       .select('id, abonnement_actif, plan')
