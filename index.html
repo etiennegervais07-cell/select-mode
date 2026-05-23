@@ -1038,6 +1038,256 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .mobile-nav-bar { display: none; }
 .mobile-sb-toggle { display: none; }
 
+
+/* ══════════════════════════════
+   NIKE-STYLE HOME PAGE
+══════════════════════════════ */
+
+/* Hero plein écran */
+.nike-hero {
+  position: relative; height: 100vh; min-height: 600px;
+  display: flex; align-items: flex-end; overflow: hidden;
+}
+.nike-hero-bg {
+  position: absolute; inset: 0;
+}
+.nike-hero-img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.nike-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
+}
+.nike-hero-content {
+  position: relative; z-index: 2;
+  padding: 0 80px 80px; max-width: 800px;
+}
+.nike-eyebrow {
+  font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--or-clair); margin-bottom: 16px; display: block;
+}
+.nike-h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 400; color: #fff; line-height: 1.0;
+  margin-bottom: 20px;
+}
+.nike-h1 em { font-style: italic; color: var(--or); }
+.nike-sub {
+  font-size: 1rem; color: rgba(255,255,255,0.7);
+  line-height: 1.6; margin-bottom: 32px; max-width: 500px;
+}
+.nike-hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+.nike-btn-primary {
+  background: #fff; color: var(--noir); border: none;
+  padding: 16px 36px; font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; font-weight: 600; transition: all .2s;
+}
+.nike-btn-primary:hover { background: var(--or); color: var(--noir); }
+.nike-btn-secondary {
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  padding: 16px 36px; font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s;
+}
+.nike-btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+.nike-scroll {
+  position: absolute; bottom: 32px; right: 40px; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.nike-scroll-line {
+  width: 1px; height: 48px; background: rgba(255,255,255,0.4);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+.nike-scroll span {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.4); writing-mode: vertical-rl;
+}
+
+/* Catégories visuelles */
+.nike-cats { padding: 4px; background: var(--blanc); }
+.nike-cat-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr;
+  gap: 4px; height: 70vh; min-height: 500px;
+}
+.nike-cat-right { display: grid; grid-template-rows: 1fr 1fr; gap: 4px; }
+.nike-cat-card {
+  position: relative; overflow: hidden; cursor: pointer;
+  background: #111;
+}
+.nike-cat-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+}
+.nike-cat-card:hover img { transform: scale(1.04); }
+.nike-cat-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 28px;
+}
+.nike-cat-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem; font-weight: 400; color: #fff;
+  margin-bottom: 12px;
+}
+.nike-cat-btn {
+  background: #fff; color: var(--noir); border: none;
+  padding: 10px 22px; font-family: 'Outfit', sans-serif;
+  font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; width: fit-content; transition: all .2s;
+}
+.nike-cat-btn:hover { background: var(--or); }
+
+/* Featured plein largeur */
+.nike-featured {
+  position: relative; height: 80vh; min-height: 500px;
+  display: flex; align-items: center; overflow: hidden;
+  margin: 4px 0;
+}
+.nike-featured-img {
+  position: absolute; inset: 0;
+}
+.nike-featured-img img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.nike-featured-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+}
+.nike-featured-content {
+  position: relative; z-index: 2; padding: 0 80px; max-width: 600px;
+}
+.nike-featured-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 400; color: #fff; line-height: 1.0;
+  margin-bottom: 16px;
+}
+.nike-featured-sub {
+  font-size: 0.95rem; color: rgba(255,255,255,0.65);
+  line-height: 1.7; max-width: 420px;
+}
+
+/* Brands grid */
+.nike-brands-section {
+  padding: 80px 60px; background: var(--blanc);
+}
+.nike-brands-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 40px;
+}
+.nike-section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400; line-height: 1.1; margin-top: 8px;
+}
+.nike-section-title em { font-style: italic; color: var(--or); }
+.nike-btn-outline {
+  background: none; border: 1.5px solid var(--noir);
+  padding: 12px 28px; font-family: 'Outfit', sans-serif;
+  font-size: 0.76rem; letter-spacing: 0.12em; text-transform: uppercase;
+  cursor: pointer; transition: all .2s; color: var(--noir); white-space: nowrap;
+}
+.nike-btn-outline:hover { background: var(--noir); color: #fff; }
+.nike-brands-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+}
+.nike-brand-card {
+  cursor: pointer; overflow: hidden; background: var(--creme);
+  transition: transform .3s;
+}
+.nike-brand-card:hover { transform: translateY(-4px); }
+.nike-brand-img {
+  aspect-ratio: 3/4; overflow: hidden; background: #eee;
+}
+.nike-brand-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.nike-brand-card:hover .nike-brand-img img { transform: scale(1.05); }
+.nike-brand-info {
+  padding: 16px; display: flex; align-items: center; gap: 12px;
+  background: #fff;
+}
+.nike-brand-init {
+  width: 36px; height: 36px; flex-shrink: 0;
+  border: 1px solid rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.85rem; font-weight: 700; color: var(--or);
+}
+.nike-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem; font-weight: 600; margin-bottom: 2px;
+}
+.nike-brand-cat {
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--gris);
+}
+
+/* Trio cards */
+.nike-trio {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 4px; height: 60vh; min-height: 400px;
+}
+.nike-trio-card {
+  position: relative; overflow: hidden; cursor: pointer; background: #111;
+}
+.nike-trio-card img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .5s ease;
+}
+.nike-trio-card:hover img { transform: scale(1.05); }
+.nike-trio-label {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
+  padding: 28px 24px 24px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.nike-trio-label h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 400; color: #fff; margin: 0;
+}
+.nike-trio-label span {
+  font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: rgba(255,255,255,0.7); cursor: pointer;
+}
+.nike-trio-card:hover .nike-trio-label span { color: var(--or); }
+
+/* Brand CTA */
+.nike-brand-cta {
+  background: var(--creme); padding: 20px 60px;
+  text-align: center; border-top: 1px solid rgba(0,0,0,0.06);
+}
+.nike-brand-cta p { font-size: 0.85rem; color: var(--gris); margin: 0; }
+
+/* Mobile adjustments */
+@media(max-width: 768px) {
+  .nike-hero-content { padding: 0 22px 80px; }
+  .nike-h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .nike-hero-btns { flex-direction: column; }
+  .nike-btn-primary, .nike-btn-secondary { text-align: center; }
+  .nike-cat-grid { grid-template-columns: 1fr; height: auto; }
+  .nike-cat-card { height: 50vw; min-height: 200px; }
+  .nike-cat-right { grid-template-rows: auto; grid-template-columns: 1fr 1fr; }
+  .nike-featured { height: 60vh; }
+  .nike-featured-content { padding: 0 22px; }
+  .nike-featured-title { font-size: clamp(2.5rem, 8vw, 4rem); }
+  .nike-brands-section { padding: 48px 18px; }
+  .nike-brands-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .nike-brands-grid { grid-template-columns: 1fr 1fr; }
+  .nike-trio { grid-template-columns: 1fr; height: auto; }
+  .nike-trio-card { height: 55vw; min-height: 220px; }
+  .nike-brand-cta { padding: 20px 18px; }
+}
+
 </style>
 </head>
 <body>
@@ -1063,101 +1313,206 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
      PAGE 1 — ACCUEIL
 ════════════════════════════ -->
 <div class="page active" id="page-home">
-  <div style="padding-top:80px;">
 
-    <!-- Hero -->
-    <div class="hero">
-      <div class="hero-left">
-        <p class="hero-eyebrow fu">1er mois gratuit · La plateforme des marques de mode</p>
-        <h1 class="fu d1">Toute la mode,<br><em>en un seul endroit.</em></h1>
-        <div style="display:inline-flex;align-items:center;gap:8px;background:var(--or);color:var(--noir);padding:8px 18px;font-size:0.76rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:600;margin-bottom:20px;">✦ 1er mois gratuit pour toutes les marques</div>
-        <p class="hero-sub fu d2">Découvrez les collections de centaines de marques — du luxe à la mode accessible — sur une seule plateforme. Pour les marques, une vitrine premium accessible en abonnement mensuel.</p>
-        <div class="hero-actions fu d3">
-          <button class="btn-p" onclick="scrollTo2('marques')">Explorer les marques</button>
-          <button class="btn-o" onclick="goTo('checkout')">Référencer ma marque</button>
-        </div>
-        <div class="hero-stats fu d4">
-          <div><span class="stat-num">200+</span><span class="stat-label">Marques partenaires</span></div>
-          <div><span class="stat-num">50k</span><span class="stat-label">Produits disponibles</span></div>
-          <div><span class="stat-num">12k</span><span class="stat-label">Visiteurs / mois</span></div>
-        </div>
-      </div>
-      <div class="hero-right">
-        <div class="h-card" onclick="goTo('brand')"><div class="h-card-inner"><div class="h-brand">MAISON ÉCLAT</div><div class="h-tag">Luxe Parisien</div><div class="h-count">124 pièces · SS 2026</div></div></div>
-        <div class="h-card" onclick="goTo('brand')"><div class="h-card-inner"><div class="h-brand">URBAIN CO.</div><div class="h-tag">Streetwear</div><div class="h-count">86 pièces · Nouveau</div></div></div>
-        <div class="h-card" onclick="goTo('brand')"><div class="h-card-inner"><div class="h-brand">TERRA LIN</div><div class="h-tag">Mode durable</div><div class="h-count">67 pièces · AW 2025</div></div></div>
-        <div class="h-card" onclick="goTo('brand')"><div class="h-card-inner"><div class="h-brand">NUIT BLANCHE</div><div class="h-tag">Soirée & Luxe</div><div class="h-count">203 pièces · Exclusif</div></div></div>
+  <!-- ══ HERO PLEIN ÉCRAN style Nike ══ -->
+  <div class="nike-hero">
+    <div class="nike-hero-bg">
+      <!-- Image plein écran avec overlay -->
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80" 
+           alt="Mode" class="nike-hero-img" onerror="this.style.display='none'">
+      <div class="nike-hero-overlay"></div>
+    </div>
+    <div class="nike-hero-content">
+      <p class="nike-eyebrow">Nouvelle saison · SS 2026</p>
+      <h1 class="nike-h1">Toute la mode,<br><em>en un seul endroit.</em></h1>
+      <p class="nike-sub">Découvrez les collections de 200+ marques — du luxe à la mode accessible.</p>
+      <div class="nike-hero-btns">
+        <button class="nike-btn-primary" onclick="goTo('search')">Explorer les collections</button>
+        <button class="nike-btn-secondary" onclick="goTo('search')">Toutes les marques</button>
       </div>
     </div>
-
-    <!-- Marquee -->
-    <div class="marquee">
-      <div class="marquee-track">
-        <span class="marquee-item">Maison Éclat</span><span class="marquee-item">Urbain Co.</span><span class="marquee-item">Terra Lin</span><span class="marquee-item">Nuit Blanche</span><span class="marquee-item">Atelier 12</span><span class="marquee-item">Velours Studio</span><span class="marquee-item">Le Jardin</span><span class="marquee-item">Noir & Or</span>
-        <span class="marquee-item">Maison Éclat</span><span class="marquee-item">Urbain Co.</span><span class="marquee-item">Terra Lin</span><span class="marquee-item">Nuit Blanche</span><span class="marquee-item">Atelier 12</span><span class="marquee-item">Velours Studio</span><span class="marquee-item">Le Jardin</span><span class="marquee-item">Noir & Or</span>
-      </div>
-    </div>
-
-    <!-- How it works -->
-    <div class="section" id="comment">
-      <div class="s-label">Fonctionnement</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:end;">
-        <h2 class="s-title">Simple pour les marques.<br>Puissant pour les acheteurs.</h2>
-        <p class="s-sub">Que vous soyez une grande maison ou une jeune marque indépendante, SÉLECT vous donne une vitrine professionnelle face à une audience qualifiée.</p>
-      </div>
-      <div class="steps-grid">
-        <div class="step-card"><div class="step-num-bg">01</div><div class="step-icon-wrap">🏷️</div><h3>Inscrivez votre marque</h3><p>Créez votre profil en quelques minutes. Ajoutez votre identité visuelle et vos collections.</p><span class="step-tag">Pour les marques</span></div>
-        <div class="step-card"><div class="step-num-bg">02</div><div class="step-icon-wrap">📦</div><h3>Publiez vos collections</h3><p>Uploadez vos produits avec photos, descriptions et prix. Chaque collection est mise en valeur.</p><span class="step-tag">Catalogue complet</span></div>
-        <div class="step-card"><div class="step-num-bg">03</div><div class="step-icon-wrap">🌟</div><h3>Touchez vos clients</h3><p>Des milliers d'acheteurs découvrent vos pièces. Vous êtes redirigé vers votre boutique pour les commandes.</p><span class="step-tag">Trafic qualifié</span></div>
-      </div>
-    </div>
-
-    <!-- Brands -->
-    <div class="showcase-section" id="marques">
-      <div class="showcase-header">
-        <div><div class="s-label" style="color:var(--or);">Nos marques partenaires</div><h2 class="s-title" style="color:#fff;">Des collections pour<br><em style="color:var(--or);">tous les styles.</em></h2></div>
-        <button class="btn-o" style="color:#fff;border-color:rgba(255,255,255,0.3);" onclick="goTo('brand')">Explorer →</button>
-      </div>
-      <div class="brands-grid">
-        <div class="brand-tile" onclick="goTo('brand')" id="myBrandTile" style="display:none;"><div class="b-initials" id="myBrandInitials">—</div><h4 id="myBrandTileName">Ma marque</h4><div class="b-cat" id="myBrandTileCat">Mode</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">UC</div><h4>Urbain Co.</h4><div class="b-cat">Streetwear · Casual</div><div class="b-items">86 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">TL</div><h4>Terra Lin</h4><div class="b-cat">Éco-responsable</div><div class="b-items">67 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><span class="b-new">Exclusif</span><div class="b-initials">NB</div><h4>Nuit Blanche</h4><div class="b-cat">Soirée · Couture</div><div class="b-items">203 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">A12</div><h4>Atelier 12</h4><div class="b-cat">Artisanal · Femme</div><div class="b-items">51 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">VS</div><h4>Velours Studio</h4><div class="b-cat">Hommes · Luxe casual</div><div class="b-items">98 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">LJ</div><h4>Le Jardin</h4><div class="b-cat">Bohème · Lifestyle</div><div class="b-items">72 produits disponibles</div></div>
-        <div class="brand-tile" onclick="goTo('brand')"><div class="b-initials">NO</div><h4>Noir & Or</h4><div class="b-cat">Accessoires · Maroquinerie</div><div class="b-items">144 produits disponibles</div></div>
-      </div>
-    </div>
-
-    <!-- Pour les marques - simple teaser -->
-    <div style="background:var(--noir);padding:80px 60px;text-align:center;" id="marques-pro">
-      <div style="font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--or);margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:12px;"><span style="display:block;width:28px;height:1px;background:var(--or);"></span>Pour les marques<span style="display:block;width:28px;height:1px;background:var(--or);"></span></div>
-      <h2 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,3.5vw,3.5rem);font-weight:400;color:#fff;margin-bottom:16px;">Vous avez une marque de mode ?</h2>
-      <p style="font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto 36px;line-height:1.8;">Affichez vos collections devant des milliers de clients passionnés de mode. Premier mois 100% gratuit.</p>
-      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;">
-        <button class="btn-p" style="background:var(--or);color:var(--noir);" onclick="goTo('marque-pro')">Découvrir les offres →</button>
-        <button class="btn-o" style="border-color:rgba(255,255,255,0.3);color:#fff;" onclick="openAuthPanel('ins')">Commencer gratuitement</button>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta-band">
-      <h2>Votre marque mérite<br>d'être vue.</h2>
-      <div><p>Rejoignez plus de 200 marques qui font confiance à SÉLECT. <strong>Premier mois 100% gratuit</strong> — vitrine en ligne en moins de 30 minutes. Aucune carte requise pour commencer.</p><button class="btn-dark" onclick="window.open('https://buy.stripe.com/4gMbIV1fkfWr3Qu6vZ6kg01','_blank')">Référencer ma marque</button></div>
-    </div>
-
-    <!-- Footer -->
-    <div class="footer">
-      <div class="footer-top">
-        <div><span class="f-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</span><p class="f-desc">La plateforme de référence pour découvrir et présenter les collections de mode.</p></div>
-        <div class="f-col"><h5>Plateforme</h5><ul><li><a onclick="scrollTo2('marques')">Toutes les marques</a></li><li><a>Nouvelles collections</a></li><li><a>Tendances</a></li></ul></div>
-        <div class="f-col"><h5>Marques</h5><ul><li><a onclick="goTo('checkout')">Référencer ma marque</a></li><li><a onclick="scrollTo2('tarifs')">Tarifs</a></li><li><a onclick="goTo('dashboard')">Mon espace</a></li></ul></div>
-        <div class="f-col"><h5>Légal</h5><ul><li><a onclick="goTo('legal')">Mentions légales</a></li><li><a onclick="goTo('legal')">CGU</a></li><li><a onclick="goTo('legal')">Confidentialité</a></li><li><a onclick="goTo('legal')">Cookies</a></li></ul></div>
-      </div>
-      <div class="footer-bottom"><p>© 2026 SÉLECT — Tous droits réservés.</p><p>Made in France 🇫🇷</p></div>
+    <!-- Scroll indicator -->
+    <div class="nike-scroll">
+      <div class="nike-scroll-line"></div>
+      <span>Découvrir</span>
     </div>
   </div>
+
+  <!-- ══ MARQUEE ══ -->
+  <div class="marquee" style="background:var(--or);padding:12px 0;">
+    <div class="marquee-track">
+      <span class="marquee-item" style="color:var(--noir);">Nouvelle Collection SS 2026</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+      <span class="marquee-item" style="color:var(--noir);">200+ Marques</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+      <span class="marquee-item" style="color:var(--noir);">Luxe · Streetwear · Mode durable</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+      <span class="marquee-item" style="color:var(--noir);">Nouvelle Collection SS 2026</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+      <span class="marquee-item" style="color:var(--noir);">200+ Marques</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+      <span class="marquee-item" style="color:var(--noir);">Luxe · Streetwear · Mode durable</span>
+      <span class="marquee-item" style="color:var(--noir);">✦</span>
+    </div>
+  </div>
+
+  <!-- ══ SECTION CATÉGORIES VISUELLES ══ -->
+  <div class="nike-cats">
+    <div class="nike-cat-grid">
+      <div class="nike-cat-card nike-cat-large" onclick="goTo('search')">
+        <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80" 
+             alt="Luxe" onerror="this.style.background='#1a1a1a'">
+        <div class="nike-cat-overlay">
+          <div class="nike-cat-label">Luxe & Couture</div>
+          <button class="nike-cat-btn">Explorer →</button>
+        </div>
+      </div>
+      <div class="nike-cat-right">
+        <div class="nike-cat-card" onclick="goTo('search')">
+          <img src="https://images.unsplash.com/photo-1556906781-9a412961a28b?w=600&q=80" 
+               alt="Streetwear" onerror="this.style.background='#2a2a2a'">
+          <div class="nike-cat-overlay">
+            <div class="nike-cat-label">Streetwear</div>
+            <button class="nike-cat-btn">Explorer →</button>
+          </div>
+        </div>
+        <div class="nike-cat-card" onclick="goTo('search')">
+          <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80" 
+               alt="Femme" onerror="this.style.background='#333'">
+          <div class="nike-cat-overlay">
+            <div class="nike-cat-label">Mode Femme</div>
+            <button class="nike-cat-btn">Explorer →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ FEATURED — GRANDE IMAGE PLEIN LARGEUR ══ -->
+  <div class="nike-featured">
+    <div class="nike-featured-img">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=80" 
+           alt="Collection" onerror="this.style.background='#111'">
+      <div class="nike-featured-overlay"></div>
+    </div>
+    <div class="nike-featured-content">
+      <p class="nike-eyebrow" style="color:var(--or-clair);">Collection Vedette</p>
+      <h2 class="nike-featured-title">Nouvelles<br>Arrivées</h2>
+      <p class="nike-featured-sub">Les dernières collections des marques les plus tendance du moment.</p>
+      <button class="nike-btn-primary" onclick="goTo('search')" style="margin-top:24px;">Voir les collections</button>
+    </div>
+  </div>
+
+  <!-- ══ MARQUES EN GRILLE VISUELLE ══ -->
+  <div class="nike-brands-section" id="marques">
+    <div class="nike-brands-header">
+      <div>
+        <p class="nike-eyebrow" style="color:var(--or);">Nos marques partenaires</p>
+        <h2 class="nike-section-title">Les marques<br><em>du moment</em></h2>
+      </div>
+      <button class="nike-btn-outline" onclick="goTo('search')">Toutes les marques →</button>
+    </div>
+    <div class="nike-brands-grid" id="nikeBrandsGrid">
+      <!-- Loaded from Supabase -->
+      <div class="nike-brand-card" onclick="goTo('brand')">
+        <div class="nike-brand-img">
+          <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?w=400&q=80" 
+               alt="Marque" onerror="this.style.background='#f2ede3'">
+        </div>
+        <div class="nike-brand-info">
+          <div class="nike-brand-init">ME</div>
+          <div>
+            <div class="nike-brand-name">Maison Éclat</div>
+            <div class="nike-brand-cat">Luxe · Prêt-à-porter</div>
+          </div>
+        </div>
+      </div>
+      <div class="nike-brand-card" onclick="goTo('brand')">
+        <div class="nike-brand-img">
+          <img src="https://images.unsplash.com/photo-1523398002811-999ca8dec234?w=400&q=80" 
+               alt="Marque" onerror="this.style.background='#1a1a1a'">
+        </div>
+        <div class="nike-brand-info">
+          <div class="nike-brand-init">UC</div>
+          <div>
+            <div class="nike-brand-name">Urbain Co.</div>
+            <div class="nike-brand-cat">Streetwear · Casual</div>
+          </div>
+        </div>
+      </div>
+      <div class="nike-brand-card" onclick="goTo('brand')">
+        <div class="nike-brand-img">
+          <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80" 
+               alt="Marque" onerror="this.style.background='#2a1a1a'">
+        </div>
+        <div class="nike-brand-info">
+          <div class="nike-brand-init">NB</div>
+          <div>
+            <div class="nike-brand-name">Nuit Blanche</div>
+            <div class="nike-brand-cat">Soirée · Couture</div>
+          </div>
+        </div>
+      </div>
+      <div class="nike-brand-card" onclick="goTo('brand')">
+        <div class="nike-brand-img">
+          <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&q=80" 
+               alt="Marque" onerror="this.style.background='#1a2a1a'">
+        </div>
+        <div class="nike-brand-info">
+          <div class="nike-brand-init">TL</div>
+          <div>
+            <div class="nike-brand-name">Terra Lin</div>
+            <div class="nike-brand-cat">Éco-responsable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 3 VISUELS CÔTE À CÔTE ══ -->
+  <div class="nike-trio">
+    <div class="nike-trio-card" onclick="goTo('search')">
+      <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500&q=80" 
+           alt="Femme" onerror="this.style.background='#1a1a1a'">
+      <div class="nike-trio-label">
+        <h3>Pour Elle</h3>
+        <span>Explorer →</span>
+      </div>
+    </div>
+    <div class="nike-trio-card" onclick="goTo('search')">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80" 
+           alt="Homme" onerror="this.style.background='#111'">
+      <div class="nike-trio-label">
+        <h3>Pour Lui</h3>
+        <span>Explorer →</span>
+      </div>
+    </div>
+    <div class="nike-trio-card" onclick="goTo('search')">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=500&q=80" 
+           alt="Accessoires" onerror="this.style.background='#222'">
+      <div class="nike-trio-label">
+        <h3>Accessoires</h3>
+        <span>Explorer →</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ POUR LES MARQUES (discret) ══ -->
+  <div class="nike-brand-cta">
+    <p>Vous avez une marque de mode ? <a onclick="goTo('marque-pro')" style="color:var(--or);cursor:pointer;text-decoration:underline;">Rejoignez SÉLECT →</a></p>
+  </div>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer">
+    <div class="footer-top">
+      <div><span class="f-logo" onclick="goTo('home')">SÉL<span>✦</span>CT</span><p class="f-desc">La plateforme de référence pour découvrir les collections de mode.</p></div>
+      <div class="f-col"><h5>Explorer</h5><ul><li><a onclick="goTo('search')">Toutes les marques</a></li><li><a onclick="goTo('search')">Nouvelles collections</a></li><li><a onclick="goTo('search')">Tendances</a></li></ul></div>
+      <div class="f-col"><h5>Marques</h5><ul><li><a onclick="goTo('marque-pro')">Référencer ma marque</a></li><li><a onclick="goTo('marque-pro')">Tarifs</a></li><li><a onclick="goTo('dashboard')">Mon espace marque</a></li></ul></div>
+      <div class="f-col"><h5>Légal</h5><ul><li><a onclick="goTo('legal')">Mentions légales</a></li><li><a onclick="goTo('legal')">CGU</a></li><li><a onclick="goTo('legal')">Confidentialité</a></li><li><a onclick="goTo('legal')">Cookies</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><p>© 2026 SÉLECT — Tous droits réservés.</p><p>Made with ✦ au Canada 🇨🇦</p></div>
+  </div>
+
 </div>
 
 <!-- ════════════════════════════
