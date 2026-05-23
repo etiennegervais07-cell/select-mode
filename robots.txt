@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Sitemap: https://select-mode.vercel.app/sitemap.xml
+
+# Block dashboard and admin pages
+Disallow: /#dashboard
+Disallow: /#choose-plan
