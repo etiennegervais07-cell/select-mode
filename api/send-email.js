@@ -7,7 +7,7 @@ const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 // Utilise le domaine Resend gratuit pour l'instant
 // Une fois que tu as un vrai domaine, change pour: noreply@select-mode.com
-const FROM_EMAIL = 'SÉLECT <onboarding@resend.dev>';
+const FROM_EMAIL = 'SÉLECT <noreply@select-mode.ca>';
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
