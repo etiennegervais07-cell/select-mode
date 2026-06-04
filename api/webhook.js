@@ -20,7 +20,7 @@ async function sendEmail(type, to, data) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'SÉLECT <noreply@select-mode.vercel.app>',
+        from: 'SÉLECT <noreply@select-mode.ca>',
         to,
         subject: getSubject(type, data),
         html: getEmailHtml(type, data)
