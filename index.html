@@ -12,11 +12,11 @@
 <meta name="robots" content="index, follow">
 <meta name="language" content="French">
 <meta name="google-site-verification" content="6dttZCnMV43scbFKSl2vH89BeT2Ir5pDy8v71YPSemc">
-<link rel="canonical" href="https://select-mode.ca">
+<link rel="canonical" href="https://select-mode.vercel.app">
 
 <!-- ══ OPEN GRAPH (Facebook, Instagram, WhatsApp) ══ -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://select-mode.ca">
+<meta property="og:url" content="https://select-mode.vercel.app">
 <meta property="og:title" content="SÉLECT — La vitrine des marques de mode au Canada">
 <meta property="og:description" content="Découvrez 200+ marques de mode canadiennes sur SÉLECT. Luxe, streetwear, mode durable — toutes les collections en un seul endroit.">
 <meta property="og:image" content="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80">
@@ -37,20 +37,20 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "SÉLECT",
-  "url": "https://select-mode.ca",
+  "url": "https://select-mode.vercel.app",
   "description": "Plateforme de mode canadienne regroupant les meilleures marques de vêtements",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://select-mode.ca/?q={search_term_string}",
+    "target": "https://select-mode.vercel.app/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   },
   "publisher": {
     "@type": "Organization",
     "name": "SÉLECT",
-    "url": "https://select-mode.ca",
+    "url": "https://select-mode.vercel.app",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://select-mode.ca"
+      "url": "https://select-mode.vercel.app"
     },
     "contactPoint": {
       "@type": "ContactPoint",
@@ -69,7 +69,7 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "SÉLECT",
-  "url": "https://select-mode.ca",
+  "url": "https://select-mode.vercel.app",
   "description": "La plateforme de référence pour découvrir les marques de mode au Canada",
   "address": {
     "@type": "PostalAddress",
@@ -479,38 +479,40 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 #page-dashboard { display: flex; }
 #page-dashboard.active { display: flex; }
 
-.sidebar { width: 230px; flex-shrink: 0; background: var(--sidebar-bg); display: flex; flex-direction: column; min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; z-index: 300; overflow-y: auto; transition: width .25s ease, transform .25s ease; }
-.sidebar.collapsed { width: 60px; }
+.sidebar { width: 240px; flex-shrink: 0; background: #0c0c0c; display: flex; flex-direction: column; min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; z-index: 300; overflow-y: auto; transition: width .25s ease, transform .25s ease; border-right: 1px solid rgba(255,255,255,0.04); }
+.sidebar.collapsed { width: 64px; }
 .sidebar.collapsed .sb-logo p,
 .sidebar.collapsed .sb-brand,
 .sidebar.collapsed .sb-item span:not(.sb-icon),
 .sidebar.collapsed .sb-sec-lbl,
 .sidebar.collapsed .sb-footer,
 .sidebar.collapsed .sb-badge { display: none; }
-.sidebar.collapsed .sb-item { justify-content: center; padding: 12px; }
+.sidebar.collapsed .sb-item { justify-content: center; padding: 14px; }
 .sidebar.collapsed .sb-logo-txt { font-size: 1rem; letter-spacing: 0; }
-.sb-toggle { position: absolute; top: 20px; right: -14px; width: 28px; height: 28px; background: var(--or); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--noir); z-index: 400; box-shadow: 0 2px 8px rgba(0,0,0,0.3); transition: transform .25s; }
+.sb-toggle { position: absolute; top: 22px; right: -13px; width: 26px; height: 26px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: rgba(255,255,255,0.4); z-index: 400; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: all .25s; }
+.sb-toggle:hover { background: var(--or); color: var(--noir); border-color: var(--or); }
 .sidebar.collapsed .sb-toggle { transform: rotate(180deg); }
-.dash-main { margin-left: 230px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; transition: margin-left .25s ease; }
-.dash-main.expanded { margin-left: 60px; }
-.sb-logo { padding: 24px 20px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.sb-logo-txt { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 700; letter-spacing: 0.2em; color: #fff; cursor: pointer; }
+.dash-main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; transition: margin-left .25s ease; }
+.dash-main.expanded { margin-left: 64px; }
+.sb-logo { padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.sb-logo-txt { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.2em; color: #fff; cursor: pointer; }
 .sb-logo-txt span { color: var(--or); }
-.sb-logo p { font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-top: 3px; }
-.sb-brand { padding: 14px 18px; margin: 10px 14px; background: rgba(184,150,74,0.1); border: 1px solid rgba(184,150,74,0.2); }
-.sb-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: #fff; font-weight: 600; }
-.sb-brand-plan { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--or-clair); margin-top: 3px; display: flex; align-items: center; gap: 6px; }
-.pulse { display: inline-block; width: 5px; height: 5px; background: var(--vert); border-radius: 50%; animation: pulse 2s infinite; }
+.sb-logo p { font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.2); margin-top: 4px; }
+.sb-brand { padding: 12px 16px; margin: 12px 14px 4px; background: rgba(184,150,74,0.08); border: 1px solid rgba(184,150,74,0.15); border-radius: 4px; }
+.sb-brand-name { font-family: 'Cormorant Garamond', serif; font-size: 0.92rem; color: #fff; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.sb-brand-plan { font-size: 0.58rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--or-clair); margin-top: 3px; display: flex; align-items: center; gap: 5px; }
+.pulse { display: inline-block; width: 5px; height: 5px; background: var(--vert); border-radius: 50%; animation: pulse 2s infinite; flex-shrink: 0; }
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
-.sb-nav { flex: 1; padding: 6px 0; }
-.sb-sec-lbl { font-size: 0.58rem; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.18); padding: 12px 20px 4px; }
-.sb-item { display: flex; align-items: center; gap: 10px; padding: 10px 20px; cursor: pointer; color: rgba(255,255,255,0.4); font-size: 0.78rem; letter-spacing: 0.02em; border-left: 2px solid transparent; transition: all .2s; }
-.sb-item:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.03); }
-.sb-item.active { color: #fff; background: rgba(184,150,74,0.1); border-left-color: var(--or); }
-.sb-icon { font-size: 0.9rem; width: 16px; text-align: center; flex-shrink: 0; }
-.sb-badge { margin-left: auto; background: var(--or); color: var(--noir); font-size: 0.58rem; font-weight: 600; padding: 1px 6px; border-radius: 8px; }
+.sb-nav { flex: 1; padding: 8px 0; }
+.sb-sec-lbl { font-size: 0.55rem; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(255,255,255,0.15); padding: 16px 20px 6px; }
+.sb-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; cursor: pointer; color: rgba(255,255,255,0.38); font-size: 0.77rem; letter-spacing: 0.01em; border-left: 2px solid transparent; transition: all .18s; position: relative; }
+.sb-item:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.03); }
+.sb-item.active { color: #fff; background: rgba(184,150,74,0.08); border-left-color: var(--or); }
+.sb-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; opacity: 0.8; }
+.sb-item.active .sb-icon { opacity: 1; }
+.sb-badge { margin-left: auto; background: var(--or); color: var(--noir); font-size: 0.56rem; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
 .sb-badge.red { background: var(--rouge); color: #fff; }
-.sb-footer { padding: 14px 20px 20px; border-top: 1px solid rgba(255,255,255,0.06); font-size: 0.7rem; color: rgba(255,255,255,0.25); }
+.sb-footer { padding: 16px 20px 22px; border-top: 1px solid rgba(255,255,255,0.05); font-size: 0.68rem; color: rgba(255,255,255,0.2); }
 .sb-footer a { color: var(--or-clair); cursor: pointer; }
 
 /* dash-main handled above */
@@ -673,7 +675,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   .products-grid{grid-template-columns:1fr 1fr;}
   .co-layout{grid-template-columns:1fr;} .co-left{padding:32px 22px;} .co-right{padding:32px 22px;}
   .sidebar{width:52px;} .sb-logo p,.sb-brand,.sb-item span,.sb-sec-lbl,.sb-footer{display:none;}
-  .sb-item{justify-content:center;padding:12px;}
+  .sb-item{justify-content:center;padding:14px;}
   .dash-main{margin-left:52px;} .dash-content{padding:18px;}
   .settings-wrap{grid-template-columns:1fr;}
 }
@@ -1060,7 +1062,6 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   .sidebar { width: 0; overflow: hidden; }
   .sidebar.mobile-open { width: 260px; }
   .dash-main { margin-left: 0 !important; }
-  .dash-header { padding: 14px 18px; }
   .dash-content { padding: 16px 18px; }
   .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
   .kpi { padding: 16px; }
@@ -1404,7 +1405,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <div class="nike-hero">
     <div class="nike-hero-bg">
       <!-- Image plein écran avec overlay -->
-      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1600&q=80" 
+      <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1600&q=80" 
            alt="Mode" class="nike-hero-img" onerror="this.style.display='none'">
       <div class="nike-hero-overlay"></div>
     </div>
@@ -1801,7 +1802,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <button class="mobile-sb-toggle" id="mobileSbToggle" onclick="toggleMobileSidebar()">☰</button>
 <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
-    <div class="sb-brand"><div class="sb-brand-name" id="sbBrandName">...</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Chargement...</div></div>
+    <div class="sb-brand" id="sbBrandBlock" style="display:none;"><div class="sb-brand-name" id="sbBrandName"></div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Actif</div></div>
     <nav class="sb-nav">
       <div class="sb-sec-lbl">Principal</div>
       <div class="sb-item active" onclick="dPage('dash',this)"><span class="sb-icon">📊</span><span>Tableau de bord</span></div>
@@ -2475,6 +2476,8 @@ async function loadDashboardData(user) {
     // Mettre à jour le nom dans le sidebar
     const sbName = document.getElementById('sbBrandName');
     if(sbName) sbName.textContent = marque.nom;
+    const sbBlock = document.getElementById('sbBrandBlock');
+    if(sbBlock) sbBlock.style.display = 'block';
 
     // Mettre à jour le prénom dans le greeting
     const dashName = document.getElementById('dashUserName');
@@ -2487,7 +2490,7 @@ async function loadDashboardData(user) {
     }
     // Update sidebar name
     const sbNameEl = document.getElementById('sbBrandName');
-    if(sbNameEl) sbNameEl.textContent = marque.nom;
+    if(sbNameEl) { sbNameEl.textContent = marque.nom; const bl = document.getElementById('sbBrandBlock'); if(bl) bl.style.display='block'; }
     
     // Update greeting subtitle
     const dashSub = document.querySelector('.d-sub');
@@ -3654,7 +3657,7 @@ updateSummary();
       </div>
 
       <h3>1. Éditeur du site</h3>
-      <p>Le site SÉLECT (select-mode.ca) est édité par :</p>
+      <p>Le site SÉLECT (select-mode.vercel.app) est édité par :</p>
       <ul>
         <li><strong>Nom :</strong> Étienne Gervais</li>
         <li><strong>Statut :</strong> Travailleur autonome (auto-entrepreneur)</li>
