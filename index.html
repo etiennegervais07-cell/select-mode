@@ -12,11 +12,11 @@
 <meta name="robots" content="index, follow">
 <meta name="language" content="French">
 <meta name="google-site-verification" content="6dttZCnMV43scbFKSl2vH89BeT2Ir5pDy8v71YPSemc">
-<link rel="canonical" href="https://select-mode.vercel.app">
+<link rel="canonical" href="https://select-mode.ca">
 
 <!-- ══ OPEN GRAPH (Facebook, Instagram, WhatsApp) ══ -->
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://select-mode.vercel.app">
+<meta property="og:url" content="https://select-mode.ca">
 <meta property="og:title" content="SÉLECT — La vitrine des marques de mode au Canada">
 <meta property="og:description" content="Découvrez 200+ marques de mode canadiennes sur SÉLECT. Luxe, streetwear, mode durable — toutes les collections en un seul endroit.">
 <meta property="og:image" content="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1200&q=80">
@@ -37,20 +37,20 @@
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "SÉLECT",
-  "url": "https://select-mode.vercel.app",
+  "url": "https://select-mode.ca",
   "description": "Plateforme de mode canadienne regroupant les meilleures marques de vêtements",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": "https://select-mode.vercel.app/?q={search_term_string}",
+    "target": "https://select-mode.ca/?q={search_term_string}",
     "query-input": "required name=search_term_string"
   },
   "publisher": {
     "@type": "Organization",
     "name": "SÉLECT",
-    "url": "https://select-mode.vercel.app",
+    "url": "https://select-mode.ca",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://select-mode.vercel.app"
+      "url": "https://select-mode.ca"
     },
     "contactPoint": {
       "@type": "ContactPoint",
@@ -69,7 +69,7 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "SÉLECT",
-  "url": "https://select-mode.vercel.app",
+  "url": "https://select-mode.ca",
   "description": "La plateforme de référence pour découvrir les marques de mode au Canada",
   "address": {
     "@type": "PostalAddress",
@@ -492,10 +492,13 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .sb-toggle { position: absolute; top: 22px; right: -13px; width: 26px; height: 26px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: rgba(255,255,255,0.4); z-index: 400; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: all .25s; }
 .sb-toggle:hover { background: var(--or); color: var(--noir); border-color: var(--or); }
 .sidebar.collapsed .sb-toggle { transform: rotate(180deg); }
-.dash-main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; transition: margin-left .25s ease; }
+.dash-main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #0c0c0c; transition: margin-left .25s ease; }
 .dash-main.expanded { margin-left: 64px; }
 /* Cache le fond beige avant chargement */
 #page-dashboard { background: #0c0c0c; }
+.dash-main.loaded { background: #f5f3ef; }
+.dash-topbar { display: none; }
+.dash-main.loaded .dash-topbar { display: flex; }
 .sb-logo { padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .sb-logo-txt { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.2em; color: #fff; cursor: pointer; }
 .sb-logo-txt span { color: var(--or); }
@@ -527,8 +530,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .d-btn.primary { background: var(--or); border-color: var(--or); color: var(--noir); font-weight: 500; }
 .d-btn.primary:hover { background: var(--or-clair); }
 
-.dash-content { padding: 32px; flex: 1; background: transparent; }
-.dash-content.loaded { background: #f5f3ef; }
+.dash-content { padding: 32px; flex: 1; }
 .d-page { display: none; }
 .d-page.active { display: block; }
 
@@ -2526,11 +2528,10 @@ async function loadDashboardData(user) {
     const statsWrap = document.getElementById('dashStatsWrap');
     const planBannerWrap = document.getElementById('planBannerWrap');
     const dashHeader = document.getElementById('dashHeader');
-    const dashContent = document.querySelector('.dash-content');
-    const dashMain = document.querySelector('.dash-main');
+    const dashMainEl = document.querySelector('.dash-main');
     
-    // Toujours révéler le fond et le header une fois chargé
-    if(dashContent) dashContent.classList.add('loaded');
+    // Révéler le fond et le header une fois chargé
+    if(dashMainEl) dashMainEl.classList.add('loaded');
     if(dashHeader) dashHeader.style.display = 'flex';
 
     if(marque.abonnement_actif) {
@@ -3684,7 +3685,7 @@ updateSummary();
       </div>
 
       <h3>1. Éditeur du site</h3>
-      <p>Le site SÉLECT (select-mode.vercel.app) est édité par :</p>
+      <p>Le site SÉLECT (select-mode.ca) est édité par :</p>
       <ul>
         <li><strong>Nom :</strong> Étienne Gervais</li>
         <li><strong>Statut :</strong> Travailleur autonome (auto-entrepreneur)</li>
