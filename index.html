@@ -1802,7 +1802,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
   <button class="mobile-sb-toggle" id="mobileSbToggle" onclick="toggleMobileSidebar()">☰</button>
 <aside class="sidebar" id="dashSidebar"><button class="sb-toggle" onclick="toggleSidebar()" title="Réduire le menu">◀</button>
     <div class="sb-logo"><div class="sb-logo-txt" onclick="goTo('home')">SÉL<span>✦</span>CT</div><p>Espace marque</p></div>
-    <div class="sb-brand" id="sbBrandBlock" style="display:none;"><div class="sb-brand-name" id="sbBrandName"></div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>Actif</div></div>
+    <div class="sb-brand" id="sbBrandBlock"><div class="sb-brand-name" id="sbBrandName">Mon espace</div><div class="sb-brand-plan" id="sbBrandPlan"><span class="pulse"></span>SÉLECT</div></div>
     <nav class="sb-nav">
       <div class="sb-sec-lbl">Principal</div>
       <div class="sb-item active" onclick="dPage('dash',this)"><span class="sb-icon">📊</span><span>Tableau de bord</span></div>
@@ -1833,7 +1833,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       <!-- Dashboard home -->
       <div class="d-page active" id="dp-dash">
         <div class="announce" id="dashAnnounce" style="display:none;"><p>🎉 Votre page est en ligne ! Ajoutez vos premiers produits pour attirer des visiteurs.</p><button class="announce-btn" onclick="dPage('products',null)">Ajouter des produits →</button></div>
-      <div style="background:var(--or-pale);border:1px solid rgba(184,150,74,0.3);padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+      <div id="planBannerWrap" style="display:none;background:var(--or-pale);border:1px solid rgba(184,150,74,0.3);padding:14px 20px;margin-bottom:24px;display:none;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
         <div style="font-size:0.82rem;">
           <strong style="color:var(--noir);" id="planBannerText">Plan actif</strong> 
           <span style="color:var(--gris);margin-left:8px;">· Produits illimités · Lien boutique actif · Badge vérifié ✦</span>
@@ -1843,56 +1843,60 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <button class="d-btn primary" onclick="dPage('products',document.querySelector('[onclick*=products]'))">+ Ajouter des produits</button>
         </div>
       </div>
-        <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);">Mis à jour aujourd'hui à 14h32</span></div>
-        <div class="kpi-grid">
-          <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">0</div><div class="kpi-chg neu" id="kpi-vues-chg">→ Nouveau compte</div></div>
-          <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">0</div><div class="kpi-chg neu" id="kpi-clics-chg">→ Nouveau compte</div></div>
-          <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">0</div><div class="kpi-chg neu" id="kpi-favoris-chg">→ Nouveau compte</div></div>
-          <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">0</div><div class="kpi-chg neu" id="kpi-prod-chg">→ Aucun produit</div></div>
+        <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);" id="dashDateLbl"></span></div>
+
+        <!-- État vide — affiché si pas d'abonnement actif -->
+        <div id="dashEmptyState" style="display:none;background:#fff;padding:52px;text-align:center;margin-bottom:24px;">
+          <div style="font-size:3rem;margin-bottom:16px;opacity:0.25;">📊</div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;margin-bottom:8px;">Aucune statistique disponible</h3>
+          <p style="font-size:0.85rem;color:var(--gris);line-height:1.7;max-width:380px;margin:0 auto 28px;">Les statistiques apparaissent une fois votre abonnement activé. Choisissez un plan pour commencer à recevoir du trafic sur votre page.</p>
+          <button class="btn-p" onclick="showPage('choose-plan')">Choisir un plan →</button>
         </div>
-        <div class="charts-row">
-          <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues & Clics — 30 jours</div><span class="chart-period">Avril 2026</span></div>
-            <svg class="chart-svg" viewBox="0 0 500 140" height="140">
-              <defs><linearGradient id="gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8964a" stop-opacity=".22"/><stop offset="100%" stop-color="#b8964a" stop-opacity="0"/></linearGradient></defs>
-              <line x1="0" y1="30" x2="500" y2="30" stroke="#eee" stroke-width="1"/>
-              <line x1="0" y1="70" x2="500" y2="70" stroke="#eee" stroke-width="1"/>
-              <line x1="0" y1="110" x2="500" y2="110" stroke="#eee" stroke-width="1"/>
-              <path d="M20,130 L460,130" fill="none" stroke="#b8964a" stroke-width="2.5" stroke-linejoin="round"/>
-              <path d="M20,130 L460,130 L460,130 L20,130 Z" fill="url(#gv)"/>
-              <path d="M20,130 L460,130" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="4,2"/>
-              <circle cx="20" cy="132" r="3" fill="#b8964a"/><text x="26" y="136" font-size="8" fill="#888">Vues</text>
-              <circle cx="65" cy="132" r="3" fill="#27ae60"/><text x="71" y="136" font-size="8" fill="#888">Clics</text>
-            </svg>
+
+        <div id="dashStatsWrap" style="display:none;">
+          <div class="kpi-grid">
+            <div class="kpi fu d1" data-icon="👁"><div class="kpi-lbl">Vues de la page</div><div class="kpi-val" id="kpi-vues">0</div><div class="kpi-chg neu" id="kpi-vues-chg">→ Nouveau compte</div></div>
+            <div class="kpi fu d2" data-icon="🖱"><div class="kpi-lbl">Clics boutique</div><div class="kpi-val" id="kpi-clics">0</div><div class="kpi-chg neu" id="kpi-clics-chg">→ Nouveau compte</div></div>
+            <div class="kpi fu d3" data-icon="♡"><div class="kpi-lbl">Produits en favoris</div><div class="kpi-val" id="kpi-favoris">0</div><div class="kpi-chg neu" id="kpi-favoris-chg">→ Nouveau compte</div></div>
+            <div class="kpi fu d4" data-icon="📦"><div class="kpi-lbl">Produits actifs</div><div class="kpi-val" id="kpi-prod">0</div><div class="kpi-chg neu" id="kpi-prod-chg">→ Aucun produit</div></div>
           </div>
-          <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Par catégorie</div></div>
-            <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
-              <svg class="donut-svg" viewBox="0 0 160 160">
-              <circle cx="80" cy="80" r="60" fill="none" stroke="var(--gris-clair)" stroke-width="20"/>
-              <text x="50%" y="48%" text-anchor="middle" fill="var(--gris)" style="font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;">vues</text>
-              <text x="50%" y="60%" text-anchor="middle" fill="var(--noir)" style="font-family:Cormorant Garamond,serif;font-size:1.1rem;font-weight:700;" id="donutValInner">0</text>
-            </svg>
-              <div class="donut-legend">
-                <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#b8964a"></div>Robes</div><span>40%</span></div>
-                <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#2a1f0e"></div>Manteaux</div><span>26%</span></div>
-                <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#27ae60"></div>Hauts</div><span>16%</span></div>
-                <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#d4b87a"></div>Accessoires</div><span>18%</span></div>
+          <div class="charts-row">
+            <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Vues & Clics — 30 jours</div><span class="chart-period">Avril 2026</span></div>
+              <svg class="chart-svg" viewBox="0 0 500 140" height="140">
+                <defs><linearGradient id="gv" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b8964a" stop-opacity=".22"/><stop offset="100%" stop-color="#b8964a" stop-opacity="0"/></linearGradient></defs>
+                <line x1="0" y1="30" x2="500" y2="30" stroke="#eee" stroke-width="1"/>
+                <line x1="0" y1="70" x2="500" y2="70" stroke="#eee" stroke-width="1"/>
+                <line x1="0" y1="110" x2="500" y2="110" stroke="#eee" stroke-width="1"/>
+                <path d="M20,130 L460,130" fill="none" stroke="#b8964a" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M20,130 L460,130 L460,130 L20,130 Z" fill="url(#gv)"/>
+                <path d="M20,130 L460,130" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="4,2"/>
+                <circle cx="20" cy="132" r="3" fill="#b8964a"/><text x="26" y="136" font-size="8" fill="#888">Vues</text>
+                <circle cx="65" cy="132" r="3" fill="#27ae60"/><text x="71" y="136" font-size="8" fill="#888">Clics</text>
+              </svg>
+            </div>
+            <div class="chart-card"><div class="chart-hdr"><div class="chart-ttl">Par catégorie</div></div>
+              <div style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+                <svg class="donut-svg" viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="60" fill="none" stroke="var(--gris-clair)" stroke-width="20"/>
+                <text x="50%" y="48%" text-anchor="middle" fill="var(--gris)" style="font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;">vues</text>
+                <text x="50%" y="60%" text-anchor="middle" fill="var(--noir)" style="font-family:Cormorant Garamond,serif;font-size:1.1rem;font-weight:700;" id="donutValInner">0</text>
+              </svg>
+                <div class="donut-legend">
+                  <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#b8964a"></div>Robes</div><span>40%</span></div>
+                  <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#2a1f0e"></div>Manteaux</div><span>26%</span></div>
+                  <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#27ae60"></div>Hauts</div><span>16%</span></div>
+                  <div class="donut-item"><div class="donut-name"><div class="d-dot" style="background:#d4b87a"></div>Accessoires</div><span>18%</span></div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="bottom-row">
-          <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Produits les plus vus</div><span class="see-all" onclick="dPage('products',document.querySelector('[onclick*=products]'))">Voir tout →</span></div>
-            <div id="topProductsList" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucun produit pour linstant</p><p style="font-size:0.76rem;">Ajoutez vos premiers produits pour voir les statistiques</p></div>
-            
-            
-            
-          </div>
-          <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Activité récente</div><span class="see-all">Tout voir →</span></div>
-            <div id="activityFeed" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucune activité pour linstant</p><p style="font-size:0.76rem;">Votre activité apparaitra ici dès que des visiteurs consulteront votre page</p></div>
-            
-            
-            
-            
+          <div class="bottom-row">
+            <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Produits les plus vus</div><span class="see-all" onclick="dPage('products',document.querySelector('[onclick*=products]'))">Voir tout →</span></div>
+              <div id="topProductsList" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucun produit pour linstant</p><p style="font-size:0.76rem;">Ajoutez vos premiers produits pour voir les statistiques</p></div>
+            </div>
+            <div class="data-card"><div class="data-card-hdr"><div class="data-card-ttl">Activité récente</div><span class="see-all">Tout voir →</span></div>
+              <div id="activityFeed" style="padding:28px 0;text-align:center;color:var(--gris);"><p style="font-size:0.88rem;margin-bottom:6px;">Aucune activité pour linstant</p><p style="font-size:0.76rem;">Votre activité apparaitra ici dès que des visiteurs consulteront votre page</p></div>
+            </div>
           </div>
         </div>
       </div>
@@ -2473,10 +2477,13 @@ async function loadDashboardData(user) {
       return;
     }
 
-    // Mettre à jour le nom dans le sidebar
+    // Mettre à jour le nom dans le sidebar — afficher le prénom de l'utilisateur
     const sbName = document.getElementById('sbBrandName');
-    if(sbName) sbName.textContent = marque.nom;
     const sbBlock = document.getElementById('sbBrandBlock');
+    if(sbName) {
+      const firstName = user.user_metadata?.first_name || user.email?.split('@')[0] || 'Mon espace';
+      sbName.textContent = firstName;
+    }
     if(sbBlock) sbBlock.style.display = 'block';
 
     // Mettre à jour le prénom dans le greeting
@@ -2488,9 +2495,12 @@ async function loadDashboardData(user) {
         || 'là';
       dashName.textContent = firstName;
     }
-    // Update sidebar name
+    // Update sidebar — prénom uniquement
     const sbNameEl = document.getElementById('sbBrandName');
-    if(sbNameEl) { sbNameEl.textContent = marque.nom; const bl = document.getElementById('sbBrandBlock'); if(bl) bl.style.display='block'; }
+    if(sbNameEl) { 
+      const firstName = user.user_metadata?.first_name || user.email?.split('@')[0] || 'Mon espace';
+      sbNameEl.textContent = firstName;
+    }
     
     // Update greeting subtitle
     const dashSub = document.querySelector('.d-sub');
@@ -2503,9 +2513,9 @@ async function loadDashboardData(user) {
     // Update plan info banner
     const planInfoEl = document.querySelector('[style*="Plan Pro actif"]');
 
-    // Mettre à jour le plan
+    // Mettre à jour le plan dans le sidebar
     const sbPlan = document.getElementById('sbBrandPlan');
-    if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · ' + (marque.abonnement_actif ? 'Actif' : 'Inactif');
+    if(sbPlan) sbPlan.innerHTML = '<span class="pulse"></span>' + (marque.plan ? marque.plan.charAt(0).toUpperCase() + marque.plan.slice(1) + ' · Actif' : 'SÉLECT');
 
     // Show stats now that data is loaded
     ['dashKpiGrid','dashChartsRow','dashBottomRow'].forEach(id => {
@@ -2514,8 +2524,23 @@ async function loadDashboardData(user) {
     });
     const loadingMsg = document.getElementById('dashLoadingMsg');
     if(loadingMsg) loadingMsg.style.display = 'none';
+    
+    // Afficher stats OU état vide selon abonnement
+    const statsWrap = document.getElementById('dashStatsWrap');
+    const emptyState = document.getElementById('dashEmptyState');
+    const planBannerWrap = document.getElementById('planBannerWrap');
+    if(marque.abonnement_actif) {
+      if(statsWrap) statsWrap.style.display = 'block';
+      if(emptyState) emptyState.style.display = 'none';
+      if(planBannerWrap) planBannerWrap.style.display = 'flex';
+    } else {
+      if(statsWrap) statsWrap.style.display = 'none';
+      if(emptyState) emptyState.style.display = 'block';
+      if(planBannerWrap) planBannerWrap.style.display = 'none';
+    }
+    
     const announce = document.getElementById('dashAnnounce');
-    if(announce) announce.style.display = 'flex';
+    if(announce && marque.abonnement_actif) announce.style.display = 'flex';
 
     // Fill settings with real data
     const sNom = document.getElementById('settings-nom');
