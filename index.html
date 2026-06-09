@@ -1845,13 +1845,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
       </div>
         <div class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);" id="dashDateLbl"></span></div>
 
-        <!-- État vide — affiché si pas d'abonnement actif -->
-        <div id="dashEmptyState" style="display:none;background:#fff;padding:52px;text-align:center;margin-bottom:24px;">
-          <div style="font-size:3rem;margin-bottom:16px;opacity:0.25;">📊</div>
-          <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;margin-bottom:8px;">Aucune statistique disponible</h3>
-          <p style="font-size:0.85rem;color:var(--gris);line-height:1.7;max-width:380px;margin:0 auto 28px;">Les statistiques apparaissent une fois votre abonnement activé. Choisissez un plan pour commencer à recevoir du trafic sur votre page.</p>
-          <button class="btn-p" onclick="showPage('choose-plan')">Choisir un plan →</button>
-        </div>
+        <!-- État vide — rien à afficher si pas d'abonnement -->
 
         <div id="dashStatsWrap" style="display:none;">
           <div class="kpi-grid">
@@ -2525,17 +2519,14 @@ async function loadDashboardData(user) {
     const loadingMsg = document.getElementById('dashLoadingMsg');
     if(loadingMsg) loadingMsg.style.display = 'none';
     
-    // Afficher stats OU état vide selon abonnement
+    // Afficher stats OU rien selon abonnement
     const statsWrap = document.getElementById('dashStatsWrap');
-    const emptyState = document.getElementById('dashEmptyState');
     const planBannerWrap = document.getElementById('planBannerWrap');
     if(marque.abonnement_actif) {
       if(statsWrap) statsWrap.style.display = 'block';
-      if(emptyState) emptyState.style.display = 'none';
       if(planBannerWrap) planBannerWrap.style.display = 'flex';
     } else {
       if(statsWrap) statsWrap.style.display = 'none';
-      if(emptyState) emptyState.style.display = 'block';
       if(planBannerWrap) planBannerWrap.style.display = 'none';
     }
     
