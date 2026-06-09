@@ -476,8 +476,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 /* ══════════════════════════════════════
    PAGE 4 — DASHBOARD
 ══════════════════════════════════════ */
-#page-dashboard { display: flex; }
-#page-dashboard.active { display: flex; background: var(--blanc); }
+#page-dashboard { display: flex; background: #f5f3ef; }
+#page-dashboard.active { display: flex; background: #f5f3ef; overflow: hidden; }
 
 .sidebar { width: 240px; flex-shrink: 0; background: #0c0c0c; display: flex; flex-direction: column; min-height: 100vh; position: fixed; top: 0; left: 0; bottom: 0; z-index: 300; overflow-y: auto; transition: width .25s ease, transform .25s ease; border-right: 1px solid rgba(255,255,255,0.04); }
 .sidebar.collapsed { width: 64px; }
@@ -492,12 +492,8 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 .sb-toggle { position: absolute; top: 22px; right: -13px; width: 26px; height: 26px; background: #1a1a1a; border: 1px solid rgba(255,255,255,0.08); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: rgba(255,255,255,0.4); z-index: 400; box-shadow: 0 2px 8px rgba(0,0,0,0.4); transition: all .25s; }
 .sb-toggle:hover { background: var(--or); color: var(--noir); border-color: var(--or); }
 .sidebar.collapsed .sb-toggle { transform: rotate(180deg); }
-.dash-main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: transparent; transition: margin-left .25s ease; }
+.dash-main { margin-left: 240px; flex: 1; display: flex; flex-direction: column; min-height: 100vh; background: #f5f3ef; transition: margin-left .25s ease; }
 .dash-main.expanded { margin-left: 64px; }
-#page-dashboard { background: transparent; }
-.dash-main.loaded { background: #f5f3ef; }
-.dash-topbar { display: none; }
-.dash-main.loaded .dash-topbar { display: flex; }
 .sb-logo { padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .sb-logo-txt { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.2em; color: #fff; cursor: pointer; }
 .sb-logo-txt span { color: var(--or); }
@@ -509,10 +505,9 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
 @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
 .sb-nav { flex: 1; padding: 8px 0; }
 .sb-sec-lbl { font-size: 0.55rem; letter-spacing: 0.26em; text-transform: uppercase; color: rgba(255,255,255,0.15); padding: 16px 20px 6px; }
-.sb-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; cursor: pointer; color: rgba(255,255,255,0.38); font-size: 0.77rem; letter-spacing: 0.01em; border-left: 2px solid transparent; transition: all .18s; position: relative; }
-.sb-item:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.03); }
-.sb-item.active { color: #fff; background: rgba(184,150,74,0.08); border-left-color: var(--or); }
-.sb-icon { font-size: 0.95rem; width: 18px; text-align: center; flex-shrink: 0; opacity: 0.8; }
+.sb-item { display: flex; align-items: center; gap: 12px; padding: 10px 20px; cursor: pointer; color: rgba(255,255,255,0.38); font-size: 0.77rem; letter-spacing: 0.01em; border-left: 2px solid transparent; transition: color .15s ease, background .15s ease, border-color .15s ease; position: relative; }
+.sb-item:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.05); }
+.sb-item.active { color: #fff; background: rgba(184,150,74,0.1); border-left-color: var(--or); }
 .sb-item.active .sb-icon { opacity: 1; }
 .sb-badge { margin-left: auto; background: var(--or); color: var(--noir); font-size: 0.56rem; font-weight: 700; padding: 2px 6px; border-radius: 10px; min-width: 18px; text-align: center; }
 .sb-badge.red { background: var(--rouge); color: #fff; }
@@ -1847,7 +1842,7 @@ body { background: var(--blanc); color: var(--noir); font-family: 'Outfit', sans
           <button class="d-btn primary" onclick="dPage('products',document.querySelector('[onclick*=products]'))">+ Ajouter des produits</button>
         </div>
       </div>
-        <div id="dashHeader" class="d-page-header" style="display:none;"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub">Vos 30 derniers jours sur SÉLECT</p></div><span style="font-size:0.7rem;color:var(--gris);" id="dashDateLbl"></span></div>
+        <div id="dashHeader" class="d-page-header"><div><h1 class="d-title">Bonjour, <em id="dashUserName">...</em> 👋</h1><p class="d-sub" id="dashSub"></p></div></div>
 
         <!-- État vide — rien à afficher si pas d'abonnement -->
 
@@ -2523,22 +2518,20 @@ async function loadDashboardData(user) {
     const loadingMsg = document.getElementById('dashLoadingMsg');
     if(loadingMsg) loadingMsg.style.display = 'none';
     
-    // Afficher stats OU rien selon abonnement
+    // Afficher stats SEULEMENT si abonnement actif
     const statsWrap = document.getElementById('dashStatsWrap');
     const planBannerWrap = document.getElementById('planBannerWrap');
     const dashHeader = document.getElementById('dashHeader');
-    const dashMainEl = document.querySelector('.dash-main');
-    
-    // Révéler le fond et le header une fois chargé
-    if(dashMainEl) dashMainEl.classList.add('loaded');
-    if(dashHeader) dashHeader.style.display = 'flex';
+    const dashSub = document.getElementById('dashSub');
 
     if(marque.abonnement_actif) {
       if(statsWrap) statsWrap.style.display = 'block';
       if(planBannerWrap) planBannerWrap.style.display = 'flex';
+      if(dashSub) dashSub.textContent = 'Vos 30 derniers jours sur SÉLECT';
     } else {
       if(statsWrap) statsWrap.style.display = 'none';
       if(planBannerWrap) planBannerWrap.style.display = 'none';
+      if(dashSub) dashSub.textContent = '';
     }
     
     const announce = document.getElementById('dashAnnounce');
